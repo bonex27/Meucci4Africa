@@ -84,10 +84,10 @@
                                 xhr.open("PATCH", "http://localhost:80/../Backend/login.php", true);
 
                                 xhr.onload = function() {
-                                    document.getElementById("risposta").innerHTML = xhr.response;
+                                alert(xhr.response);
                                 };
                                 xhr.onerror = function() {
-                                    alert("Bau!");
+                                    alert("Errore");
                                 };
                                 xhr.send(dati);
                             </script>
