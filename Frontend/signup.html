@@ -71,9 +71,26 @@
                             <label for="inputPassword" class="sr-only">Password</label>
                                 <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
                             
-                            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" />
-                            <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
-                        </form>
+                                <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()"/>
+                                <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
+                            </form>
+    
+                            <script>
+                                function send() {
+                                    var dati;
+                                    dati=document.getElementById("form").serializeObject();
+                                }
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("PATCH", "http://localhost:80/../Backend/login.php", true);
+
+                                xhr.onload = function() {
+                                    document.getElementById("risposta").innerHTML = xhr.response;
+                                };
+                                xhr.onerror = function() {
+                                    alert("Bau!");
+                                };
+                                xhr.send(dati);
+                            </script>
                     </div>
                 </div>
             </div>
