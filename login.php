@@ -18,6 +18,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
+    <!-- Other CSS -->
+    <link href="css\signin.css" rel="stylesheet">
+
     <title>Meucci for Africa</title>
 </head>
 <body>
@@ -50,12 +53,18 @@
             <div class="col-md-8">
                 <div class="card border-success mb-3">
                     <div class="card-header bg-success">
-                        <a class="navbar-brand text-white" href="index2.html"><b>Homepage</b></a>
+                        <a class="navbar-brand text-white"><b>Login</b></a>
                     </div>
                     <div class="card-body">
-                        <div class="col-sm-4">
-                            <img src="img/logo.png" class="rounded" alt="Cinque Terre">
-                        </div>
+                        <form class="form-signin" method="GET" action="../../Backend/searchUser.php">
+                            <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
+                            <label for="inputEmail" class="sr-only">Username</label>
+                            <input type="text" id="inputEmail" class="form-control" placeholder="Email address" name="user" required>
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password" required>
+                            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" />
+                            <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
+                        </form>
                     </div>
                 </div>
             </div>
