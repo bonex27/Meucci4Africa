@@ -77,19 +77,25 @@
     
                             <script>
                                 function send() {
-                                    var dati;
-                                    dati=document.getElementById("form").serializeObject();
-                                }
-                                var xhr = new XMLHttpRequest();
-                                xhr.open("PATCH", "http://localhost:80/../Backend/login.php", true);
+                                    var nome = document.getElementById("inputName").value;
+                                    var cognome = document.getElementById("inputSurname").value;
+                                    var email = document.getElementById("inputEmail").value;
+                                    var password = document.getElementById("inputPassword").value;
+                                    var obj = { nome: nome, cognome: cognome, email: email, password: password };
+                                    var myJSON = JSON.stringify(obj);
 
-                                xhr.onload = function() {
-                                alert(xhr.response);
-                                };
-                                xhr.onerror = function() {
-                                    alert("Errore");
-                                };
-                                xhr.send(dati);
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("POST", "http://localhost:80/../Backend/login.php", true);
+
+                                    xhr.onload = function() {
+                                    alert(xhr.response);
+                                    };
+                                    xhr.onerror = function() {
+                                        alert("Errore");
+                                    };
+                                    xhr.send(myJSON);
+                                }
+                                
                             </script>
                     </div>
                 </div>
