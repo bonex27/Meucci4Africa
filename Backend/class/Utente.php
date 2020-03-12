@@ -44,7 +44,30 @@ class Utente
     		die("Oh noes! There's an error in the query!".$e);
 		}
 
-		
+
+	}	
+	public function login() {
+		/*
+		Nella prima parte esegue l' aggiunta del nuovo studente
+		*/
+		try {
+    		$sql = 'select id from utenti where email = :email && password = :password';
+    		$data = [
+			    'email' => $this->_email,
+				'password' => $this->_password,
+
+			];
+	    	$stmt = $this->db->prepare($sql);
+	    	$stmt->execute($data);
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return $result;			
+ 
+		} catch (Exception $e) {
+    		die("Oh noes! There's an error in the query!".$e);
+		}
+
+
+	}	
  
 }
 ?>
