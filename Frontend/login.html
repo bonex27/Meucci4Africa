@@ -65,7 +65,7 @@
                             <label for="inputPassword" class="sr-only">Password</label>
                                 <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password" required>
 
-                            <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()"/>
+                            <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()" value="login"/>
                             <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
                         </form>
 
@@ -77,7 +77,7 @@
                                 var myJSON = JSON.stringify(obj);
 
                                 var xhr = new XMLHttpRequest();
-                                xhr.open("POST", "http://localhost:80/../Backend/login.php", true);
+                                xhr.open("POST", "http://localhost:80/meucci4africa/Backend/login.php", true);
 
                                 xhr.onload = function() {
                                     alert(xhr.response);
