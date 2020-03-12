@@ -10,7 +10,7 @@
 class DBConnection {
     private $_dbHostname = "rufis01.ddns.net:3306";
     private $_dbName = "meucci4africa";
-    private $_dbUsername = "zurlao";
+    private $_dbUsername = "test";
     private $_dbPassword = "zurlino40";
     private $_con;
  

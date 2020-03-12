@@ -13,11 +13,12 @@ switch($requestMethod) {
         $utente->_email = $input["email"];
         $utente->_password = $input["password"];
 
-        $student->insert();
-        $js_encode = json_encode(array('status'=>TRUE, 'studentInfo'=>$data), true);
+        $utente->insert();
+        //$js_encode = json_encode(array('status'=>TRUE, 'studentInfo'=>$data), true);
 
         header('Content-Type: application/json');
-		echo $js_encode;
+        //echo $js_encode;
+        echo "Bravo";
         break;
     
     default:

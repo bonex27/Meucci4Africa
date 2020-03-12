@@ -11,8 +11,8 @@ switch($requestMethod) {
         $utente->_email = $input["email"];
         $utente->_password = $input["password"];
 
-        $student->login();
-        $js_encode = json_encode(array('status'=>TRUE, 'studentInfo'=>$data), true);
+        $dati = $utente->login();
+        $js_encode = json_encode(array('status'=>TRUE, 'studentInfo'=>$dati), true);
 
         header('Content-Type: application/json');
 		echo $js_encode;

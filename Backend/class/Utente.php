@@ -27,7 +27,7 @@ class Utente
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
 		try {
-    		$sql = 'INSERT INTO utenti (nome, cognome, email, password)  VALUES (:nome, :cognome, :email, :password)';
+    		$sql = 'INSERT INTO utente (nome, cognome, email, password)  VALUES (:nome, :cognome, :email, :password)';
     		$data = [
 			    'nome' => $this->_nome,
 			    'cognome' => $this->_cognome,
@@ -51,7 +51,7 @@ class Utente
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
 		try {
-    		$sql = 'select id from utenti where email = :email && password = :password';
+    		$sql = 'select * from utente where email = :email && password = :password';
     		$data = [
 			    'email' => $this->_email,
 				'password' => $this->_password,
