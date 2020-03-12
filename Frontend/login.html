@@ -56,7 +56,7 @@
                         <a class="navbar-brand text-white"><b>Login</b></a>
                     </div>
                     <div class="card-body">
-                        <form class="form-signin" method="GET" action="../../Backend/searchUser.php">
+                        <form class="form-signin" method="GET" id="form">
                             <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
                             
                             <label for="inputEmail" class="sr-only">Email</label>
@@ -65,9 +65,27 @@
                             <label for="inputPassword" class="sr-only">Password</label>
                                 <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password" required>
 
-                            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" />
+                            <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()"/>
                             <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
                         </form>
+
+                        <script>
+                            function send() {
+                                var dati;
+                                dati=document.getElementById("form").serializeObject();
+                            }
+
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("PATCH", "http://localhost:80/../Backend/login.php", true);
+
+                            xhr.onload = function() {
+                                document.getElementById("risposta").innerHTML = xhr.response;
+                            };
+                            xhr.onerror = function() {
+                                alert("Bau!");
+                            };
+                            xhr.send(dati);
+                        </script>
                     </div>
                 </div>
             </div>
