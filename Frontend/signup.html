@@ -18,6 +18,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
+    <!-- Other CSS -->
+    <link href="css\signin.css" rel="stylesheet">
+
     <title>Meucci for Africa</title>
 </head>
 <body>
@@ -50,12 +53,33 @@
             <div class="col-md-8">
                 <div class="card border-success mb-3">
                     <div class="card-header bg-success">
-                        <a class="navbar-brand text-white" href="index2.html"><b>Homepage</b></a>
+                        <a class="navbar-brand text-white"><b>Registrazione</b></a>
                     </div>
                     <div class="card-body">
-                        <div class="col-sm-4">
-                            <img src="img/logo.png" class="rounded" alt="Cinque Terre">
-                        </div>
+                        <form class="form-signin" method="GET" action="../../Backend/searchUser.php">
+                            <h1 class="h3 mb-3 font-weight-normal">Registrazione</h1>
+
+                            <label for="inputName" class="sr-only">Nome</label>
+                                <input type="text" id="inputName" class="form-control" placeholder="Nome" name="name" required>
+
+                            <label for="inputSurname" class="sr-only">Cognome</label>
+                                <input type="text" id="inputSurname" class="form-control" placeholder="Cognome" name="surname" required>
+
+                            <label for="inputSex" class="sr-only">Sesso</label>
+                                <input type="radio" id="gridRadios1" name="sesso" value="m">
+                                    <label for="maschile">Maschile</label>
+                                <input type="radio" id="gridRadios2" name="sesso" value="f">
+                                    <label for="femminile">Femminile</label>
+                                
+                            <label for="inputEmail" class="sr-only">Email</label>
+                                <input type="text" id="inputEmail" class="form-control" placeholder="Email" name="email" required>
+
+                            <label for="inputPassword" class="sr-only">Password</label>
+                                <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+                            
+                            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" />
+                            <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
+                        </form>
                     </div>
                 </div>
             </div>
