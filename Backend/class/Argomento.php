@@ -43,7 +43,7 @@ class Argomento
 		{
 			try
 			{
-				$sql = 'select * from argomenti where id = :id';
+				$sql = 'select * from argomento where idArgomento = :id';
 				$data = [
 					'id' => $this->_id,
 				];
@@ -55,6 +55,7 @@ class Argomento
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
+				echo $e;
 			}
 		}
 
