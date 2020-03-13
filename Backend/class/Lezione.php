@@ -7,7 +7,7 @@
  */
  
 include("DBConnection.php");
-class Argomento 
+class Lezione 
 {
     protected $db;
     public $_id;
@@ -25,7 +25,12 @@ class Argomento
 		if(!isset($this->_id))
 		{
 			try {
-				$sql = 'select * from argomento';
+				$sql = 'SELECT a.nomeAula, t.idTurno, t.oraInizio, t.oraFine, l.postiliberi, l.postioccupati
+				FROM lezione l
+				INNER JOIN aula a
+				ON l.aula = a.idAula
+				INNER JOIN turno t
+				on l.turno = t.idTurno;';
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute();
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -41,7 +46,13 @@ class Argomento
 		{
 			try
 			{
-				$sql = 'select * from argomenti where id = :id';
+				$sql = 'SELECT a.nomeAula, t.idTurno, t.oraInizio, t.oraFine, l.postiliberi, l.postioccupati
+				FROM lezione l
+				INNER JOIN aula a
+				ON l.aula = a.idAula
+				INNER JOIN turno t
+				on l.turno = t.idTurno
+				where a.argomento = :id';
 				$data = [
 					'id' => $this->_id,
 				];
