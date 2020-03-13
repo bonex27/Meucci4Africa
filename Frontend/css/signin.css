@@ -4,11 +4,11 @@ body {
 }
 .form-signin {
   width: 100%;
-  max-width: 330px;
+  max-width: 350px;
   padding: 15px;
 }
 .form-signin .checkbox {
-  font-weight: 400;
+  font-weight: 400px;
 }
 .form-signin .form-control {
   box-sizing: border-box;

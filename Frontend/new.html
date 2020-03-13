@@ -23,7 +23,7 @@
 
     <title>Meucci for Africa</title>
 </head>
-<body onload="load()">
+<body>
 
 <nav class="navbar navbar-expand-lg navbar-light navbar-Meucci for Africa">
     <div class="container">
@@ -53,11 +53,33 @@
             <div class="col-md-8">
                 <div class="card border-success mb-3">
                     <div class="card-header bg-success">
-                        <a class="navbar-brand text-white"><b>Login</b></a>
+                        <a class="navbar-brand text-white"><b>Inserimento corsi</b></a>
                     </div>
                     <div class="card-body">
-                        <div id="titoloCorsi">
-                        </div>
+                        <form class="form-signin" form="" id="form">
+                            <h1 class="h3 mb-3 font-weight-normal">Nuovo</h1>
+                            
+                            <label for="inputAula" class="sr-only">Aula</label>
+                                <input type="text" id="inputAula" class="form-control" name="aula" placeholder="Aula" required>
+                    
+                            <label for="inputCorso" class="sr-only">Corso</label>
+                                <input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required>
+                            
+                            <label for="inputTurni">Turni:</label><br>
+                                <input type="checkbox" id="turno1" name="turno1" value="1" class="form-check-label">
+                                    <label for="vehicle1"> Turno 1</label>
+                                <input type="checkbox" id="turno2" name="turno2" value="2" class="form-check-label">
+                                    <label for="vehicle2"> Turno 2</label>
+                                <input type="checkbox" id="turno3" name="turno3" value="3" class="form-check-label">
+                                    <label for="vehicle3"> Turno 3</label>
+                                <input type="checkbox" id="turno4" name="turno4" value="4" class="form-check-label">
+                                    <label for="vehicle4"> Turno 4</label>
+                    
+                            <label for="inputPosti" class="sr-only">Numero posti</label>
+                                <input type="text" id="inputPosti" class="form-control" name="posti" placeholder="Numero Posti" required><br>
+                    
+                            <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()" value="segna"/>
+                        </form>
 
                     </div>
                 </div>
@@ -67,9 +89,8 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="Script/corsi.js"></script>
+<script src="Script/login.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
->>>>>>> 7a764e337a1bea4565076fef2d3fea305bbab8f6
 </body>
 </html>
