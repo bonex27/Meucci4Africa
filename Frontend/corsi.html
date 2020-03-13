@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <title>Meucci for Africa</title>
+</head>
+<body>
+    <form class="form-signin" form="" id="form">
+        <h1 class="h3 mb-3 font-weight-normal">Nuovo Corso</h1>
+        
+        <label for="inputAula" class="sr-only">Aula</label><br>
+            <input type="text" id="inputAula" class="form-control" name="aula" placeholder="Aula" required><br><br>
+
+        <label for="inputCorso" class="sr-only">Corso</label><br>
+            <input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required><br><br>
+        
+        <label for="inputTurni" class="col-md-4 col-form-label text-md-right">Turni:</label>
+            <div class="col-md-6">
+                <input type="checkbox" id="turno1" name="turno1" value="1" class="form-check-label">
+                    <label for="vehicle1"> Turno 1</label>
+                <input type="checkbox" id="turno2" name="turno2" value="2" class="form-check-label">
+                    <label for="vehicle2"> Turno 2</label>
+                <input type="checkbox" id="turno3" name="turno3" value="3" class="form-check-label">
+                    <label for="vehicle3"> Turno 3</label>
+                <input type="checkbox" id="turno4" name="turno4" value="4" class="form-check-label">
+                    <label for="vehicle4"> Turno 4</label>
+            </div><br>
+
+        <label for="inputPosti" class="sr-only">Numero posti</label><br>
+            <input type="text" id="inputPosti" class="form-control" name="posti" placeholder="Numero Posti" required><br><br>
+
+        <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()" value="segna"/>
+    </form>
+</body>
+</html>
