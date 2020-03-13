@@ -23,7 +23,7 @@
 
     <title>Meucci for Africa</title>
 </head>
-<body>
+<body onload="aule()">
 
 <nav class="navbar navbar-expand-lg navbar-light navbar-Meucci for Africa">
     <div class="container">
@@ -56,14 +56,14 @@
                         <a class="navbar-brand text-white"><b>Inserimento corsi</b></a>
                     </div>
                     <div class="card-body">
-                        <form class="form-signin" form="" id="form">
+                        <form class="form-signin" action="" id="form">
                             <h1 class="h3 mb-3 font-weight-normal">Nuovo</h1>
                             
                             <label for="inputAula" class="sr-only">Aula</label>
-                                <input type="text" id="inputAula" class="form-control" name="aula" placeholder="Aula" required>
+                                <select id="inputAula" name="aula" required></select>
                     
                             <label for="inputCorso" class="sr-only">Corso</label>
-                                <input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required>
+                                <br><input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required>
                             
                             <label for="inputTurni">Turni:</label><br>
                                 <input type="checkbox" id="turno1" name="turno1" value="1" class="form-check-label">
@@ -89,7 +89,7 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="Script/login.js"></script>
+<script src="Script/aule.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
