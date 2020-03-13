@@ -73,37 +73,14 @@
                             
                                 <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()" value="Iscriviti"/>
                                 <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
-                            </form>
-    
-                            <script>
-                                function send() {
-                                    var nome = document.getElementById("inputName").value;
-                                    var cognome = document.getElementById("inputSurname").value;
-                                    var email = document.getElementById("inputEmail").value;
-                                    var password = document.getElementById("inputPassword").value;
-                                    var obj = { nome: nome, cognome: cognome, email: email, password: password };
-                                    var myJSON = JSON.stringify(obj);
-
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.open("POST", "http://localhost:80/meucci4africa/Backend/registrazione.php", true);
-
-                                    xhr.onload = function() {
-                                    alert(xhr.response);
-                                    };
-                                    xhr.onerror = function() {
-                                        alert("Errore");
-                                    };
-                                    xhr.send(myJSON);
-                                }
-                                
-                            </script>
+                            </form> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
-
+<script src="Script/signup.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
