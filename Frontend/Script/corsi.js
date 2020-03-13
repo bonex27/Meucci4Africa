@@ -24,11 +24,9 @@ function load() {
 function corsoScelto(id)
 {
     document.getElementById("titoloCorsi").innerHTML = "";
-    var xhr = new XMLHttpRequest();
     var chiamataSingola = 'http://localhost:80/Meucci4Africa/Backend/corsi.php?id='+ id;
-
+    var xhr = new XMLHttpRequest();
     xhr.open("GET", chiamataSingola, true);
-
     xhr.onload = function() {
         var obj = JSON.parse(xhr.response);
             var page ="<h3 id='title' style='font-weight: bold'>"+obj[0].titolo+"<h3>";
@@ -38,6 +36,19 @@ function corsoScelto(id)
     xhr.onerror = function() {
         alert("Errore");
     };
+   
+    var chiamataInfo = 'http://localhost:80/Meucci4Africa/Backend/lezioni.php?id='+ id;
+    var callInfo = new XMLHttpRequest();
+    callInfo.open("GET", chiamataInfo, true);
+    callInfo.onload = function() {
+        var obj = JSON.parse(callInfo.response);
+        //aggungere informazioni
+            document.getElementById("titoloCorsi").innerHTML += page;
+    };
+    callInfo.onerror = function() {
+        alert("Errore");
+    }; 
     xhr.send();
+    callInfo.send();
     
 }

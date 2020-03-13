@@ -40,6 +40,7 @@ class Lezione
 			catch (Exception $e)
 			{
 				header("HTTP/1. 500 Internal server error");
+				
 			}
 		}
 		else
@@ -52,7 +53,7 @@ class Lezione
 				ON l.aula = a.idAula
 				INNER JOIN turno t
 				on l.turno = t.idTurno
-				where a.argomento = :id';
+				where l.argomento = :id';
 				$data = [
 					'id' => $this->_id,
 				];
@@ -64,6 +65,7 @@ class Lezione
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
+				echo $e;
 			}
 		}
 
