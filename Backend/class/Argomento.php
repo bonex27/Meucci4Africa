@@ -7,7 +7,7 @@
  */
  
 include("DBConnection.php");
-class Utente 
+class Argomento 
 {
     protected $db;
     public $_id;
@@ -24,10 +24,10 @@ class Utente
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
 		
-		if($this->_id == null)
+		if(!isset($this->_id))
 		{
 			try {
-				$sql = 'select * from argomenti';
+				$sql = 'select * from argomento';
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute();
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -36,7 +36,7 @@ class Utente
 			}
 			catch (Exception $e)
 			{
-				header("HTTP/1.0 500 Internal server error");
+				header("HTTP/1. 500 Internal server error");
 			}
 		}
 		else
