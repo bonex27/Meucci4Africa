@@ -1,34 +1,96 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!doctype html>
 <html lang="it">
 <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+
+    <link rel="icon" href="img\Frontend\logo.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Other CSS -->
+    <link href="css\signin.css" rel="stylesheet">
+
     <title>Meucci for Africa</title>
 </head>
 <body>
-    <form class="form-signin" form="" id="form">
-        <h1 class="h3 mb-3 font-weight-normal">Nuovo Corso</h1>
-        
-        <label for="inputAula" class="sr-only">Aula</label><br>
-            <input type="text" id="inputAula" class="form-control" name="aula" placeholder="Aula" required><br><br>
 
-        <label for="inputCorso" class="sr-only">Corso</label><br>
-            <input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required><br><br>
-        
-        <label for="inputTurni" class="col-md-4 col-form-label text-md-right">Turni:</label>
-            <div class="col-md-6">
-                <input type="checkbox" id="turno1" name="turno1" value="1" class="form-check-label">
-                    <label for="vehicle1"> Turno 1</label>
-                <input type="checkbox" id="turno2" name="turno2" value="2" class="form-check-label">
-                    <label for="vehicle2"> Turno 2</label>
-                <input type="checkbox" id="turno3" name="turno3" value="3" class="form-check-label">
-                    <label for="vehicle3"> Turno 3</label>
-                <input type="checkbox" id="turno4" name="turno4" value="4" class="form-check-label">
-                    <label for="vehicle4"> Turno 4</label>
-            </div><br>
+<nav class="navbar navbar-expand-lg navbar-light navbar-Meucci for Africa">
+    <div class="container">
+        <a class="navbar-brand" href="../index.html"><b>Meucci for Africa</b></a>
+    
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <label for="inputPosti" class="sr-only">Numero posti</label><br>
-            <input type="text" id="inputPosti" class="form-control" name="posti" placeholder="Numero Posti" required><br><br>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="signup.html">Registrazione</a>
+                </li>
+            </ul>
 
-        <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()" value="segna"/>
-    </form>
+        </div>
+    </div>
+</nav>
+
+<main class="my-form">
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-success mb-3">
+                    <div class="card-header bg-success">
+                        <a class="navbar-brand text-white"><b>Login</b></a>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-signin" form="" id="form">
+                            <h1 class="h3 mb-3 font-weight-normal">Nuovo Corso</h1>
+                            
+                            <label for="inputAula" class="sr-only">Aula</label>
+                                <input type="text" id="inputAula" class="form-control" name="aula" placeholder="Aula" required>
+                    
+                            <label for="inputCorso" class="sr-only">Corso</label>
+                                <input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required>
+                            
+                            <label for="inputTurni">Turni:</label><br>
+                                <input type="checkbox" id="turno1" name="turno1" value="1" class="form-check-label">
+                                    <label for="vehicle1"> Turno 1</label>
+                                <input type="checkbox" id="turno2" name="turno2" value="2" class="form-check-label">
+                                    <label for="vehicle2"> Turno 2</label>
+                                <input type="checkbox" id="turno3" name="turno3" value="3" class="form-check-label">
+                                    <label for="vehicle3"> Turno 3</label>
+                                <input type="checkbox" id="turno4" name="turno4" value="4" class="form-check-label">
+                                    <label for="vehicle4"> Turno 4</label>
+                    
+                            <label for="inputPosti" class="sr-only">Numero posti</label>
+                                <input type="text" id="inputPosti" class="form-control" name="posti" placeholder="Numero Posti" required><br>
+                    
+                            <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()" value="segna"/>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="Script/login.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>
