@@ -12,7 +12,7 @@ switch($requestMethod) {
         $utente->_password = $input["password"];
 
         $dati = $utente->login();
-        $js_encode = json_encode(array('status'=>TRUE, 'studentInfo'=>$dati), true);
+        $js_encode = json_encode($dati, true);
 
         header('Content-Type: application/json');
 		echo $js_encode;
