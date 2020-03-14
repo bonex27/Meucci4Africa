@@ -71,6 +71,27 @@ class Lezione
 
 
 	}	
- 
+ 	public function put($aula, $argomento, $turno, $postiLiberi) {
+		
+		try {
+			$sql = "INSERT INTO lezione ('aula', 'argomento', 'turno', 'postiLiberi', 'postiOccupati') VALUES (:aula, :argomento, :turno, :postiLiberi, 0);";
+			$data = [
+				'aula' => $aula,
+				'argomento' => $argomento,
+				'turno' => $turno,
+				'postiLiberi' => $postiLiberi,
+			];
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			$result = "OK";
+			return $result;			
+	
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.1 400 Bad request");
+		}
+		
+	}
 }
 ?>
