@@ -14,8 +14,6 @@ switch($requestMethod) {
         $utente->_password = md5($input["password"]);
 
         $data = $utente->insert();
-        session_start();
-        $_SESSION['id'] = $dati[0];
         break;
     
     default:

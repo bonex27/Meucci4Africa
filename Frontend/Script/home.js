@@ -11,8 +11,9 @@ function loadTable()
         {
             var tr = document.createElement('tr');
             tr.innerHTML = '<td>' + data[i].idTurno + '</td>' +
+                '<td>' + data[i].Titolo + '</td>' +
                 '<td>' + data[i].oraInizio + '</td>' +
-                '<td>' + data[i].oraFine + '</td>' +
+                '<td>' + data[i].oraFine + '</td>'+
                 '<td>' + data[i].nomeAula + '</td>';
             table.appendChild(tr);
         }

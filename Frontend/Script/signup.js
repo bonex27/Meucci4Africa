@@ -10,7 +10,7 @@ function send() {
     xhr.open("POST", "http://localhost:80/meucci4africa/Backend/registrazione.php", true);
 
     xhr.onload = function() {
-        window.open("home.html","_self");
+        window.open("login.html","_self");
     };
     xhr.onerror = function() {
         alert("Errore");

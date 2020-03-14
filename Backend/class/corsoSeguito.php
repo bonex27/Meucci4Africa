@@ -19,23 +19,25 @@ class mieiCorsi
 	
 	public function get() {
 			try {
-				$sql = 'SELECT t.idTurno, a.nomeAula, t.oraInizio, t.oraFine
+				$sql = 'SELECT t.idTurno, a.nomeAula, t.oraInizio, t.oraFine , ar.Titolo
 				FROM utente u
 				INNER JOIN iscrizione i
 				ON i.utente = u.idUtente
 				INNER JOIN lezione l
                 on l.idLezione = i.lezione
+				INNER JOIN argomento ar
+				ON ar.idArgomento = l.Argomento
                 INNER JOIN aula a
-                on a.idAula = l.aula;
+                on a.idAula = l.aula
                 INNER JOIN turno t
-                on t.idTurnourno = l.turno;
+                on t.idTurno = l.turno
                 where u.idUtente = :id';
                 $data = [
-					'id' => $this->_id,
+					'id' => $this->_id["idUtente"]
 				];
 
 				$stmt = $this->db->prepare($sql);
-				$stmt->execute();
+				$stmt->execute($data);
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 				return $result;			
 	
@@ -44,7 +46,6 @@ class mieiCorsi
 			{
 				header("HTTP/1. 500 Internal server error");
 				echo $e;
-				echo $this->_id;
 			}
 	}	
  
