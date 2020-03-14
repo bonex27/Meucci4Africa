@@ -11,10 +11,11 @@ switch($requestMethod) {
 		{
 			$MieiCorsi->_id = $_SESSION["id"];	//id is last element of uri
 			$result = $MieiCorsi->get();
+
 			$jsonData = json_encode($result, true);
 
-        header('Content-Type: application/json');
-		echo $jsonData;
+        	header('Content-Type: application/json');
+			echo $jsonData;
 		}
 		else{
 			header("HTTP/1.0 401 Not Authorized");
