@@ -1,6 +1,10 @@
 <?php
 $requestMethod = $_SERVER["REQUEST_METHOD"];
+
 include('./class/Utente.php');
+include('./class/keys.php');
+
+
 $utente = new Utente();
 switch($requestMethod) {
 
@@ -12,10 +16,9 @@ switch($requestMethod) {
         $utente->_password = md5($input["password"]);
 
         $dati = $utente->login();
-        $js_encode = json_encode($dati, true);
 
-        header('Content-Type: application/json');
-		echo $js_encode;
+        session_start();
+        $_SESSION['id'] = $dati[0];
         break;
     
     default:

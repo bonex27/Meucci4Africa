@@ -14,12 +14,8 @@ switch($requestMethod) {
         $utente->_password = md5($input["password"]);
 
         $data = $utente->insert();
-        $js_encode = json_encode($data, true);
-
-        //$js_encode = json_encode(array('status'=>TRUE, 'studentInfo'=>$data), true);
-
-        header('Content-Type: application/json');
-        echo $js_encode;
+        session_start();
+        $_SESSION['id'] = $dati[0];
         break;
     
     default:

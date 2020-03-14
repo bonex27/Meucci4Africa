@@ -52,7 +52,16 @@ function corsoScelto(id)
     callInfo.send();
     
 }
-function cancellaCookie()
+function delSession()
 {
-  scriviCookie(idUtente,'',-1);
+  var xhr = new XMLHttpRequest();
+    xhr.open("GET", 'http://localhost:80/Meucci4Africa/Backend/esci.php' , true);
+
+    xhr.onload = function() {
+        window.open('../../index.html',"_self");
+    };
+    xhr.onerror = function() {
+        alert("Errore");
+    };
+    xhr.send();
 }

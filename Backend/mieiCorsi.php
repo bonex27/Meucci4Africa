@@ -5,15 +5,22 @@ $MieiCorsi = new MieiCorsi();
 switch($requestMethod) {
 
 	case 'GET'://Ok
-		if(isset($_GET["id"])) 	//if uri doesn't end with 'corsi'
+		session_start();
+
+		if(isset($_SESSION["id"])) 	//if uri doesn't end with 'corsi'
 		{
-			$MieiCorsi->_id = $_GET["id"];	//id is last element of uri
-		}
-		$result = $MieiCorsi->get();
-		$jsonData = json_encode($result, true);
+			$MieiCorsi->_id = $_SESSION["id"];	//id is last element of uri
+			$result = $MieiCorsi->get();
+			$jsonData = json_encode($result, true);
 
         header('Content-Type: application/json');
 		echo $jsonData;
+		}
+		else{
+			header("HTTP/1.0 401 Not Authorized");
+		}	
+
+		
         break;
     
     default:

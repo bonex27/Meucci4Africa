@@ -1,8 +1,8 @@
 function loadTable()
 {
-    var callCorsi ="http://localhost:80/Meucci4Africa/Backend/mieiCorsi.php?id="+leggiCookie('idUtente');
+
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", callCorsi , true);//aggiungere id utente!!
+    xhr.open("GET", 'http://localhost:80/Meucci4Africa/Backend/mieiCorsi.php' , true);
 
     xhr.onload = function() {
         var data = JSON.parse(xhr.response);
@@ -24,24 +24,17 @@ function loadTable()
 
     
 }
-function leggiCookie(nomeCookie)
+function delSession()
 {
-  if (document.cookie.length > 0)
-  {
-    var inizio = document.cookie.indexOf(nomeCookie + "=");
-    if (inizio != -1)
-    {
-      inizio = inizio + nomeCookie.length + 1;
-      var fine = document.cookie.indexOf(";",inizio);
-      if (fine == -1) fine = document.cookie.length;
-      return unescape(document.cookie.substring(inizio,fine));
-    }else{
-       return "";
-    }
-  }
-  return "";
+  var xhr = new XMLHttpRequest();
+    xhr.open("GET", 'http://localhost:80/Meucci4Africa/Backend/esci.php' , true);
+
+    xhr.onload = function() {
+        window.open('../../index.html',"_self");
+    };
+    xhr.onerror = function() {
+        alert("Errore");
+    };
+    xhr.send();
 }
-function cancellaCookie()
-{
-  scriviCookie(idUtente,'',-1);
-}
+
