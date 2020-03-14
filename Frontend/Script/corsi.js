@@ -23,6 +23,7 @@ function listCorsi()
     xhr.open("GET", "http://localhost:80/Meucci4Africa/Backend/corsi.php", true);
 
     xhr.onload = function() {
+        document.getElementById("titPage").innerHTML="Corso"
         var obj = JSON.parse(xhr.response);
         console.log( obj.length);
         for(var i = 0; i< obj.length; i++)
@@ -51,7 +52,9 @@ function loadCorso(id)
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chiamataSingola, true);
     xhr.onload = function() {
+        
         var obj = JSON.parse(xhr.response);
+        document.getElementById("titPage").innerHTML=obj[0].titolo;
             var page ="<h3 id='title' style='font-weight: bold'>"+obj[0].titolo+"<h3>";
             page += "<h4 id='desc'>"+obj[0].descrizione+"</h4>";
             document.getElementById("titoloCorsi").innerHTML += page;
