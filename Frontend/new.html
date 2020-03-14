@@ -56,29 +56,32 @@
                         <a class="navbar-brand text-white"><b>Inserimento corsi</b></a>
                     </div>
                     <div class="card-body">
-                        <form class="form-signin" action="" id="form">
+                        <form class="form-signin" method="PUT" action="http://localhost:80/Meucci4Africa/Backend/lezioni.php" id="form">
                             <h1 class="h3 mb-3 font-weight-normal">Nuovo</h1>
                             
                             <label for="inputAula" class="sr-only">Aula</label>
                                 <select id="inputAula" name="aula" required></select>
                     
                             <label for="inputCorso" class="sr-only">Corso</label>
-                                <br><input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required>
+                                <input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required>
                             
+                            <label for="inputDescrizione" class="sr-only">Descrizione</label>
+                                <input type="text" id="inputDescrizione" class="form-control" name="descrizione" placeholder="Descrizione" required>
+
                             <label for="inputTurni">Turni:</label><br>
-                                <input type="checkbox" id="turno1" name="turno1" value="1" class="form-check-label">
+                                <input type="checkbox" id="turno1" name="turno1" class="form-check-label">
                                     <label for="vehicle1"> Turno 1</label>
-                                <input type="checkbox" id="turno2" name="turno2" value="2" class="form-check-label">
+                                <input type="checkbox" id="turno2" name="turno2" class="form-check-label">
                                     <label for="vehicle2"> Turno 2</label>
-                                <input type="checkbox" id="turno3" name="turno3" value="3" class="form-check-label">
+                                <input type="checkbox" id="turno3" name="turno3" class="form-check-label">
                                     <label for="vehicle3"> Turno 3</label>
-                                <input type="checkbox" id="turno4" name="turno4" value="4" class="form-check-label">
+                                <input type="checkbox" id="turno4" name="turno4" class="form-check-label">
                                     <label for="vehicle4"> Turno 4</label>
                     
                             <label for="inputPosti" class="sr-only">Numero posti</label>
                                 <input type="text" id="inputPosti" class="form-control" name="posti" placeholder="Numero Posti" required><br>
                     
-                            <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="send()" value="segna"/>
+                            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="segna"/>
                         </form>
 
                     </div>

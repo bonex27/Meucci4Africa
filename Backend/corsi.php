@@ -14,10 +14,15 @@ switch($requestMethod) {
 
         header('Content-Type: application/json');
 		echo $jsonData;
-        break;
+		break;
+		
+	case 'PUT':
+		$arg = $argomento->put($_PUT["corso"], $_PUT["descrizione"]);
+		echo $result;
+		break;
     
     default:
-	    header("HTTP/1.0 405 Method Not Allowed");
+	    header("HTTP/1.1 405 Method Not Allowed");
 	    break;
 }
 ?>	
