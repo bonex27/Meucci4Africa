@@ -30,7 +30,7 @@ function delSession()
     xhr.open("GET", 'http://localhost:80/Meucci4Africa/Backend/esci.php' , true);
 
     xhr.onload = function() {
-        window.open('../../index.html',"_self");
+        window.open('../index.html',"_self");
     };
     xhr.onerror = function() {
         alert("Errore");
