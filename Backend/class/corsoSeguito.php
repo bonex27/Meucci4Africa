@@ -26,16 +26,16 @@ class mieiCorsi
 				INNER JOIN lezione l
                 on l.idLezione = i.lezione
                 INNER JOIN aula a
-                on a.idAula = l.aula;
+                on a.idAula = l.aula
                 INNER JOIN turno t
-                on t.idTurnourno = l.turno;
+                on t.idTurno = l.turno
                 where u.idUtente = :id';
                 $data = [
 					'id' => $this->_id,
 				];
 
 				$stmt = $this->db->prepare($sql);
-				$stmt->execute();
+				$stmt->execute($data);
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 				return $result;			
 	

@@ -1,5 +1,6 @@
 <?php
 $requestMethod = $_SERVER["REQUEST_METHOD"];
+include_once("class/Utente.php");
 
 $utente = new Utente();
 switch($requestMethod) {
