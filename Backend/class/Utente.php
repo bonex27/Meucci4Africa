@@ -38,12 +38,24 @@ class Utente
 	    	$stmt = $this->db->prepare($sql);
 	    	$stmt->execute($data);
 			$status = $stmt->rowCount();
-			echo "a";
  
 		} catch (Exception $e) {
-    		die("Oh noes! There's an error in the query!".$e);
+    		die("Errore inserimento".$e);
 		}
 
+		try {
+			
+    		$sql = "SELECT idUtente FROM utente WHERE email=:email";
+		    $stmt = $this->db->prepare($sql);
+		    $data = [
+		    	'email' => $this->_email,
+			];
+		    $stmt->execute($data);
+		    $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $result;
+		} catch (Exception $e) {
+		    die("Oh noes! There's an error in the query!".$e);
+		}
 
 	}	
 	public function login() {

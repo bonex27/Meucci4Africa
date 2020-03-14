@@ -52,3 +52,7 @@ function corsoScelto(id)
     callInfo.send();
     
 }
+function cancellaCookie()
+{
+  scriviCookie(idUtente,'',-1);
+}

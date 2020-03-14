@@ -9,10 +9,10 @@ switch($requestMethod) {
         $input = json_decode($inputJSON, TRUE);
 
         $utente->_email = $input["email"];
-        $utente->_password = $input["password"];
+        $utente->_password = md5($input["password"]);
 
         $dati = $utente->login();
-        $js_encode = json_encode(array('status'=>TRUE, 'studentInfo'=>$dati), true);
+        $js_encode = json_encode($dati, true);
 
         header('Content-Type: application/json');
 		echo $js_encode;
