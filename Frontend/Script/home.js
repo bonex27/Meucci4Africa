@@ -41,3 +41,7 @@ function leggiCookie(nomeCookie)
   }
   return "";
 }
+function cancellaCookie()
+{
+  scriviCookie(idUtente,'',-1);
+}

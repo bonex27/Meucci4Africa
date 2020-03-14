@@ -11,7 +11,7 @@ switch($requestMethod) {
         $utente->_nome = $input["nome"];
         $utente->_cognome = $input["cognome"];
         $utente->_email = $input["email"];
-        $utente->_password = $input["password"];
+        $utente->_password = md5($input["password"]);
 
         $data = $utente->insert();
         $js_encode = json_encode($data, true);

@@ -12,7 +12,7 @@ function send() {
     xhr.onload = function() {
         var obj = JSON.parse(xhr.response);
         scriviCookie(obj.idUtente,60);
-        window.open("home.html");
+        window.open("home.html","_self");
     };
     xhr.onerror = function() {
         alert("Errore");
