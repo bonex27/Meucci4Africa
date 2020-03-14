@@ -48,7 +48,7 @@ class Utente
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
 		try {
-    		$sql = 'select idUtente from utente where email = :email && password = :password';
+    		$sql = 'select idUtente from utente where email = :email and password = :password';
     		$data = [
 			    'email' => $this->_email,
 				'password' => $this->_password,
