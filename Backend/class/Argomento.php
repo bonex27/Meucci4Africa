@@ -6,14 +6,15 @@
  *   
  */
  
-include("DBConnection.php");
+include_once("DBConnection.php");
 class Argomento 
 {
     protected $db;
 	public $_id;
 	public $_titolo;
  
-    public function __construct() {
+	public function __construct()
+	{
         $this->db = new DBConnection();
         $this->db = $this->db->returnConnection();
 	}
@@ -38,7 +39,7 @@ class Argomento
 				header("HTTP/1.1 500 Internal server error");
 			}
 		}
-		else if(!isset($this->_titolo)){
+		else if(isset($this->_titolo)){
 			try {
 				$sql = 'select idArgomento from argomento where titolo = :titolo';
 				$data = [

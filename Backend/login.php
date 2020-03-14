@@ -1,10 +1,6 @@
 <?php
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-include('./class/Utente.php');
-include('./class/keys.php');
-
-
 $utente = new Utente();
 switch($requestMethod) {
 
