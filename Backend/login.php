@@ -15,11 +15,12 @@ switch($requestMethod) {
         $dati = $utente->login();
 
         session_start();
-        try
+        
+        if(isset($dati[0]))
         {
             $_SESSION['id'] = $dati[0];
         }
-        catch(Exception $e)
+        else
         {
             header("HTTP/1.0 400 Bad Request");
         }

@@ -9,7 +9,14 @@ function send() {
     xhr.open("POST", "http://localhost:80/Meucci4Africa/Backend/login.php", true);
 
     xhr.onload = function() {
-        window.open("home.html","_self");
+        if(xhr.status != 200)
+        {
+            alert("Password o email non validi");
+        }
+        else
+        {
+            window.open("home.html","_self");
+        }
     };
     xhr.onerror = function() {
         alert("Errore");
