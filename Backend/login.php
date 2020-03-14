@@ -15,7 +15,14 @@ switch($requestMethod) {
         $dati = $utente->login();
 
         session_start();
-        $_SESSION['id'] = $dati[0];
+        try
+        {
+            $_SESSION['id'] = $dati[0];
+        }
+        catch(Exception $e)
+        {
+            header("HTTP/1.0 400 Bad Request");
+        }
         break;
     
     default:
