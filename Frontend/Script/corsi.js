@@ -1,7 +1,24 @@
 
 var idCorso = "";
 function load() {
+    var url = window.location.href;
+    var urlSplit = url.split("/");
+    var urlLength = urlSplit.length;
 
+    if(urlSplit[urlLength-1]=="corsi" || urlSplit[urlLength-1]=="corsi.html")
+    {
+        listCorsi();
+    }
+    else
+    {
+        loadCorso(urlSplit[urlLength-1]);
+    }
+}
+window.onpopstate = load;
+
+function listCorsi()
+{
+    document.getElementById("titoloCorsi").innerHTML = "";
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:80/Meucci4Africa/Backend/corsi.php", true);
 
@@ -10,7 +27,7 @@ function load() {
         console.log( obj.length);
         for(var i = 0; i< obj.length; i++)
         {
-            var page ="<h3 id='title' style='font-weight: bold' onclick='corsoScelto("+obj[i].idArgomento+")'>"+obj[i].titolo+"<h3>";
+            var page ="<h3 id='title' style='font-weight: bold' onclick='clickCorso("+obj[i].idArgomento+")'>"+obj[i].titolo+"<h3>";
             page += "<h4 id='desc'>"+obj[i].descrizione+"</h4>";
             document.getElementById("titoloCorsi").innerHTML += page;
         }
@@ -21,7 +38,13 @@ function load() {
     xhr.send();
 }
 
-function corsoScelto(id)
+function clickCorso(id)
+{
+    history.pushState({},"Meucci4Africa", "http://localhost:80/Meucci4Africa/Frontend/corsi/" + id);
+    loadCorso(id);
+}
+
+function loadCorso(id)
 {
     document.getElementById("titoloCorsi").innerHTML = "";
     var chiamataSingola = 'http://localhost:80/Meucci4Africa/Backend/corsi.php?id='+ id;
