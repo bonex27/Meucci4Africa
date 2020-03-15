@@ -29,3 +29,19 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+#tit {
+    font-size: 400%;
+    background-color: orange;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 15%;
+}
+
+#titleHome{
+    text-align: center;
+    font-weight: bold;
+  }
