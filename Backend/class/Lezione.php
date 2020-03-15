@@ -47,13 +47,13 @@ class Lezione
 		{
 			try
 			{
-				$sql = 'SELECT a.nomeAula, t.idTurno, t.oraInizio, t.oraFine, l.postiliberi, l.postioccupati
+				$sql = 'SELECT a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati, l.idLezione
 				FROM lezione l
 				INNER JOIN aula a
 				ON l.aula = a.idAula
 				INNER JOIN turno t
 				on l.turno = t.idTurno
-				where l.argomento = :id';
+				where l.argomento = :id and l.postiliberi > 0';
 				$data = [
 					'id' => $this->_id,
 				];

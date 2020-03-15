@@ -8,10 +8,10 @@
  
 // Database Connection
 class DBConnection {
-    private $_dbHostname = "rufis01.ddns.net:3306";
+    private $_dbHostname ="localhost"; //"rufis01.ddns.net:3306";
     private $_dbName = "meucci4africa";
-    private $_dbUsername = "test";
-    private $_dbPassword = "zurlino40";
+    private $_dbUsername = "bonex";
+    private $_dbPassword = "pietro001";
     private $_con;
  
     public function __construct() {
