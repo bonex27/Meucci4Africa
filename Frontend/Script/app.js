@@ -78,35 +78,66 @@ function loadCorso(id)
     var chiamataSingola = 'http://localhost:80/Meucci4Africa/Backend/corsi.php?id='+ id;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chiamataSingola, true);
-    xhr.onload = function()
-    {
-        var page = "";
+    xhr.onload = function() {
+        
         var obj = JSON.parse(xhr.response);
         document.getElementById("appTitle").innerHTML=obj[0].titolo;
-        page += "<h3 id='title' style='font-weight: bold'>"+obj[0].titolo+"<h3>";
+        var page = "<h3 id='title' style='font-weight: bold'>"+obj[0].titolo+"<h3>";
         page += "<h4 id='desc'>"+obj[0].descrizione+"</h4>";
+        page +=  '<select id="inputLezione" name="aula" required></select>';
+        page += '<input type="button" onclick="callIscriviti()"/>';
         document.getElementById("appContainer").innerHTML = page;
+        callLezioni(id);
     };
-    xhr.onerror = function()
-    {
+    xhr.onerror = function() {
         alert("Errore");
     };
    
+    xhr.send();
+
+}
+
+function callLezioni(id)
+{
     var chiamataInfo = 'http://localhost:80/Meucci4Africa/Backend/lezioni.php?id='+ id;
     var callInfo = new XMLHttpRequest();
     callInfo.open("GET", chiamataInfo, true);
-    callInfo.onload = function()
-    {
+    callInfo.onload = function() {
         var obj = JSON.parse(callInfo.response);
-        //aggiungi informazioni
+        loadLezioni(obj);
+
     };
-    callInfo.onerror = function()
-    {
+    callInfo.onerror = function() {
         alert("Errore");
-    }; 
-    xhr.send();
+    };
     callInfo.send();
-    
+}
+
+function loadLezioni(lezioni) {
+    let option;
+
+    for (var i = 0; i < lezioni.length; i++) {
+
+        option = document.createElement('option');
+        option.text = lezioni[i].idTurno + lezioni[i].oraInizio;
+        option.value = lezioni[i].idLezione;
+        document.getElementById("inputLezione").add(option);
+    }
+}
+
+function callIscriviti()
+{
+    id = document.getElementById("inputLezione").value;
+    var chiamataIscrizione = 'http://localhost:80/Meucci4Africa/Backend/iscrizioni.php?id='+ id;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", chiamataIscrizione, true);
+    xhr.onload = function() {
+        alert(xhr.response);
+    };
+    xhr.onerror = function() {
+        alert("Errore");
+    };
+    xhr.send();
 }
 
 

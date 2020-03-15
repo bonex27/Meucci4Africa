@@ -18,7 +18,7 @@ switch($requestMethod) {
         
         if(isset($dati[0]))
         {
-            $_SESSION['id'] = $dati[0];
+            $_SESSION['id'] = $dati[0]['idUtente'];
         }
         else
         {

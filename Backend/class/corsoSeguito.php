@@ -33,7 +33,7 @@ class mieiCorsi
                 on t.idTurno = l.turno
                 where u.idUtente = :id';
                 $data = [
-					'id' => $this->_id["idUtente"]
+					'id' => $this->_id
 				];
 
 				$stmt = $this->db->prepare($sql);
