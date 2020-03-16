@@ -2,16 +2,20 @@
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 include('class/Lezione.php');
-$lezione = new Lezione();
 include('class/Argomento.php');
+$lezione = new Lezione();
 $argomento = new Argomento();
 
 switch($requestMethod) {
 
 	case 'GET'://Ok
-		if(isset($_GET["id"])) 	//if uri doesn't end with 'corsi'
+		if(isset($_GET["idLezione"]))
 		{
-			$lezione->_id = $_GET["id"];	//id is last element of uri
+			$lezione->_idLezione = $_GET["idLezione"];	//id is last element of uri
+		}
+		if(isset($_GET["idArgomento"]))
+		{
+			$lezione->_idArgomento = $_GET["idArgomento"];	//id is last element of uri
 		}
 		$result = $lezione->get();
 		$jsonData = json_encode($result, true);
