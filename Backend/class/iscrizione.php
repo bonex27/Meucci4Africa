@@ -11,7 +11,7 @@ include_once("Lezione.php");
 class Iscrizione 
 {
 	protected $db;
-	public $idIscrizione;
+	public $_idIscrizione;
     public $_idUtente;
 	public $_idLezione;
  
@@ -51,12 +51,14 @@ class Iscrizione
 				];
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute($data);
-                $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				//echo $result[0]["postiLiberi"]."\n";
                 return($result[0]["postiLiberi"]);
 			}
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
+				echo $e;
 				return 0;
 			}
 		
@@ -67,23 +69,28 @@ class Iscrizione
 		try
 			{
 				$lezione = new Lezione();
-				$lezione->_id = $this->_idLezione;
-				$turno = $lezione->get()[0]["turno"];
+				$lezione->_idLezione = $this->_idLezione;
+				print_r( $lezione->get());
+				$turno = $lezione->get()[0]["idTurno"];
+				echo $turno;
 				$sql = 'SELECT i.utente, l.turno
 				FROM iscrizione I
 				INNER JOIN lezione l ON i.lezione = l.idLezione
 				WHERE i.utente = :idUtente AND l.turno = :idTurno';
 				$data = [
-					'idTurno' => $this->_idTurno,
+					'idTurno' => $turno,
+					'idUtente' => $this->_idUtente
 				];
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute($data);
-                $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				return isset($result[0]);
+				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				print_r($result);
+				return !isset($result[0]);
 			}
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
+				echo $e;
 				return FALSE;
 			}
 		
@@ -93,8 +100,8 @@ class Iscrizione
 	{
 		try
 			{
-				$posti--;
-				print_r($posti);
+				
+				//print_r($posti);
 				$sql = "UPDATE lezione SET postiLiberi = :place WHERE (`idLezione` = :id)";
 				$data = [
                     'id' => $this->_idLezione,
@@ -107,6 +114,7 @@ class Iscrizione
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
+				echo $e;
 				return FALSE;
 			}
 		
@@ -120,8 +128,7 @@ class Iscrizione
 
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
-			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-			$this->checkSpace();		
+			//$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);		
 
 		}
 		catch (Exception $e)
@@ -129,28 +136,6 @@ class Iscrizione
 			header("HTTP/1. 500 Internal server error");
 			echo $e;
 		}
-}
-public function addPlace($posti) {
-	try
-		{
-			$posti++
-			print_r($posti);
-			$sql = "UPDATE lezione SET postiLiberi = :place WHERE (`idLezione` = :id)";
-			$data = [
-				'id' => $this->_idLezione,
-				'place' => $posti,
-			];
-			$stmt = $this->db->prepare($sql);
-			$stmt->execute($data);
-			$this->insert();
-			return 'ok';
-		}
-		catch (Exception $e)
-		{
-			header("HTTP/1.0 400 Bad request");
-			echo("update " . $e);
-		}
-	
-}
+	}
 }
 ?>

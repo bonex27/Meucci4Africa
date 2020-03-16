@@ -118,7 +118,7 @@ function loadCorso(id)
 
 function callLezioni(id)
 {
-    var chiamataInfo = 'http://localhost:80/Meucci4Africa/Backend/lezioni.php?id='+ id;
+    var chiamataInfo = 'http://localhost:80/Meucci4Africa/Backend/lezioni.php?idArgomento='+ id;
     var callInfo = new XMLHttpRequest();
     callInfo.open("GET", chiamataInfo, true);
     callInfo.onload = function() {
@@ -317,7 +317,7 @@ function loadHome()
                 '<td>' + data[i].oraInizio + '</td>' +
                 '<td>' + data[i].oraFine + '</td>'+
                 '<td>' + data[i].nomeAula + '</td>'+
-                '<td><button type="button" class="btn btn-danger" onclick=(delIscrizione(data[i].idIscrizione, data[i].idLezione))>-</button></td>';
+                '<td><button type="button" class="btn btn-danger" onclick="delIscrizione('+data[i].idIscrizione+', '+ data[i].idLezione+')">-</button></td>';
             table.appendChild(tr);
         }
         appContainer.innerHTML+='<button type="button" onclick="clickIscriviti()" class="btn btn-success">Iscriviti</button>';
@@ -327,13 +327,15 @@ function loadHome()
     };
     xhr.send();
 }
-
+/*
+###Disiscrizione###
+*/
 function delIscrizione(iscrizione,lezione)
 {
     var xhr = new XMLHttpRequest();
-    xhr.open("DELETE", 'http://localhost:80/Meucci4Africa/Backend/iscrizioni.php/?id='+iscrizione+"+idLezione="+lezione , true);
+    xhr.open("DELETE", 'http://localhost:80/Meucci4Africa/Backend/iscrizioni.php/?id='+iscrizione+"&idLezione="+lezione , true);
     xhr.onload = function() {
-        alert(xhr.response);
+        this.loadHome();
     };
     xhr.onerror = function() {
         alert("Errore");

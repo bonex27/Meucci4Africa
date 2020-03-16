@@ -24,7 +24,7 @@ class Lezione
 		*/
 		if(isset($this->_idLezione))
 		{
-			$sql = 'SELECT l.idLezione a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati, l.idLezione
+			$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati
 			FROM lezione l
 			INNER JOIN aula a
 			ON l.aula = a.idAula
@@ -43,7 +43,7 @@ class Lezione
 		{
 			try
 			{
-				$sql = 'SELECT l.idLezione a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati, l.idLezione
+				$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati
 				FROM lezione l
 				INNER JOIN aula a
 				ON l.aula = a.idAula

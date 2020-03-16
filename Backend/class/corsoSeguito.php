@@ -19,7 +19,7 @@ class mieiCorsi
 	
 	public function get() {
 			try {
-				$sql = 'SELECT i.IdIscrizione, l.idLezione ,t.idTurno, a.nomeAula, t.oraInizio, t.oraFine , ar.Titolo
+				$sql = 'SELECT i.idIscrizione, l.idLezione ,t.idTurno, a.nomeAula, t.oraInizio, t.oraFine , ar.Titolo
 				FROM utente u
 				INNER JOIN iscrizione i
 				ON i.utente = u.idUtente
