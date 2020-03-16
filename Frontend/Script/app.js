@@ -103,8 +103,8 @@ function loadCorso(id)
         appTitle.innerHTML=obj[0].titolo;
         var page = "<h3 id='title' style='font-weight: bold'>"+obj[0].titolo+"<h3>";
         page += "<h4 id='desc'>"+obj[0].descrizione+"</h4>";
-        page +=  '<select id="inputLezione" name="aula" required></select>';
-        page += '<input type="button" onclick="callIscriviti()"/>';
+        page +=  '<select id="inputLezione" class="custom-select mr-sm-2" required></select>';
+        page += '<br><br><button type="button"  class="btn btn-danger" onclick="callIscriviti()">Iscriviti</button>';
         appContainer.innerHTML = page;
         callLezioni(id);
     };
