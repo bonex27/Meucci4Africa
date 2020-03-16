@@ -10,7 +10,8 @@ include_once("DBConnection.php");
 class Lezione 
 {
     protected $db;
-    public $_id;
+    public $_idLezione;
+    public $_idArgomento;
  
     public function __construct() {
         $this->db = new DBConnection();
@@ -21,8 +22,49 @@ class Lezione
 		/*
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
-		
-		if(!isset($this->_id))
+		if(isset($this->_idLezione))
+		{
+			$sql = 'SELECT l.idLezione a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati, l.idLezione
+			FROM lezione l
+			INNER JOIN aula a
+			ON l.aula = a.idAula
+			INNER JOIN turno t
+			on l.turno = t.idTurno
+			where l.idLezione = :idLezione and l.postiliberi > 0';
+			$data = [
+				'idLezione' => $this->_idLezione,
+			];
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return $result;	
+		}
+		else if(isset($this->_idArgomento))
+		{
+			try
+			{
+				$sql = 'SELECT l.idLezione a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati, l.idLezione
+				FROM lezione l
+				INNER JOIN aula a
+				ON l.aula = a.idAula
+				INNER JOIN turno t
+				on l.turno = t.idTurno
+				where l.argomento = :idArgomento and l.postiliberi > 0';
+				$data = [
+					'idArgomento' => $this->_idArgomento,
+				];
+				$stmt = $this->db->prepare($sql);
+				$stmt->execute($data);
+				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				return $result;	
+			}
+			catch (Exception $e)
+			{
+				header("HTTP/1.0 400 Bad request");
+				echo $e;
+			}
+		}
+		else
 		{
 			try {
 				$sql = 'SELECT a.nomeAula, t.idTurno, t.oraInizio, t.oraFine, l.postiliberi, l.postioccupati
@@ -41,31 +83,6 @@ class Lezione
 			{
 				header("HTTP/1. 500 Internal server error");
 				
-			}
-		}
-		else
-		{
-			try
-			{
-				$sql = 'SELECT a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati, l.idLezione
-				FROM lezione l
-				INNER JOIN aula a
-				ON l.aula = a.idAula
-				INNER JOIN turno t
-				on l.turno = t.idTurno
-				where l.argomento = :id and l.postiliberi > 0';
-				$data = [
-					'id' => $this->_id,
-				];
-				$stmt = $this->db->prepare($sql);
-				$stmt->execute($data);
-				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				return $result;	
-			}
-			catch (Exception $e)
-			{
-				header("HTTP/1.0 400 Bad request");
-				echo $e;
 			}
 		}
 

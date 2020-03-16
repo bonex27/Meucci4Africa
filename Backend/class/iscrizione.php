@@ -7,6 +7,7 @@
  */
  
 include_once("DBConnection.php");
+include_once("Lezione.php");
 class Iscrizione 
 {
 	protected $db;
@@ -14,12 +15,14 @@ class Iscrizione
     public $_idUtente;
 	public $_idLezione;
  
-    public function __construct() {
+	public function __construct()
+	{
         $this->db = new DBConnection();
         $this->db = $this->db->returnConnection();
 	}
 	
-	public function insert() {
+	public function insert()
+	{
         try {
 			$sql = "INSERT INTO iscrizione VALUE (DEFAULT, :utente, :lezione);";
 			$data = [
@@ -29,18 +32,15 @@ class Iscrizione
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
 			$result = "OK";
-			echo"Iscritto";	
-	
 		}
 		catch (Exception $e)
 		{
             header("HTTP/1.1 400 Bad request");
-            echo("insert " . $e);
 		}
     }
 
-    public function checkSpace() {
-		
+	public function getSpace()
+	{
 		try
 			{
 				$sql = 'SELECT  l.postiLiberi, l.postiOccupati
@@ -52,18 +52,45 @@ class Iscrizione
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute($data);
                 $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                $this->remPlace($result[0]["postiLiberi"]);
-				
+                return($result[0]["postiLiberi"]);
 			}
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
-				echo("check " . $e);
+				return 0;
+			}
+		
+	}
+	
+	public function checkTurno()
+	{
+		try
+			{
+				$lezione = new Lezione();
+				$lezione->_id = $this->_idLezione;
+				$turno = $lezione->get()[0]["turno"];
+				$sql = 'SELECT i.utente, l.turno
+				FROM iscrizione I
+				INNER JOIN lezione l ON i.lezione = l.idLezione
+				WHERE i.utente = :idUtente AND l.turno = :idTurno';
+				$data = [
+					'idTurno' => $this->_idTurno,
+				];
+				$stmt = $this->db->prepare($sql);
+				$stmt->execute($data);
+                $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				return isset($result[0]);
+			}
+			catch (Exception $e)
+			{
+				header("HTTP/1.0 400 Bad request");
+				return FALSE;
 			}
 		
     }
     
-    public function remPlace($posti) {
+	public function setPlace($posti)
+	{
 		try
 			{
 				$posti--;
@@ -75,13 +102,12 @@ class Iscrizione
 				];
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute($data);
-                $this->insert();
-				
+				return TRUE;
 			}
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
-				echo("update " . $e);
+				return FALSE;
 			}
 		
 	}
