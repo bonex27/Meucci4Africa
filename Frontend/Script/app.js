@@ -299,7 +299,8 @@ function loadHome()
         '<td>Corso</td>' +
         '<td>Inizio</td>' +
         '<td>Fine</td>' +
-        '<td>Aula</td>';
+        '<td>Aula</td>'+
+        '<td>Disiscriviti</td>';
 
     thead.appendChild(tr);
 
@@ -315,10 +316,24 @@ function loadHome()
                 '<td>' + data[i].Titolo + '</td>' +
                 '<td>' + data[i].oraInizio + '</td>' +
                 '<td>' + data[i].oraFine + '</td>'+
-                '<td>' + data[i].nomeAula + '</td>';
+                '<td>' + data[i].nomeAula + '</td>'+
+                '<td><button type="button" class="btn btn-danger" onclick=(delIscrizione(data[i].idIscrizione, data[i].idLezione))>-</button></td>';
             table.appendChild(tr);
         }
         appContainer.innerHTML+='<button type="button" onclick="clickIscriviti()" class="btn btn-success">Iscriviti</button>';
+    };
+    xhr.onerror = function() {
+        alert("Errore");
+    };
+    xhr.send();
+}
+
+function delIscrizione(iscrizione,lezione)
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", 'http://localhost:80/Meucci4Africa/Backend/iscrizioni.php/?id='+iscrizione+"+idLezione="+lezione , true);
+    xhr.onload = function() {
+        alert(xhr.response);
     };
     xhr.onerror = function() {
         alert("Errore");

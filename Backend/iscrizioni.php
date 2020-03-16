@@ -23,7 +23,27 @@ switch($requestMethod)
 		}	
 
 		
-        break;
+		break;
+		case 'DELETE'://Ok
+			session_start();
+	
+			if(isset($_SESSION["id"]))
+			{
+				$iscrizione->_idIscrizione = $_GET["id"];
+				$iscrizione->_idLezione = $_GET["idLezione"];
+				//$result =$MieiCorsi->get();
+				echo $iscrizione->del();
+				//$jsonData = json_encode($result, true);
+	
+				//header('Content-Type: application/json');
+				//echo $jsonData;
+			}
+			else{
+				header("HTTP/1.0 401 Not Authorized");
+			}	
+	
+			
+			break;
     
     default:
 	    header("HTTP/1.0 405 Method Not Allowed");

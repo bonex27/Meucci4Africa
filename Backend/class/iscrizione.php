@@ -9,7 +9,8 @@
 include_once("DBConnection.php");
 class Iscrizione 
 {
-    protected $db;
+	protected $db;
+	public $idIscrizione;
     public $_idUtente;
 	public $_idLezione;
  
@@ -84,5 +85,46 @@ class Iscrizione
 			}
 		
 	}
+	public function del() {
+		try {
+			$sql = 'DELETE from Iscrizione i where i.idIscrizione = :id';
+			$data = [
+				'id' => $this->_idIscrizione
+			];
+
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			$this->checkSpace();		
+
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1. 500 Internal server error");
+			echo $e;
+		}
+}
+public function addPlace($posti) {
+	try
+		{
+			$posti++
+			print_r($posti);
+			$sql = "UPDATE lezione SET postiLiberi = :place WHERE (`idLezione` = :id)";
+			$data = [
+				'id' => $this->_idLezione,
+				'place' => $posti,
+			];
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			$this->insert();
+			return 'ok';
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.0 400 Bad request");
+			echo("update " . $e);
+		}
+	
+}
 }
 ?>
