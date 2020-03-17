@@ -1,5 +1,6 @@
 html,
 body {
+  overflow: hidden;
   height: 100%;
   color: white;
 }
@@ -29,11 +30,6 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-}
-
-.justify-content-center
-{
-  width: 100%;
 }
 
 .text-muted
