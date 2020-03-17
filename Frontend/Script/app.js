@@ -295,12 +295,12 @@ function loadHome()
 
     var tr = document.createElement('tr');
     tr.innerHTML =
-        '<td>Turno</td>' +
-        '<td>Corso</td>' +
-        '<td>Inizio</td>' +
-        '<td>Fine</td>' +
-        '<td>Aula</td>'+
-        '<td>Disiscriviti</td>';
+        '<th>Turno</td>' +
+        '<th>Corso</th>' +
+        '<th>Inizio</th>' +
+        '<th>Fine</th>' +
+        '<th>Aula</th>'+
+        '<th style="text-align: center;">Disiscriviti</th>';
 
     thead.appendChild(tr);
 
@@ -317,7 +317,7 @@ function loadHome()
                 '<td>' + data[i].oraInizio + '</td>' +
                 '<td>' + data[i].oraFine + '</td>'+
                 '<td>' + data[i].nomeAula + '</td>'+
-                '<td><button type="button" class="btn btn-danger" onclick="delIscrizione('+data[i].idIscrizione+', '+ data[i].idLezione+')">-</button></td>';
+                '<td style="text-align: center;"><button type="button" class="btn btn-danger" onclick="delIscrizione('+data[i].idIscrizione+', '+ data[i].idLezione+')">-</button></td>';
             table.appendChild(tr);
         }
         appContainer.innerHTML+='<button type="button" onclick="clickIscriviti()" class="btn btn-success">Iscriviti</button>';
