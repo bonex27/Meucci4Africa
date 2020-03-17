@@ -1,6 +1,7 @@
 html,
 body {
   height: 100%;
+  color: white;
 }
 .form-signin {
   width: 100%;
@@ -30,18 +31,47 @@ body {
   border-top-right-radius: 0;
 }
 
-#tit {
-    font-size: 400%;
-    background-color: orange;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    width: 100%;
-    height: 15%;
+.justify-content-center
+{
+  width: 100%;
 }
 
-#titleHome{
-    text-align: center;
-    font-weight: bold;
-  }
+.text-muted
+{
+  margin-bottom: -1rem;
+}
+
+@font-face {
+  font-family: 'gameplayregular';
+  src: url('../fonts/gameplay-webfont.woff2') format('woff2'),
+       url('../fonts/gameplay-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+body, .appBg
+{
+  background-color: #27241f;
+}
+
+.bg-yellow
+{
+  background-color: #eaaf25;
+}
+
+div.nowLoading {
+  margin: 10;
+  text-align: center;
+  color: #eaaf25;
+  text-align: center;
+  font-family: 'gameplayregular';
+  font-weight: normal;
+  font-style: normal;
+  -webkit-text-stroke: 8px #444;
+  paint-order: markers stroke fill;
+}
+
+.table
+{
+  color: white;
+}
