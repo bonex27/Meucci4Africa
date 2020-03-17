@@ -19,7 +19,7 @@ switch($requestMethod)
 				}
 			echo "A";	
 			$availableSeats = $iscrizione->getSpace();
-			if($availableSeats <= 0)
+			if($availableSeats <= 0)	//Redundant??
 			{
 				header("HTTP/1.0 400 Bad Request");		
 				exit();
@@ -38,8 +38,7 @@ switch($requestMethod)
 		else{
 			header("HTTP/1.0 401 Not Authorized");
 			return;
-		}	
-		header("HTTP/1.0 400 Bad Request");		
+		}		
 		break;
 		case 'DELETE'://Ok
 			session_start();

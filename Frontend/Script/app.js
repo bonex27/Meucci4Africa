@@ -335,7 +335,7 @@ function delIscrizione(iscrizione,lezione)
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", 'http://localhost:80/Meucci4Africa/Backend/iscrizioni.php/?id='+iscrizione+"&idLezione="+lezione , true);
     xhr.onload = function() {
-        this.loadHome();
+        loadHome();
     };
     xhr.onerror = function() {
         alert("Errore");
