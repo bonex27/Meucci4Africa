@@ -4,6 +4,7 @@
 
 let appTitle;
 let appContainer;
+let appNavbar;
 
 function load()
 {
@@ -13,6 +14,58 @@ function load()
 
     appTitle = document.getElementById("appTitle");
     appContainer = document.getElementById("appContainer");
+    appNavbar = document.getElementById("appNavbar");
+
+    //Put this in a function?
+    var isLoggedRequest = new XMLHttpRequest();
+    isLoggedRequest.open("GET", "http://localhost/meucci4africa/Backend/isLogged.php", false)
+    isLoggedRequest.send();
+
+    var isLogged = eval(isLoggedRequest.response);
+
+    if(!isLogged)
+    {
+        appNavbar.innerHTML = "";
+        
+        var navItem = document.createElement("li");
+        navItem.className="nav-item";
+
+        var navLink = document.createElement("a");
+        navLink.className="nav-link";
+        navLink.innerHTML="Login"
+        navLink.setAttribute("href", "login");
+        navItem.appendChild(navLink);
+
+        appNavbar.appendChild(navItem);
+
+        
+        var navItem = document.createElement("li");
+        navItem.className="nav-item";
+
+        var navLink = document.createElement("a");
+        navLink.className="nav-link";
+        navLink.innerHTML="Registrati"
+        navLink.setAttribute("href", "signup");
+        navItem.appendChild(navLink);
+
+        appNavbar.appendChild(navItem);
+    }
+    else
+    {
+        appNavbar.innerHTML = "";
+        var navItem = document.createElement("li");
+        navItem.className="nav-item";
+
+        var navLink = document.createElement("a");
+        navLink.className="nav-link";
+        navLink.addEventListener("click", logout);
+        navLink.innerHTML="Esci";
+        navItem.appendChild(navLink);
+
+        appNavbar.appendChild(navItem);
+    }
+    //till here?
+
 
     if(urlSplit[urlLength-1]=="index")
     {
@@ -164,7 +217,7 @@ function callIscriviti()
 ###EXIT###
 */
 
-function delSession()
+function logout()
 {
   var xhr = new XMLHttpRequest();
     xhr.open("GET", 'http://localhost:80/Meucci4Africa/Backend/esci.php' , true);
@@ -172,6 +225,7 @@ function delSession()
     xhr.onload = function()
     {
         history.pushState({},"Meucci4Africa", "http://localhost:80/Meucci4Africa/Frontend/index");
+        load();
     };
     xhr.onerror = function()
     {
@@ -186,6 +240,7 @@ function delSession()
 
 function loadLogin()
 {
+    appTitle.innerHTML = "Login"
     appContainer.innerHTML = 
 '<form class="form-signin" method="GET" id="form">'+
     '<h1 class="h3 mb-3 font-weight-normal">Sign in</h1>'+
@@ -193,8 +248,8 @@ function loadLogin()
     '    <input type="text" id="inputEmail" class="form-control" placeholder="Email address" name="email" required>'+
     '<label for="inputPassword" class="sr-only">Password</label>'+
     '    <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password" required>'+
-    '<input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="login()" value="login"/>'+
-    '<p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>'+
+    '<input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="login()" value="Login"/>'+
+    '<p class="mt-4 text-muted">&copy; 2019-2020</p>'+
 '</form>';
 }
 
@@ -215,7 +270,7 @@ function login() {
         else
         {
             history.pushState({},"Meucci4Africa", "http://localhost:80/Meucci4Africa/Frontend/home");
-            loadHome();
+            load();
         }
     };
     xhr.onerror = function() {
@@ -244,7 +299,7 @@ function loadSignUp()
     '    <label for="inputPassword" class="sr-only">Password</label>' +
     '        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>' +
     '        <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="signUp()" value="Iscriviti"/>' +
-    '        <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>' +
+    '        <p class="mt-4 text-muted">&copy; 2019-2020</p>' +
     '</form>';
 }
 
@@ -289,18 +344,22 @@ function loadHome()
     var table = document.createElement("table");
     var thead = document.createElement("thead");
     table.setAttribute("class", "table");
-    thead.setAttribute("class", "thead-dark");
+    thead.className = "thead-dark";
     table.appendChild(thead);
     document.getElementById("appContainer").appendChild(table);
 
     var tr = document.createElement('tr');
     tr.innerHTML =
-        '<th>Turno</td>' +
+
+        '<th>Turno</th>' +
+
         '<th>Corso</th>' +
         '<th>Inizio</th>' +
         '<th>Fine</th>' +
         '<th>Aula</th>'+
-        '<th style="text-align: center;">Disiscriviti</th>';
+
+        '<th>Disiscriviti</th>';
+
 
     thead.appendChild(tr);
 
@@ -317,7 +376,9 @@ function loadHome()
                 '<td>' + data[i].oraInizio + '</td>' +
                 '<td>' + data[i].oraFine + '</td>'+
                 '<td>' + data[i].nomeAula + '</td>'+
-                '<td style="text-align: center;"><button type="button" class="btn btn-danger" onclick="delIscrizione('+data[i].idIscrizione+', '+ data[i].idLezione+')">-</button></td>';
+             '<td style="text-align: center;"><button type="button" class="btn btn-danger" onclick="delIscrizione('+data[i].idIscrizione+', '+ data[i].idLezione+')">-</button></td>';
+
+                '<td><button type="button" class="btn btn-danger" onclick="delIscrizione('+data[i].idIscrizione+', '+ data[i].idLezione+')">x</button></td>';
             table.appendChild(tr);
         }
         appContainer.innerHTML+='<button type="button" onclick="clickIscriviti()" class="btn btn-success">Iscriviti</button>';

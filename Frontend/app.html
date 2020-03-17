@@ -12,7 +12,7 @@
         <link rel="icon" href="img\Frontend\logo.png">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 
@@ -26,20 +26,14 @@
     </head>
     <body onload="load()">
 
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ff5555;">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #eaaf25;">
                 <a class="navbar-brand" href="index"><b>Meucci for Africa</b></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
         
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="Frontend\login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Frontend\signup">Registrazione</a>
-                        </li>
+                    <ul class="navbar-nav ml-auto" id="appNavbar">
                     </ul>
         
                 </div>
@@ -49,12 +43,16 @@
             <div class="cotainer">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <div class="card border-success mb-3">
-                            <div class="card-header bg-success">
-                                <a class="navbar-brand text-white"><b id="appTitle">Corsi</b></a>
+                        <div class="card bg-yellow mb-3">
+                            <div class="card-header bg-yellow">
+                                <a class="navbar-brand text-white"><b id="appTitle"></b></a>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body appBg">
                                 <div id="appContainer">
+                                    <div class="nowLoading">
+                                        <h1>   NOW LOADING...</h1>
+                                        <h4>Please Wait</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
