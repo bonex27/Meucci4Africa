@@ -1,6 +1,6 @@
 html,
 body {
-  overflow: hidden;
+  overflow-x: hidden;
   height: 100%;
   color: white;
 }
