@@ -69,7 +69,33 @@ div.nowLoading {
   paint-order: markers stroke fill;
 }
 
+.text-black
+{
+  color: #27241f !important;
+}
+
 .table
 {
   color: white;
+  text-align: center;
+}
+
+.table td
+{
+  vertical-align: middle;
+}
+
+.clickable:hover
+{
+  cursor:pointer;
+}
+
+.unclickable
+{
+  font-weight:normal !important; 
+}
+
+.my-form
+{
+  margin-top: 3rem;
 }

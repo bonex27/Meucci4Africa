@@ -1,3 +1,22 @@
+<?php 
+$status = $_SERVER['REDIRECT_STATUS'];
+$codes = array(
+       403 => array('403 Forbidden', 'The server has refused to fulfill your request.'),
+       404 => array('404 Not Found', 'The document/file requested was not found on this server.'),
+       405 => array('405 Method Not Allowed', 'The method specified in the Request-Line is not allowed for the specified resource.'),
+       408 => array('408 Request Timeout', 'Your browser failed to send a request in the time allowed by the server.'),
+       500 => array('500 Internal Server Error', 'The request was unsuccessful due to an unexpected condition encountered by the server.'),
+       502 => array('502 Bad Gateway', 'The server received an invalid response from the upstream server while trying to fulfill the request.'),
+       504 => array('504 Gateway Timeout', 'The upstream server failed to send a request in the time allowed by the server.'),
+);
+
+$title = $codes[$status][0];
+$message = $codes[$status][1];
+if ($title == false || strlen($status) != 3) {
+       $message = 'Please supply a valid status code.';
+}
+?>
+
 <!doctype html>
 <html lang="it">
     <head>
@@ -5,25 +24,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Fonts -->
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-
         <link rel="icon" href="/img/favicon.png">
 
         <!-- Bootstrap CSS -->
-
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 
         <!-- Other CSS -->
         <link href="/style/app.css" rel="stylesheet">
-
-        <!-- Scripts -->
-        <script src="/client/app.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
         <title>Meucci for Africa</title>
     </head>
@@ -48,13 +56,13 @@
                     <div class="col-md-8">
                         <div class="card bg-yellow mb-3">
                             <div class="card-header bg-yellow">
-                                <a class="navbar-brand"><b id="appTitle"></b></a>
+                                <a class="navbar-brand text-white">Error<b id="appTitle"></b></a>
                             </div>
                             <div class="card-body appBg">
                                 <div id="appContainer">
                                     <div class="nowLoading">
-                                        <h1>   NOW LOADING...</h1>
-                                        <h4>Please Wait</h4>
+                                        <h1><?=$title;?></h1>
+                                        <h4><?=$message;?></h4>
                                     </div>
                                 </div>
                             </div>

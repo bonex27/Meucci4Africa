@@ -1,3 +1,11 @@
-Options +FollowSymLinks -MultiViews
+Options +FollowSymLinks -MultiViews -Indexes
+ErrorDocument 400 /errors/error.php
+ErrorDocument 401 /errors/error.php
+ErrorDocument 403 /errors/error.php
+ErrorDocument 404 /errors/error.php
+ErrorDocument 408 /errors/error.php
+ErrorDocument 500 /errors/error.php
+ErrorDocument 502 /errors/error.php
+ErrorDocument 504 /errors/error.php
 RewriteEngine On
 RewriteRule ^[^\.]*$ app.html

@@ -52,13 +52,11 @@ class Iscrizione
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute($data);
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				//echo $result[0]["postiLiberi"]."\n";
                 return($result[0]["postiLiberi"]);
 			}
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
-				echo $e;
 				return 0;
 			}
 		
@@ -84,13 +82,11 @@ class Iscrizione
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute($data);
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				print_r($result);
 				return !isset($result[0]);
 			}
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
-				echo $e;
 				return FALSE;
 			}
 		
@@ -114,7 +110,6 @@ class Iscrizione
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
-				echo $e;
 				return FALSE;
 			}
 		
@@ -135,7 +130,6 @@ class Iscrizione
 		catch (Exception $e)
 		{
 			header("HTTP/1. 500 Internal server error");
-			echo $e;
 		}
 	}
 }

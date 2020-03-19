@@ -1,17 +1,10 @@
 <?php
-/**
- * @package PHP Rest API(DBConnection)
- *
- * @author 
- * 
- */
- 
-// Database Connection
+
 class DBConnection {
-    private $_dbHostname ="localhost"; //"rufis01.ddns.net:3306";
-    private $_dbName = "meucci4africa";
-    private $_dbUsername = "test";
-    private $_dbPassword = "zurlino40";
+    private $_dbHostname ="localhost";
+    private $_dbName = "ideeinbi_meucciforafrica";
+    private $_dbUsername = "ideei_meucci";
+    private $_dbPassword = "meucci2020";
     private $_con;
  
     public function __construct() {
@@ -29,4 +22,5 @@ class DBConnection {
         return $this->_con;
     }
 }
+
 ?>

@@ -31,7 +31,8 @@ class mieiCorsi
                 on a.idAula = l.aula
                 INNER JOIN turno t
                 on t.idTurno = l.turno
-                where u.idUtente = :id';
+				where u.idUtente = :id
+				ORDER BY i.idIscrizione';
                 $data = [
 					'id' => $this->_id
 				];
