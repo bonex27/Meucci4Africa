@@ -10,6 +10,7 @@ function load()
 {
     var url = window.location.href;
     var urlSplit = url.split("/");
+    var host = urlSplit[2];
     var urlLength = urlSplit.length;
 
     appTitle = document.getElementById("appTitle");
@@ -18,7 +19,7 @@ function load()
 
     //Put this in a function?
     var isLoggedRequest = new XMLHttpRequest();
-    isLoggedRequest.open("GET", "http://localhost/meucci4africa/Backend/isLogged.php", false)
+    isLoggedRequest.open("GET", host + "/api/isLogged.php", false)
     isLoggedRequest.send();
 
     var isLogged = eval(isLoggedRequest.response);
@@ -101,7 +102,7 @@ window.onpopstate = load;
 function loadIndex()
 {
     appTitle.innerHTML = "Meucci4Africa";
-    appContainer.innerHTML = "<img src='http://localhost/meucci4africa/Frontend/img/logo.png' class='rounded' alt='LOGO'>";
+    appContainer.innerHTML = "<img src='/img/logo.png' class='rounded' alt='LOGO'>";
 }
 
 /*
@@ -112,7 +113,7 @@ function listCorsi()
 {
     appTitle.innerHTML="Corsi";
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost/Meucci4Africa/Backend/corsi.php", true);
+    xhr.open("GET", host + "/api/corsi.php", true);
 
     xhr.onload = function()
     {
@@ -141,13 +142,13 @@ function listCorsi()
 
 function clickCorso(id)
 {
-    history.pushState({},"Meucci4Africa", "http://localhost:80/Meucci4Africa/Frontend/corsi/" + id);
+    history.pushState({},"Meucci4Africa", host + "/corsi/" + id);
     loadCorso(id);
 }
 
 function loadCorso(id)
 {
-    var chiamataSingola = 'http://localhost:80/Meucci4Africa/Backend/corsi.php?id='+ id;
+    var chiamataSingola = host + '/api/corsi.php?id='+ id;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chiamataSingola, true);
     xhr.onload = function() {
@@ -171,7 +172,7 @@ function loadCorso(id)
 
 function callLezioni(id)
 {
-    var chiamataInfo = 'http://localhost:80/Meucci4Africa/Backend/lezioni.php?idArgomento='+ id;
+    var chiamataInfo = host + '/api/lezioni.php?idArgomento='+ id;
     var callInfo = new XMLHttpRequest();
     callInfo.open("GET", chiamataInfo, true);
     callInfo.onload = function() {
@@ -200,7 +201,7 @@ function loadLezioni(lezioni) {
 function callIscriviti()
 {
     id = document.getElementById("inputLezione").value;
-    var chiamataIscrizione = 'http://localhost:80/Meucci4Africa/Backend/iscrizioni.php?id='+ id;
+    var chiamataIscrizione = host + '/api/iscrizioni.php?id='+ id;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chiamataIscrizione, true);
     xhr.onload = function() {
@@ -220,11 +221,11 @@ function callIscriviti()
 function logout()
 {
   var xhr = new XMLHttpRequest();
-    xhr.open("GET", 'http://localhost:80/Meucci4Africa/Backend/esci.php' , true);
+    xhr.open("GET", host + '/api/esci.php' , true);
 
     xhr.onload = function()
     {
-        history.pushState({},"Meucci4Africa", "http://localhost:80/Meucci4Africa/Frontend/index");
+        history.pushState({},"Meucci4Africa", host + "/index");
         load();
     };
     xhr.onerror = function()
@@ -260,7 +261,7 @@ function login() {
     var myJSON = JSON.stringify(obj);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:80/Meucci4Africa/Backend/login.php", true);
+    xhr.open("POST", host + "/api/login.php", true);
 
     xhr.onload = function() {
         if(xhr.status != 200)
@@ -269,7 +270,7 @@ function login() {
         }
         else
         {
-            history.pushState({},"Meucci4Africa", "http://localhost:80/Meucci4Africa/Frontend/home");
+            history.pushState({},"Meucci4Africa", host + "/home");
             load();
         }
     };
@@ -313,11 +314,11 @@ function signUp() {
     var myJSON = JSON.stringify(obj);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:80/meucci4africa/Backend/registrazione.php", true);
+    xhr.open("POST", host + "/api/registrazione.php", true);
 
     xhr.onload = function() {
         //SBAGLIATO, CONTROLLARE ERRORE
-        history.pushState({},"Meucci4Africa", "http://localhost:80/Meucci4Africa/Frontend/login");
+        history.pushState({},"Meucci4Africa", host + "/login");
         loadLogin();
     };
     xhr.onerror = function() {
@@ -333,7 +334,7 @@ function signUp() {
 
 function clickIscriviti()
 {
-    history.pushState({},"Meucci4Africa", "http://localhost:80/Meucci4Africa/Frontend/corsi");
+    history.pushState({},"Meucci4Africa", host + "/corsi");
     listCorsi();
 }
 
@@ -364,7 +365,7 @@ function loadHome()
     thead.appendChild(tr);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", 'http://localhost:80/Meucci4Africa/Backend/mieiCorsi.php' , true);
+    xhr.open("GET", host + '/api/mieiCorsi.php' , true);
     xhr.onload = function() {
         var data = JSON.parse(xhr.response);
 
@@ -394,7 +395,7 @@ function loadHome()
 function delIscrizione(iscrizione,lezione)
 {
     var xhr = new XMLHttpRequest();
-    xhr.open("DELETE", 'http://localhost:80/Meucci4Africa/Backend/iscrizioni.php/?id='+iscrizione+"&idLezione="+lezione , true);
+    xhr.open("DELETE", host + '/api/iscrizioni.php/?id='+iscrizione+"&idLezione="+lezione , true);
     xhr.onload = function() {
         loadHome();
     };
