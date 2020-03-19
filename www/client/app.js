@@ -10,7 +10,6 @@ function load()
 {
     var url = window.location.href;
     var urlSplit = url.split("/");
-    var host = urlSplit[2];
     var urlLength = urlSplit.length;
 
     appTitle = document.getElementById("appTitle");
@@ -19,7 +18,7 @@ function load()
 
     //Put this in a function?
     var isLoggedRequest = new XMLHttpRequest();
-    isLoggedRequest.open("GET", host + "/api/isLogged.php", false)
+    isLoggedRequest.open("GET", "/api/isLogged.php", false)
     isLoggedRequest.send();
 
     var isLogged = eval(isLoggedRequest.response);
@@ -113,7 +112,7 @@ function listCorsi()
 {
     appTitle.innerHTML="Corsi";
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", host + "/api/corsi.php", true);
+    xhr.open("GET", "/api/corsi.php", true);
 
     xhr.onload = function()
     {
@@ -142,13 +141,13 @@ function listCorsi()
 
 function clickCorso(id)
 {
-    history.pushState({},"Meucci4Africa", host + "/corsi/" + id);
+    history.pushState({},"Meucci4Africa", "/corsi/" + id);
     loadCorso(id);
 }
 
 function loadCorso(id)
 {
-    var chiamataSingola = host + '/api/corsi.php?id='+ id;
+    var chiamataSingola = '/api/corsi.php?id='+ id;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chiamataSingola, true);
     xhr.onload = function() {
@@ -172,7 +171,7 @@ function loadCorso(id)
 
 function callLezioni(id)
 {
-    var chiamataInfo = host + '/api/lezioni.php?idArgomento='+ id;
+    var chiamataInfo = '/api/lezioni.php?idArgomento='+ id;
     var callInfo = new XMLHttpRequest();
     callInfo.open("GET", chiamataInfo, true);
     callInfo.onload = function() {
@@ -201,7 +200,7 @@ function loadLezioni(lezioni) {
 function callIscriviti()
 {
     id = document.getElementById("inputLezione").value;
-    var chiamataIscrizione = host + '/api/iscrizioni.php?id='+ id;
+    var chiamataIscrizione = '/api/iscrizioni.php?id='+ id;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chiamataIscrizione, true);
     xhr.onload = function() {
@@ -221,11 +220,11 @@ function callIscriviti()
 function logout()
 {
   var xhr = new XMLHttpRequest();
-    xhr.open("GET", host + '/api/esci.php' , true);
+    xhr.open("GET", '/api/esci.php' , true);
 
     xhr.onload = function()
     {
-        history.pushState({},"Meucci4Africa", host + "/index");
+        history.pushState({},"Meucci4Africa", "/index");
         load();
     };
     xhr.onerror = function()
@@ -261,7 +260,7 @@ function login() {
     var myJSON = JSON.stringify(obj);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", host + "/api/login.php", true);
+    xhr.open("POST", "/api/login.php", true);
 
     xhr.onload = function() {
         if(xhr.status != 200)
@@ -270,7 +269,7 @@ function login() {
         }
         else
         {
-            history.pushState({},"Meucci4Africa", host + "/home");
+            history.pushState({},"Meucci4Africa", "/home");
             load();
         }
     };
@@ -314,11 +313,11 @@ function signUp() {
     var myJSON = JSON.stringify(obj);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", host + "/api/registrazione.php", true);
+    xhr.open("POST", "/api/registrazione.php", true);
 
     xhr.onload = function() {
         //SBAGLIATO, CONTROLLARE ERRORE
-        history.pushState({},"Meucci4Africa", host + "/login");
+        history.pushState({},"Meucci4Africa", "/login");
         loadLogin();
     };
     xhr.onerror = function() {
@@ -334,7 +333,7 @@ function signUp() {
 
 function clickIscriviti()
 {
-    history.pushState({},"Meucci4Africa", host + "/corsi");
+    history.pushState({},"Meucci4Africa", "/corsi");
     listCorsi();
 }
 
@@ -365,7 +364,7 @@ function loadHome()
     thead.appendChild(tr);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", host + '/api/mieiCorsi.php' , true);
+    xhr.open("GET", '/api/mieiCorsi.php' , true);
     xhr.onload = function() {
         var data = JSON.parse(xhr.response);
 
@@ -395,7 +394,7 @@ function loadHome()
 function delIscrizione(iscrizione,lezione)
 {
     var xhr = new XMLHttpRequest();
-    xhr.open("DELETE", host + '/api/iscrizioni.php/?id='+iscrizione+"&idLezione="+lezione , true);
+    xhr.open("DELETE", '/api/iscrizioni.php/?id='+iscrizione+"&idLezione="+lezione , true);
     xhr.onload = function() {
         loadHome();
     };

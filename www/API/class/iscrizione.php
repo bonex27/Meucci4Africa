@@ -74,7 +74,7 @@ class Iscrizione
 				$turno = $lezione->get()[0]["idTurno"];
 				echo $turno;
 				$sql = 'SELECT i.utente, l.turno
-				FROM iscrizione I
+				FROM iscrizione i
 				INNER JOIN lezione l ON i.lezione = l.idLezione
 				WHERE i.utente = :idUtente AND l.turno = :idTurno';
 				$data = [
@@ -119,11 +119,12 @@ class Iscrizione
 			}
 		
 	}
-	public function del() {
+	public function del() {	//add user check
 		try {
-			$sql = 'DELETE from Iscrizione i where i.idIscrizione = :id';
+			$sql = 'DELETE FROM iscrizione
+			WHERE idIscrizione = :id';
 			$data = [
-				'id' => $this->_idIscrizione
+				'id' => $this->_idIscrizione + 0
 			];
 
 			$stmt = $this->db->prepare($sql);
