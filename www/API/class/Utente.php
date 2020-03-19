@@ -16,17 +16,20 @@ class Utente
     public $_email;
     public $_password;
  
-    public function __construct() {
+	public function __construct()
+	{
         $this->db = new DBConnection();
         $this->db = $this->db->returnConnection();
     }
  
     //insert
-    public function insert() {
+	public function insert()
+	{
 		/*
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
-		try {
+		try
+		{
     		$sql = 'INSERT INTO utente (nome, cognome, email, password)  VALUES (:nome, :cognome, :email, :password)';
     		$data = [
 			    'nome' => $this->_nome,
@@ -39,15 +42,18 @@ class Utente
 	    	$stmt->execute($data);
 			$status = $stmt->rowCount();
  
-		} catch (Exception $e) {
+		} catch (Exception $e)
+		{
     		die("Errore inserimento".$e);
 		}
 	}	
-	public function login() {
+	public function login()
+	{
 		/*
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
-		try {
+		try
+		{
     		$sql = 'select idUtente from utente where email = :email and password = :password';
     		$data = [
 			    'email' => $this->_email,
@@ -59,12 +65,10 @@ class Utente
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 			return $result;			
  
-		} catch (Exception $e) {
+		} catch (Exception $e)
+		{
     		die("Oh noes! There's an error in the query!".$e);
 		}
-
-
 	}	
- 
 }
 ?>

@@ -12,12 +12,14 @@ class mieiCorsi
     protected $db;
     public $_id;
  
-    public function __construct() {
+	public function __construct()
+	{
         $this->db = new DBConnection();
         $this->db = $this->db->returnConnection();
 	}
 	
-	public function get() {
+	public function get()
+	{
 			try {
 				$sql = 'SELECT i.idIscrizione, l.idLezione ,t.idTurno, a.nomeAula, t.oraInizio, t.oraFine , ar.Titolo
 				FROM utente u
@@ -32,7 +34,7 @@ class mieiCorsi
                 INNER JOIN turno t
                 on t.idTurno = l.turno
 				where u.idUtente = :id
-				ORDER BY i.idIscrizione';
+				ORDER BY l.turno';
                 $data = [
 					'id' => $this->_id
 				];

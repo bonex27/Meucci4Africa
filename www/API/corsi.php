@@ -1,8 +1,12 @@
 <?php
+include_once('class/Argomento.php');
+
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-include('class/Argomento.php');
+
 $argomento = new Argomento();
-switch($requestMethod) {
+
+switch($requestMethod)
+{
 
 	case 'GET'://Ok
 		if(isset($_GET["id"])) 	//if uri doesn't end with 'corsi'

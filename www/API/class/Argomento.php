@@ -26,7 +26,8 @@ class Argomento
 		
 		if(!isset($this->_id))
 		{
-			try {
+			try
+			{
 				$sql = 'select * from argomento';
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute();
@@ -39,8 +40,10 @@ class Argomento
 				header("HTTP/1.1 500 Internal server error");
 			}
 		}
-		else if(isset($this->_titolo)){
-			try {
+		else if(isset($this->_titolo))
+		{
+			try
+			{
 				$sql = 'select idArgomento from argomento where titolo = :titolo';
 				$data = [
 					'titolo' => $this->_titolo,
@@ -81,7 +84,8 @@ class Argomento
 
 	public function put($titolo, $descrizione) {
 		
-		try {
+		try
+		{
 			$sql = "INSERT INTO argomento ('titolo', 'descrizione') VALUES (:titolo, :descrizione);";
 			$data = [
 				'titolo' => $titolo,

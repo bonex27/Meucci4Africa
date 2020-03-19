@@ -1,12 +1,14 @@
 <?php
+include_once('class/Lezione.php');
+include_once('class/Argomento.php');
+
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-include('class/Lezione.php');
-include('class/Argomento.php');
 $lezione = new Lezione();
 $argomento = new Argomento();
 
-switch($requestMethod) {
+switch($requestMethod)
+{
 
 	case 'GET'://Ok
 		if(isset($_GET["idLezione"]))

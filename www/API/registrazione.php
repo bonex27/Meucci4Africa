@@ -1,8 +1,12 @@
 <?php
+include_once('./class/Utente.php');
+
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-include('./class/Utente.php');
+
 $utente = new Utente();
-switch($requestMethod) {
+
+switch($requestMethod)
+{
 
     case 'POST'://Ok
         $inputJSON = file_get_contents('php://input');

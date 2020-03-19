@@ -1,24 +1,20 @@
 <?php
-/**
- * @package Meucci 4 Africa
- *
- * @author 
- *   
- */
- 
 include_once("DBConnection.php");
+
 class Lezione 
 {
     protected $db;
     public $_idLezione;
     public $_idArgomento;
  
-    public function __construct() {
+	public function __construct()
+	{
         $this->db = new DBConnection();
         $this->db = $this->db->returnConnection();
 	}
 	
-	public function get() {
+	public function get()
+	{
 		/*
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
@@ -66,7 +62,8 @@ class Lezione
 		}
 		else
 		{
-			try {
+			try
+			{
 				$sql = 'SELECT a.nomeAula, t.idTurno, t.oraInizio, t.oraFine, l.postiliberi, l.postioccupati
 				FROM lezione l
 				INNER JOIN aula a
@@ -90,7 +87,8 @@ class Lezione
 	}	
  	public function put($aula, $argomento, $turno, $postiLiberi) {
 		
-		try {
+		try
+		{
 			$sql = "INSERT INTO lezione ('aula', 'argomento', 'turno', 'postiLiberi', 'postiOccupati') VALUES (:aula, :argomento, :turno, :postiLiberi, 0);";
 			$data = [
 				'aula' => $aula,

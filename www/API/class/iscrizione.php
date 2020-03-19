@@ -23,7 +23,8 @@ class Iscrizione
 	
 	public function insert()
 	{
-        try {
+		try
+		{
 			$sql = "INSERT INTO iscrizione VALUE (DEFAULT, :utente, :lezione);";
 			$data = [
 				'utente' => $this->_idUtente + 0,
@@ -42,80 +43,78 @@ class Iscrizione
 	public function getSpace()
 	{
 		try
-			{
-				$sql = 'SELECT  l.postiLiberi, l.postiOccupati
-				FROM lezione l
-				where l.idLezione = :idLezione and l.postiliberi > 0';
-				$data = [
-					'idLezione' => $this->_idLezione,
-				];
-				$stmt = $this->db->prepare($sql);
-				$stmt->execute($data);
-				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                return($result[0]["postiLiberi"]);
-			}
-			catch (Exception $e)
-			{
-				header("HTTP/1.0 400 Bad request");
-				return 0;
-			}
+		{
+			$sql = 'SELECT  l.postiLiberi, l.postiOccupati
+			FROM lezione l
+			where l.idLezione = :idLezione and l.postiliberi > 0';
+			$data = [
+				'idLezione' => $this->_idLezione,
+			];
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return($result[0]["postiLiberi"]);
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.0 400 Bad request");
+			return 0;
+		}
 		
 	}
 	
 	public function checkTurno()
 	{
 		try
-			{
-				$lezione = new Lezione();
-				$lezione->_idLezione = $this->_idLezione;
-				print_r( $lezione->get());
-				$turno = $lezione->get()[0]["idTurno"];
-				echo $turno;
-				$sql = 'SELECT i.utente, l.turno
-				FROM iscrizione i
-				INNER JOIN lezione l ON i.lezione = l.idLezione
-				WHERE i.utente = :idUtente AND l.turno = :idTurno';
-				$data = [
-					'idTurno' => $turno,
-					'idUtente' => $this->_idUtente
-				];
-				$stmt = $this->db->prepare($sql);
-				$stmt->execute($data);
-				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				return !isset($result[0]);
-			}
-			catch (Exception $e)
-			{
-				header("HTTP/1.0 400 Bad request");
-				return FALSE;
-			}
-		
+		{
+			$lezione = new Lezione();
+			$lezione->_idLezione = $this->_idLezione;
+			print_r( $lezione->get());
+			$turno = $lezione->get()[0]["idTurno"];
+			echo $turno;
+			$sql = 'SELECT i.utente, l.turno
+			FROM iscrizione i
+			INNER JOIN lezione l ON i.lezione = l.idLezione
+			WHERE i.utente = :idUtente AND l.turno = :idTurno';
+			$data = [
+				'idTurno' => $turno,
+				'idUtente' => $this->_idUtente
+			];
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return !isset($result[0]);
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.0 400 Bad request");
+			return FALSE;
+		}
     }
     
 	public function setPlace($posti)
 	{
 		try
-			{
-				
-				//print_r($posti);
-				$sql = "UPDATE lezione SET postiLiberi = :place WHERE (`idLezione` = :id)";
-				$data = [
-                    'id' => $this->_idLezione,
-                    'place' => $posti,
-				];
-				$stmt = $this->db->prepare($sql);
-				$stmt->execute($data);
-				return TRUE;
-			}
-			catch (Exception $e)
-			{
-				header("HTTP/1.0 400 Bad request");
-				return FALSE;
-			}
+		{
+			$sql = "UPDATE lezione SET postiLiberi = :place WHERE (`idLezione` = :id)";
+			$data = [
+				'id' => $this->_idLezione,
+				'place' => $posti,
+			];
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			return TRUE;
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.0 400 Bad request");
+			return FALSE;
+		}
 		
 	}
 	public function del() {	//add user check
-		try {
+		try
+		{
 			$sql = 'DELETE FROM iscrizione
 			WHERE idIscrizione = :id';
 			$data = [

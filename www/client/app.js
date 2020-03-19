@@ -18,74 +18,14 @@ function load()
     appContainer = document.getElementById("appContainer");
     appNavbar = document.getElementById("appNavbar");
 
-    //NAVBAR
-    //Put this in a function and slam it at the bottom??
     var isLoggedRequest = new XMLHttpRequest();
-    isLoggedRequest.open("GET", "/API/isLogged.php", false); //Apparently this is bad?
+    isLoggedRequest.open("GET", "/API/isLogged.php", false); //TODO: get rid of this, aparently it's bad
     isLoggedRequest.send();
 
     var isLogged = eval(isLoggedRequest.response);
 
-    if(!isLogged)
-    {
-        appNavbar.innerHTML = "";
-        
-        var navItem = document.createElement("li");
-        navItem.className="nav-item";
+    loadNavbar(isLogged);
 
-        var navLink = document.createElement("a");
-        navLink.className="nav-link clickable";
-        navLink.innerHTML="Login"
-        navLink.setAttribute("href", "login");
-        navItem.appendChild(navLink);
-
-        appNavbar.appendChild(navItem);
-
-        
-        var navItem = document.createElement("li");
-        navItem.className="nav-item";
-
-        var navLink = document.createElement("a");
-        navLink.className="nav-link clickable";
-        navLink.innerHTML="Registrati"
-        navLink.setAttribute("href", "signup");
-        navItem.appendChild(navLink);
-
-        appNavbar.appendChild(navItem);
-    }
-    else
-    {
-        appNavbar.innerHTML = "";
-
-        var navItem = document.createElement("li");
-        navItem.className="nav-item";
-
-        var navLink = document.createElement("a");
-        navLink.className="nav-link clickable";
-        navLink.addEventListener("click", 
-                                function() {
-                                            history.pushState({},"Meucci4Africa", "/home");
-                                            loadHome();
-                                        } );
-        navLink.innerHTML="I tuoi corsi";
-        navItem.appendChild(navLink);
-
-        appNavbar.appendChild(navItem);
-
-        var navItem = document.createElement("li");
-        navItem.className="nav-item";
-
-        var navLink = document.createElement("a");
-        navLink.className="nav-link clickable";
-        navLink.addEventListener("click", logout);
-        navLink.innerHTML="Esci";
-        navItem.appendChild(navLink);
-
-        appNavbar.appendChild(navItem);
-    }
-    //till here?
-
-    //TITLE     
     let pathTopLevel = pathSplit[1 + levelsToApp];
     let corso = pathSplit[2 + levelsToApp];
 
@@ -95,18 +35,34 @@ function load()
     {
         case "corsi":
         {
-            if(corso != undefined && corso != "")
+            if(!isLogged)   //NOTE: Perhaps save location and restore it after login?
             {
-                loadCorso(corso);
+                history.pushState({},"Meucci4Africa", "/login");
+                loadLogin();
             }
             else
             {
-                listCorsi();
+                if(corso != undefined && corso != "")
+                {
+                    loadCorso(corso);
+                }
+                else
+                {
+                    listCorsi();
+                }
             }
         }break;
         case "home":
         {
-            loadHome();
+            if(!isLogged)   //NOTE: Perhaps save location and restore it after login?
+            {
+                history.pushState({},"Meucci4Africa", "/login");
+                loadLogin();
+            }
+            else
+            {
+                loadHome();
+            }
         }break;
         case "login":
         {
@@ -118,6 +74,7 @@ function load()
         }break;
         default:
         {
+            history.replaceState({}, "Meucci4Africa", "/");
             loadIndex();
         }break;
     }
@@ -325,7 +282,7 @@ function logout()
 
     xhr.onload = function()
     {
-        history.pushState({},"Meucci4Africa", "/index");
+        history.pushState({},"Meucci4Africa", "/");
         load();
     };
     xhr.onerror = function()
@@ -373,6 +330,7 @@ function login()
         else
         {
             history.pushState({},"Meucci4Africa", "/home");
+            loadNavbar(true);
             loadHome();
         }
     };
@@ -538,4 +496,69 @@ function delIscrizione(iscrizione,lezione)
     };
 
     xhr.send();
+}
+
+/*
+###NAVBAR###
+*/
+
+function loadNavbar(isLogged)   //TODO: This can totally be reduced
+{
+    if(!isLogged)
+    {
+        appNavbar.innerHTML = "";
+        
+        var navItem = document.createElement("li");
+        navItem.className="nav-item";
+
+        var navLink = document.createElement("a");
+        navLink.className="nav-link clickable";
+        navLink.innerHTML="Login"
+        navLink.setAttribute("href", "/login"); //TODO: We are a SPA, don't use href
+        navItem.appendChild(navLink);
+
+        appNavbar.appendChild(navItem);
+
+        
+        var navItem = document.createElement("li");
+        navItem.className="nav-item";
+
+        var navLink = document.createElement("a");
+        navLink.className="nav-link clickable";
+        navLink.innerHTML="Registrati"
+        navLink.setAttribute("href", "/signup"); //TODO: We are a SPA, don't use href
+        navItem.appendChild(navLink);
+
+        appNavbar.appendChild(navItem);
+    }
+    else
+    {
+        appNavbar.innerHTML = "";
+
+        var navItem = document.createElement("li");
+        navItem.className="nav-item";
+
+        var navLink = document.createElement("a");
+        navLink.className="nav-link clickable";
+        navLink.addEventListener("click", 
+                                function() {
+                                            history.pushState({},"Meucci4Africa", "/home");
+                                            loadHome();
+                                        } );
+        navLink.innerHTML="I tuoi corsi";
+        navItem.appendChild(navLink);
+
+        appNavbar.appendChild(navItem);
+
+        var navItem = document.createElement("li");
+        navItem.className="nav-item";
+
+        var navLink = document.createElement("a");
+        navLink.className="nav-link clickable";
+        navLink.addEventListener("click", logout);
+        navLink.innerHTML="Esci";
+        navItem.appendChild(navLink);
+
+        appNavbar.appendChild(navItem);
+    }
 }

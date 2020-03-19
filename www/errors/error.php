@@ -1,5 +1,6 @@
 <?php 
 $status = $_SERVER['REDIRECT_STATUS'];
+
 $codes = array(
        403 => array('403 Forbidden', 'The server has refused to fulfill your request.'),
        404 => array('404 Not Found', 'The document/file requested was not found on this server.'),
@@ -12,8 +13,11 @@ $codes = array(
 
 $title = $codes[$status][0];
 $message = $codes[$status][1];
-if ($title == false || strlen($status) != 3) {
-       $message = 'Please supply a valid status code.';
+
+if ($title == false || strlen($status) != 3)
+{
+    $title = 'Missing error code';
+    $message = 'Contact the webmaster';
 }
 ?>
 
