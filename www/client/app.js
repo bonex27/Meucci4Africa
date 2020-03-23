@@ -360,12 +360,40 @@ function loadSignUp()
     '    <label for="inputEmail" class="sr-only">Email</label>' +
     '        <input type="text" id="inputEmail" class="form-control" placeholder="Email" name="email" required>' +
     '    <label for="inputPassword" class="sr-only">Password</label>' +
+    '<label for="inputAula" class="sr-only">Aula</label>' +
+'            <select id="inputAula" name="aula" required></select>' +
     '        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>' +
     '        <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="signUp()" value="Iscriviti"/>' +
     '        <p class="mt-4 text-muted">&copy; 2019-2020</p>' +
     '</form>';
+    aule();
 }
 
+function aule()
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/API/classi.php", true);
+
+    xhr.onload = function()
+    {
+    const data = JSON.parse(xhr.response);
+    let option;
+
+    for (var i = 0; i < data.length; i++)
+    {
+        option = document.createElement('option');
+        option.text = data[i].nome;
+        option.value = data[i].id;
+        document.getElementById("inputAula").add(option);
+    }
+    };
+    xhr.onerror = function()
+    {
+        alert("Errore");
+    };
+    xhr.send();
+    
+}
 
 function signUp() {
     var nome = document.getElementById("inputName").value;
