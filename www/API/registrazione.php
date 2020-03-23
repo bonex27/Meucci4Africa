@@ -16,6 +16,7 @@ switch($requestMethod)
         $utente->_cognome = $input["cognome"];
         $utente->_email = $input["email"];
         $utente->_password = md5($input["password"]);
+        $utente->_classe = $input["classe"];
 
         $data = $utente->insert();
         break;

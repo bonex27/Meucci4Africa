@@ -15,6 +15,7 @@ class Utente
     public $_cognome;
     public $_email;
     public $_password;
+    public $_classe;
  
 	public function __construct()
 	{
@@ -30,21 +31,23 @@ class Utente
 		*/
 		try
 		{
-    		$sql = 'INSERT INTO utente (nome, cognome, email, password)  VALUES (:nome, :cognome, :email, :password)';
+    		$sql = 'INSERT INTO utente (nome, cognome, email, password, classe)  VALUES (:nome, :cognome, :email, :password, :classe)';
     		$data = [
 			    'nome' => $this->_nome,
 			    'cognome' => $this->_cognome,
 			    'email' => $this->_email,
 				'password' => $this->_password,
-
+				'classe' => $this->_classe,
 			];
 	    	$stmt = $this->db->prepare($sql);
 	    	$stmt->execute($data);
 			$status = $stmt->rowCount();
  
-		} catch (Exception $e)
+		}
+		catch (Exception $e)
 		{
-    		die("Errore inserimento".$e);
+			header("HTTP/1.0 400 Bad request");
+			echo $e;
 		}
 	}	
 	public function login()
@@ -65,9 +68,11 @@ class Utente
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 			return $result;			
  
-		} catch (Exception $e)
+		}
+		catch (Exception $e)
 		{
-    		die("Oh noes! There's an error in the query!".$e);
+			header("HTTP/1.0 500 Internal server error");
+			echo $e;
 		}
 	}	
 }
