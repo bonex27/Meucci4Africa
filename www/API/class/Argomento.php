@@ -12,6 +12,7 @@ class Argomento
     protected $db;
 	public $_id;
 	public $_titolo;
+	public $_descrizione;
  
 	public function __construct()
 	{
@@ -20,9 +21,7 @@ class Argomento
 	}
 	
 	public function get() {
-		/*
-		Nella prima parte esegue l' aggiunta del nuovo studente
-		*/
+
 		
 		if(!isset($this->_id))
 		{
@@ -82,19 +81,27 @@ class Argomento
 
 	}	
 
-	public function put($titolo, $descrizione) {
+	public function put() {
 		
 		try
 		{
 			$sql = "INSERT INTO argomento ('titolo', 'descrizione') VALUES (:titolo, :descrizione);";
 			$data = [
-				'titolo' => $titolo,
-				'descrizione' => $descrizione,
+				'titolo' => $this->_titolo,
+				'descrizione' => $this->_descrizione,
 			];
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
-			$result = "OK";
-			return $result;			
+			
+			
+			$sql = 'select idArgomento from argomento where titolo = :titolo';
+				$data = [
+					'titolo' => $this->_titolo,
+				];
+				$stmt = $this->db->prepare($sql);
+				$stmt->execute($data);
+				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				return $result;	
 	
 		}
 		catch (Exception $e)

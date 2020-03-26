@@ -72,6 +72,10 @@ function load()
         {
             loadSignUp();
         }break;
+        case "newcorso":
+        {
+            newCorso();
+        }break;
         default:
         {
             history.replaceState({}, "Meucci4Africa", "/");
@@ -207,7 +211,7 @@ function loadCorso(id)
         var page = "<h3 id='title' style='font-weight: bold'>"+obj[0].titolo+"<h3>";
         page += "<h4 id='desc'>"+obj[0].descrizione+"</h4>";
         page +=  '<select id="inputLezione" class="custom-select mr-sm-2" required></select>';
-        page += '<br><br><button type="button"  class="btn btn-danger" onclick="callIscriviti()">Iscriviti</button>';
+        page += '<br><br><button type="button"  class="btn btn-danger" onclick="checkIscrizione()">Iscriviti</button>';
         appContainer.innerHTML = page;
         loadTurni(id);
     };
@@ -232,7 +236,7 @@ function loadTurni(argomento)
         for (var i = 0; i < turni.length; i++)
         {
             option = document.createElement('option');
-            option.text = turni[i].idTurno + turni[i].oraInizio;
+            option.text = "Turno: " + turni[i].idTurno + "     Inizio: "+turni[i].oraInizio.substr(11, 5);
             option.value = turni[i].idLezione;
             document.getElementById("inputLezione").add(option);
         }
@@ -244,7 +248,32 @@ function loadTurni(argomento)
     };
     callInfo.send();
 }
+function checkIscrizione()
+{
+    document.getElementById('modalTitle').innerHTML ="Isccrizione";
+    document.getElementById('modalBody').innerHTML ="Sei sicuro di volerti iscrivere?";
+    document.getElementById('modalBtn').innerHTML ="No";
+    document.getElementById('modalBtn').addEventListener("click",function list()
+    {
+        $("#modalBtnOk" ).remove();
+        document.getElementById('modalBtn').removeEventListener('click',list);
+    });
+    
+    let button = document.createElement("button");
+    button.innerHTML="Si";
+    button.className="btn btn-success";
+    button.type ="button";
+    button.id="modalBtnOk";
+    button.addEventListener("click", function()
+    {
+        $('#modalAll').modal('hide');
+        callIscriviti();
+        document.getElementById('modalBtn').removeEventListener('click',list);
 
+    });
+    document.getElementById("modalFooter").appendChild(button);
+    $('#modalAll').modal('show');
+}
 
 function callIscriviti()
 {
@@ -353,16 +382,18 @@ function loadSignUp()
     appContainer.innerHTML = 
     '<form class="form-signin">' +
     '    <h1 class="h3 mb-3 font-weight-normal">Registrazione</h1>' +
-    '    <label for="inputName" class="sr-only">Nome</label>' +
+    '    <label for="formGroupExampleInput">Nome:</label>' +
     '        <input type="text" id="inputName" class="form-control" placeholder="Nome" name="nome" required>' +
-    '    <label for="inputSurname" class="sr-only">Cognome</label>' +
+    '    <label for="formGroupExampleInput">Cognome</label>' +
     '        <input type="text" id="inputSurname" class="form-control" placeholder="Cognome" name="cognome" required>' +
-    '    <label for="inputEmail" class="sr-only">Email</label>' +
+    '    <label for="formGroupExampleInput">Email</label>' +
     '        <input type="text" id="inputEmail" class="form-control" placeholder="Email" name="email" required>' +
-    '    <label for="inputPassword" class="sr-only">Password</label>' +
-    '<label for="inputAula" class="sr-only">Aula</label>' +
-'            <select id="inputAula" name="aula" required></select>' +
+    '       <label for="formGroupExampleInput">Classe</label>' +
+'            <select id="inputClasse" class="form-control" name="aula" required></select>' +
+    '       <label for="formGroupExampleInput">Password</label>' +
     '        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>' +
+    '       <label for="formGroupExampleInput">Verifica password</label>' +
+    '        <input type="password" id="inputPasswordCheck" class="form-control" name="passwordCheck" placeholder="Password" required>' +
     '        <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="signUp()" value="Iscriviti"/>' +
     '        <p class="mt-4 text-muted">&copy; 2019-2020</p>' +
     '</form>';
@@ -384,7 +415,7 @@ function aule()
         option = document.createElement('option');
         option.text = data[i].nome;
         option.value = data[i].id;
-        document.getElementById("inputAula").add(option);
+        document.getElementById("inputClasse").add(option);
     }
     };
     xhr.onerror = function()
@@ -400,29 +431,41 @@ function signUp() {
     var cognome = document.getElementById("inputSurname").value;
     var email = document.getElementById("inputEmail").value;
     var password = document.getElementById("inputPassword").value;
-    var obj = { nome: nome, cognome: cognome, email: email, password: password };
+    var passwordCheck = document.getElementById("inputPasswordCheck").value;
+    var Classe = document.getElementById("inputClasse").value;
+    var obj = { nome: nome, cognome: cognome, email: email, password: password, classe: Classe };
     var myJSON = JSON.stringify(obj);
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/API/registrazione.php", true);
+    if(password == passwordCheck)
+    {    
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/API/registrazione.php", true);
 
-    xhr.onload = function()
-    {
-        if(xhr.status != 200)
+        xhr.onload = function()
         {
-            alert("Errore!");
-        }
-        else
+            if(xhr.status != 200)
+            {
+                alert("Errore!");
+            }
+            else
+            {
+                history.pushState({},"Meucci4Africa", "/login");
+                loadLogin();
+            }
+        };
+        xhr.onerror = function()
         {
-            history.pushState({},"Meucci4Africa", "/login");
-            loadLogin();
-        }
-    };
-    xhr.onerror = function()
+            alert("Errore");
+        };
+        xhr.send(myJSON);
+    }
+    else
     {
-        alert("Errore");
-    };
-    xhr.send(myJSON);
+
+        document.getElementById('modalTitle').innerHTML ="Errore";
+        document.getElementById('modalBody').innerHTML ="Le password non coincidono";
+        $('#modalAll').modal('show');
+    }
 }
 
 
@@ -465,8 +508,8 @@ function loadHome()
             tr.innerHTML =
                 '<td>' + data[i].idTurno + '</td>' +
                 '<td>' + data[i].Titolo + '</td>' +
-                '<td>' + data[i].oraInizio + '</td>' +
-                '<td>' + data[i].oraFine + '</td>'+
+                '<td>' + data[i].oraInizio.substr(11, 5) + '</td>' +
+                '<td>' + data[i].oraFine.substr(11, 5) + '</td>'+
                 '<td>' + data[i].nomeAula + '</td>';
             td = document.createElement("td");
             button = document.createElement("button");
@@ -478,7 +521,7 @@ function loadHome()
             button.addEventListener("click",
                                     function()
                                     {
-                                        delIscrizione(iscrizione, lezione);
+                                        checkDel(iscrizione,lezione);
                                     });
             button.innerHTML="x";
 
@@ -511,6 +554,34 @@ function loadHome()
 /*
 ###UNSUBSCRIBE###
 */
+function checkDel(iscrizione,lezione)
+{
+    document.getElementById('modalTitle').innerHTML ="Disiscrizione";
+    document.getElementById('modalBody').innerHTML ="Sei sicuro di volerti disiscrivere?";
+    document.getElementById('modalBtn').innerHTML ="No";
+    document.getElementById('modalBtn').addEventListener("click",function list()
+    {
+        $("#modalBtnOk" ).remove();
+        document.getElementById('modalBtn').removeEventListener('click',list);
+    });
+    
+    let button = document.createElement("button");
+    button.innerHTML="Si";
+    button.class="btn btn-primary";
+    button.id="modalBtnOk";
+    button.className="btn btn-danger";
+    button.type ="button";
+    button.addEventListener("click", function()
+    {
+        $('#modalAll').modal('hide');
+        checkDel(iscrizione,lezione);
+        document.getElementById('modalBtn').removeEventListener('click',list);
+        
+
+    });
+    document.getElementById("modalFooter").appendChild(button);
+    $('#modalAll').modal('show');
+}
 
 function delIscrizione(iscrizione,lezione)
 {
@@ -590,3 +661,64 @@ function loadNavbar(isLogged)   //TODO: This can totally be reduced
         appNavbar.appendChild(navItem);
     }
 }
+
+function newCorso()
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", '/API/aule.php' , true);
+    xhr.onload = function()
+    {
+    
+    appContainer.innerHTML= ' <form class="" id="form">'+
+'       <label for="inputAula">Aula</label><br>'+
+'       <select id="inputAula" class ="form-control"name="aula" required></select>'+
+'       <label for="inputCorso" >Corso</label><br>'+
+    '    <input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required>'+
+    
+    '<label for="inputDescrizione" >Descrizione</label><br>'+
+        '<textarea type="" id="inputDescrizione" class="form-control" name="descrizione" placeholder="Descrizione" required>'+
+        '</textarea><br>'+
+
+    '<label for="inputTurni">Turni:</label><br>'+
+        '<input type="checkbox" id="turno1" name="turno1" class="form-check-label">'+
+          '  <label for="turno1"> Turno 1</label>'+
+       ' <input type="checkbox" id="turno2" name="turno2" class="form-check-label">'+
+       '     <label for="turno2"> Turno 2</label>'+
+       ' <input type="checkbox" id="turno3" name="turno3" class="form-check-label">'+
+        '    <label for="turno3"> Turno 3</label>'+
+      '  <input type="checkbox" id="turno4" name="turno4" class="form-check-label">'+
+       '     <label for="turno4"> Turno 4</label>'+
+
+   '<br> <label for="inputPosti" >Numero posti:</label>'+
+    '    <input type="text" id="inputPosti" class="form-control" name="posti" placeholder="Numero Posti" required><br>'+
+
+   ' <button type="submit" class="btn btn-outline-success my-2 my-sm-0" value="segna">Aggiungi</button>'+
+'</form>';
+
+var data = JSON.parse(xhr.response);
+let option;
+
+for (var i = 0; i < data.length; i++)
+{
+option = document.createElement('option');
+option.text = data[i].nomeAula;
+option.value = data[i].idAula;
+document.getElementById("inputAula").add(option);
+}
+let title;
+appTitle.innerHTML = "";
+title = document.createElement("a");
+title.className = "unclickable text-black";
+title.innerHTML = "Corsi";
+appTitle.appendChild(title);
+
+
+        
+    };
+    xhr.onerror = function()
+    {
+        alert("Errore");
+    };
+    xhr.send();
+}
+    

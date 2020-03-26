@@ -25,27 +25,7 @@
 </head>
 <body onload="aule()">
 
-<nav class="navbar navbar-expand-lg navbar-light navbar-Meucci for Africa">
-    <div class="container">
-        <a class="navbar-brand" href="../index.html"><b>Meucci for Africa</b></a>
-    
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="signup.html">Registrazione</a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-</nav>
 
 <main class="my-form">
     <div class="cotainer">
@@ -56,32 +36,31 @@
                         <a class="navbar-brand text-white"><b>Inserimento corsi</b></a>
                     </div>
                     <div class="card-body">
-                        <form class="form-signin" method="PUT" id="form">
-                            <h1 class="h3 mb-3 font-weight-normal">Nuovo</h1>
-                            
-                            <label for="inputAula" class="sr-only">Aula</label>
-                                <select id="inputAula" name="aula" required></select>
+                        <form class="form-signin" id="form">
+                            <label for="inputAula">Aula</label><br>
+                                <select id="inputAula" class ="form-control"name="aula" required></select>
                     
-                            <label for="inputCorso" class="sr-only">Corso</label>
+                            <label for="inputCorso" >Corso</label><br>
                                 <input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required>
                             
-                            <label for="inputDescrizione" class="sr-only">Descrizione</label>
-                                <input type="text" id="inputDescrizione" class="form-control" name="descrizione" placeholder="Descrizione" required>
+                            <label for="inputDescrizione" >Descrizione</label><br>
+                                <textarea type="" id="inputDescrizione" class="form-control" name="descrizione" placeholder="Descrizione" required>
+                                </textarea><br>
 
                             <label for="inputTurni">Turni:</label><br>
                                 <input type="checkbox" id="turno1" name="turno1" class="form-check-label">
-                                    <label for="vehicle1"> Turno 1</label>
+                                    <label for="turno1"> Turno 1</label>
                                 <input type="checkbox" id="turno2" name="turno2" class="form-check-label">
-                                    <label for="vehicle2"> Turno 2</label>
+                                    <label for="turno2"> Turno 2</label>
                                 <input type="checkbox" id="turno3" name="turno3" class="form-check-label">
-                                    <label for="vehicle3"> Turno 3</label>
+                                    <label for="turno3"> Turno 3</label>
                                 <input type="checkbox" id="turno4" name="turno4" class="form-check-label">
-                                    <label for="vehicle4"> Turno 4</label>
+                                    <label for="turno4"> Turno 4</label>
                     
-                            <label for="inputPosti" class="sr-only">Numero posti</label>
+                            <label for="inputPosti" >Numero posti</label><br>
                                 <input type="text" id="inputPosti" class="form-control" name="posti" placeholder="Numero Posti" required><br>
                     
-                            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="segna"/>
+                            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" value="segna">Aggiungi</button>
                         </form>
 
                     </div>
