@@ -130,3 +130,12 @@ div.nowLoading
 {
   color: #27241f;
 }
+.link 
+{
+  color: #007bff !important;
+}
+
+.link:hover
+{
+  text-decoration: underline !important;
+}

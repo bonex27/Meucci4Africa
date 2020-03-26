@@ -11,39 +11,41 @@ switch($requestMethod)
 {
 
     case 'POST'://Ok
+        
         $inputJSON = file_get_contents('php://input');
         $input = json_decode($inputJSON, TRUE);
 
-        $argomento->_id = $input['titolo'];
-        $argomento->_id = $input['descrizione'];
+        $argomento->_titolo = $input['titolo'];
+        $argomento->_descrizione = $input['descrizione'];
 
         $id = $argomento->put();
         
-        $nuovoCorso->$id[0]['idArgomento'];           
+        $nuovoCorso->idAula = $input["idAula"];
+        $nuovoCorso->idArgomento =  $id[0]['idArgomento'];           
         $nuovoCorso->postiLiberi = $input['postiLiberi'];
         $nuovoCorso->postiOccupati = 0;
-        
-        if($input["turno1"] == "ok")
+
+        if($input["turno1"] == true)
         {
-            $nuovoCorso->idTurno = $input["turno1"];
-            $argomento->put();
+            $nuovoCorso->idTurno = 1;
+            $nuovoCorso->post();
         }
-        if($input["turno2"] == "ok")
+        if($input["turno2"] == true)
         {
-            $nuovoCorso->idTurno = $input["turno2"];
-            $argomento->put();
+            $nuovoCorso->idTurno = 2;
+            $nuovoCorso->post();
         }
-        if($input["turno3"] == "ok")
+        if($input["turno3"] == true)
         {
-            $nuovoCorso->idTurno = $input["turno3"];
-            $argomento->put();
+            $nuovoCorso->idTurno = 3;
+            $nuovoCorso->post();
         }
-        if($input["turno4"] == "ok")
+        if($input["turno4"] == true)
         {
-            $nuovoCorso->idTurno = $input["turno4"];
-            $argomento->put();
+            $nuovoCorso->idTurno = 4;
+            $nuovoCorso->post();
         }
-    
+    break;
     default:
 	    header("HTTP/1.1 405 Method Not Allowed");
 	    break;

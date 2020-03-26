@@ -72,9 +72,15 @@ function load()
         {
             loadSignUp();
         }break;
+
         case "newcorso":
         {
             newCorso();
+        }break;
+        case "profile":
+        {
+            loadProfile();
+
         }break;
         default:
         {
@@ -601,67 +607,186 @@ function delIscrizione(iscrizione,lezione)
 ###NAVBAR###
 */
 
-function loadNavbar(isLogged)   //TODO: This can totally be reduced
+function loadNavbar(isLogged)
 {
+    appNavbar.innerHTML = "";
+
+    var navItem1 = document.createElement("li");
+    var navLink1 = document.createElement("a");
+    navItem1.className="nav-item";
+    navLink1.className="nav-link clickable";
+
+    var navItem2 = navItem1.cloneNode(false);
+    var navLink2 = navLink1.cloneNode(false);
+
     if(!isLogged)
     {
-        appNavbar.innerHTML = "";
-        
-        var navItem = document.createElement("li");
-        navItem.className="nav-item";
-
-        var navLink = document.createElement("a");
-        navLink.className="nav-link clickable";
-        navLink.innerHTML="Login"
-        navLink.setAttribute("href", "/login"); //TODO: We are a SPA, don't use href
-        navItem.appendChild(navLink);
-
-        appNavbar.appendChild(navItem);
-
-        
-        var navItem = document.createElement("li");
-        navItem.className="nav-item";
-
-        var navLink = document.createElement("a");
-        navLink.className="nav-link clickable";
-        navLink.innerHTML="Registrati"
-        navLink.setAttribute("href", "/signup"); //TODO: We are a SPA, don't use href
-        navItem.appendChild(navLink);
-
-        appNavbar.appendChild(navItem);
+        navLink1.innerHTML="Login"
+        navLink1.addEventListener("click", 
+                                function() {
+                                            history.pushState({},"Meucci4Africa", "/login");
+                                            loadLogin();
+                                        } );
+        navLink2.innerHTML="Registrati"
+        navLink2.addEventListener("click", 
+                                function() {
+                                            history.pushState({},"Meucci4Africa", "/signup");
+                                            loadSignUp();
+                                        } );
     }
     else
     {
-        appNavbar.innerHTML = "";
-
-        var navItem = document.createElement("li");
-        navItem.className="nav-item";
-
-        var navLink = document.createElement("a");
-        navLink.className="nav-link clickable";
-        navLink.addEventListener("click", 
+        navLink1.addEventListener("click", 
                                 function() {
                                             history.pushState({},"Meucci4Africa", "/home");
                                             loadHome();
                                         } );
-        navLink.innerHTML="I tuoi corsi";
-        navItem.appendChild(navLink);
+        navLink1.innerHTML="I tuoi corsi";
 
-        appNavbar.appendChild(navItem);
-
-        var navItem = document.createElement("li");
-        navItem.className="nav-item";
-
-        var navLink = document.createElement("a");
-        navLink.className="nav-link clickable";
-        navLink.addEventListener("click", logout);
-        navLink.innerHTML="Esci";
-        navItem.appendChild(navLink);
-
-        appNavbar.appendChild(navItem);
+        navLink2.addEventListener("click", logout);
+        navLink2.innerHTML="Esci";
     }
+    
+    navItem1.appendChild(navLink1);
+    navItem2.appendChild(navLink2);
+    appNavbar.appendChild(navItem1);
+    appNavbar.appendChild(navItem2);
 }
 
+/*
+###PROFILO###
+*/
+
+function loadProfile()
+{
+    var button;
+
+    appTitle.innerHTML = "<a class='unclickable text-black'>Il mio profilo</a>";
+
+    appContainer.innerHTML =
+    '<h2>Informazioni Personali</h2>' +
+    '<span>Nome: </span><span id="nome"></span><br/>' +
+    '<span>Cognome: </span><span id="cognome"></span><br/>' +
+    '<span>Classe: </span><span id="classe"></span><br/>' +
+    '<br/>' +
+    '<h2>Account</h2>' +
+    '<span>E-Mail: </span><span id="email"></span><br/>' +
+    '<span>Password: ********</span> <a class="link" id="editPsw"></a><br/>' +
+    '<br/>' +
+    '<div id="editProfile" style="margin-bottom: 0.5rem;">' +
+    '</div>' +
+    '<div id="deleteProfile" style="margin-bottom: 0.5rem;">' +
+    '</div>';
+
+    button = document.createElement("button");
+    button.id = "btnEdit";
+    button.className = "btn btn-primary";
+    button.innerHTML = "Modifica Profilo";
+    button.addEventListener("click",
+                            function()
+                            {
+                                document.getElementById("editPsw").innerHTML = "modifica";
+                                //TODO: Make other fields editable and enable apply button
+                            });
+    document.getElementById("editProfile").append(button);
+
+    button = document.createElement("button");
+    button.id = "btnApply";
+    button.className = "btn btn-outline-secondary disabled";
+    button.disabled = true;
+    button.innerHTML = "Applica";
+    button.addEventListener("click",
+                            function()
+                            {
+                                
+                            });
+    document.getElementById("editProfile").append(button);
+
+    button = document.createElement("button");
+    button.id = "btnDelete";
+    button.className = "btn btn-danger";
+    button.innerHTML = "Elimina Account";
+    button.addEventListener("click",
+                            function()
+                            {
+
+                            });
+    document.getElementById("deleteProfile").append(button);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/API/profilo.php");
+    xhr.onload = function()
+    {
+        var profileInfo = JSON.parse(xhr.response)[0];
+        document.getElementById("nome").innerHTML = profileInfo.nome;
+        document.getElementById("cognome").innerHTML = profileInfo.cognome;
+        document.getElementById("classe").innerHTML = profileInfo.classe;
+
+        document.getElementById("email").innerHTML = profileInfo.email;
+        if(profileInfo.authLevel > 0)
+        {
+            appContainer.insertAdjacentHTML('beforeend',
+            '<h2>Admin</h2>' +
+            '<div id="listIscritti" style="margin-bottom: 0.5rem;">' +
+            '</div>' +
+            '<div id="addCorso" style="margin-bottom: 0.5rem;">' +
+            '</div>');
+
+            button = document.createElement("button");
+            button.id = "btnList";
+            button.className = "btn btn-info";
+            button.innerHTML = "Elenco Iscritti";
+            button.addEventListener("click",
+                                    function()
+                                    {
+        
+                                    });
+            document.getElementById("listIscritti").append(button);
+
+            button = document.createElement("button");
+            button.id = "btnAdd";
+            button.className = "btn btn-warning";
+            button.innerHTML = "Aggiungi Corso";
+            button.addEventListener("click",
+                                    function()
+                                    {
+        								newCorso();
+										history.pushState({},"Meucci4Africa", "/newcorso")
+				
+                                    });
+            document.getElementById("addCorso").append(button);
+        }
+    };
+    xhr.onerror = function(){alert("Errore di rete");}
+    xhr.send();
+}
+function addCorso()
+{
+    var aula = document.getElementById("inputAula").value;
+    var titolo = document.getElementById("inputCorso").value;
+    var descrizione = document.getElementById("inputDescrizione").value;
+    var turno1 = document.getElementById("turno1").checked;
+    var turno2 = document.getElementById("turno2").checked;
+    var turno3 = document.getElementById("turno3").checked;
+    var turno4 = document.getElementById("turno4").checked;
+    var postiLiberi = document.getElementById("inputPosti").value;
+
+    var obj = { idAula: aula, titolo: titolo, descrizione: descrizione, turno1: turno1,turno2: turno2,turno3: turno3,turno4: turno4, postiLiberi: postiLiberi};
+    var myJSON = JSON.stringify(obj);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/API/nuoviCorsi.php' , true);
+    xhr.onload = function()
+    {
+        alert("ok")
+    };
+    xhr.onerror = function()
+    {
+        alert("Errore");
+    };
+    xhr.send(myJSON);
+
+
+}
 function newCorso()
 {
     var xhr = new XMLHttpRequest();
@@ -669,7 +794,7 @@ function newCorso()
     xhr.onload = function()
     {
     
-    appContainer.innerHTML= ' <form class="" id="form">'+
+    appContainer.innerHTML= ' <div  id="form">'+
 '       <label for="inputAula">Aula</label><br>'+
 '       <select id="inputAula" class ="form-control"name="aula" required></select>'+
 '       <label for="inputCorso" >Corso</label><br>'+
@@ -692,8 +817,8 @@ function newCorso()
    '<br> <label for="inputPosti" >Numero posti:</label>'+
     '    <input type="text" id="inputPosti" class="form-control" name="posti" placeholder="Numero Posti" required><br>'+
 
-   ' <button type="submit" class="btn btn-outline-success my-2 my-sm-0" value="segna">Aggiungi</button>'+
-'</form>';
+   ' <button  class="btn btn-outline-success my-2 my-sm-0" onclick="addCorso()" value="segna">Aggiungi</button>'+
+'</div>';
 
 var data = JSON.parse(xhr.response);
 let option;
@@ -721,4 +846,3 @@ appTitle.appendChild(title);
     };
     xhr.send();
 }
-    

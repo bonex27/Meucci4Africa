@@ -25,14 +25,14 @@ class nuovoCorso
     {
 			try
 			{
-                $sql = "INSERT INTO argomento ('aula', 'argomento', 'turno', 'postiLiberi','postiOccupati') VALUES (:aula, :argomento, :turno, :postiLiberi, :postiOccupati);"
+                $sql = "INSERT INTO lezione (aula, argomento, turno, postiLiberi,postiOccupati) VALUES (:aula, :argomento, :turno, :postiLiberi, :postiOccupati);";
                 
 				$data = [
-                    'aula' => $idAula,
-                    'argomento' => $idArgomento,
-                    'turno' => $idTurno,
-                    'postiLiberi' => $postiLiberi,
-                    'postiOccupati' => $postiOccupati,
+                    'aula' => $this->idAula,
+                    'argomento' => $this->idArgomento,
+                    'turno' => $this->idTurno,
+                    'postiLiberi' => $this->postiLiberi,
+                    'postiOccupati' => $this->postiOccupati,
 
                 ];
                 $stmt = $this->db->prepare($sql);

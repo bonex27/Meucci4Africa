@@ -85,14 +85,15 @@ class Argomento
 		
 		try
 		{
-			$sql = "INSERT INTO argomento ('titolo', 'descrizione') VALUES (:titolo, :descrizione);";
+			$sql = "INSERT INTO argomento (titolo, descrizione) VALUES (:titolo, :descrizione)";
+
 			$data = [
 				'titolo' => $this->_titolo,
 				'descrizione' => $this->_descrizione,
 			];
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
-			
+
 			
 			$sql = 'select idArgomento from argomento where titolo = :titolo';
 				$data = [
@@ -107,6 +108,7 @@ class Argomento
 		catch (Exception $e)
 		{
 			header("HTTP/1.1 400 Bad request");
+			echo $e;
 		}
 		
 	}

@@ -50,19 +50,31 @@ class Utente
 			echo $e;
 		}
 	}	
-	public function login()
+	public function get()
 	{
 		/*
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
 		try
 		{
-    		$sql = 'select idUtente from utente where email = :email and password = :password';
-    		$data = [
-			    'email' => $this->_email,
-				'password' => $this->_password,
-
-			];
+			if(isset($this->_id))
+			{
+				$sql = 'select u.nome, u.cognome, u.email, u.authLevel, c.nome as classe
+				from utente u
+				inner join classi c on u.classe = c.id
+				where idUtente = :id';
+				$data = [
+					'id' => $this->_id,
+				];
+			}
+			else
+    		{
+				$sql = 'select idUtente from utente where email = :email and password = :password';
+				$data = [
+					'email' => $this->_email,
+					'password' => $this->_password,
+				];
+			}
 	    	$stmt = $this->db->prepare($sql);
 	    	$stmt->execute($data);
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
