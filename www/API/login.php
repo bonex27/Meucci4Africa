@@ -15,7 +15,7 @@ switch($requestMethod)
         $utente->_email = $input["email"];
         $utente->_password = md5($input["password"]);
 
-        $dati = $utente->login();
+        $dati = $utente->get();
 
         session_start();
         

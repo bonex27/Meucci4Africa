@@ -121,3 +121,13 @@ div.nowLoading
   top: 0;
   z-index: 1024;
 }
+
+.link 
+{
+  color: #007bff !important;
+}
+
+.link:hover
+{
+  text-decoration: underline !important;
+}
