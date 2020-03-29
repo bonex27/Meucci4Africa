@@ -806,7 +806,7 @@ function loadProfile()
             button.addEventListener("click",
                                     function()
                                     {
-                                        loadUsersList();
+                                        loadUserList();
                                         history.pushState({},"Meucci4Africa", "/users")
                                         
                                     });
@@ -921,20 +921,44 @@ appTitle.appendChild(title);
 ###LISTA CORSI###
 */
 
-function loadUserList(){
+function loadUserList()
+{
     appTitle.innerHTML = "<a class='unclickable text-black'>Tutti gli utenti</a>";
 
     appContainer.innerHTML= '<div id="utenti"></div>';
-    appUtenti = document.getElementById("utenti");
-
+    appUtenti = document.getElementById("utenti");      
+                var table = document.createElement("table");
+                var thead = document.createElement("thead");
+                table.setAttribute("class", "table");
+                thead.className = "thead-dark";
+                table.appendChild(thead);
+                document.getElementById("appContainer").appendChild(table);
+            
+                var tr = document.createElement('tr');
+                tr.innerHTML =
+                    '<th>Nome</th>' +
+                    '<th>Cognome</th>' +
+                    '<th>Classe</th>' ;
+                thead.appendChild(tr);
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/API/utenti.php");
     xhr.onload = function()
         {
             var profileInfo = JSON.parse(xhr.response);
-            for(var i=0; i<profileInfo.length; i++){
-                appUtenti.innerHTML='<div>'+ profileInfo[i].nome + profileInfo[i].cognome + profileInfo[i].classe + '</div>';
-            }
+                    let tr, td, button;
+            
+                    for(var i = 0; i < profileInfo.length; i++)
+                    {
+                        tr = document.createElement('tr');
+                        tr.innerHTML =
+                            '<td>' +  profileInfo[i].nome + '</td>' +
+                            '<td>' +  profileInfo[i].cognome + '</td>' +
+                            '<td>' + profileInfo[i].classe + '</td>';
+                        td = document.createElement("td");
+                        tr.appendChild(td);
+                        table.appendChild(tr);
+                    }
+            
         };
     xhr.onerror = function(){alert("Errore di rete");}
     xhr.send();
