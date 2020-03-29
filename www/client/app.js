@@ -846,3 +846,27 @@ appTitle.appendChild(title);
     };
     xhr.send();
 }
+
+
+/*
+###LISTA CORSI###
+*/
+
+function loadUserList(){
+    appTitle.innerHTML = "<a class='unclickable text-black'>Tutti gli utenti</a>";
+
+    appContainer.innerHTML= '<div id="utenti"></div>';
+    appUtenti = document.getElementById("utenti");
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/API/utenti.php");
+    xhr.onload = function()
+        {
+            var profileInfo = JSON.parse(xhr.response);
+            for(var i=0; i<profileInfo.length; i++){
+                appUtenti.innerHTML='<div>'+ profileInfo[i].nome + profileInfo[i].cognome + profileInfo[i].classe + '</div>';
+            }
+        };
+    xhr.onerror = function(){alert("Errore di rete");}
+    xhr.send();
+}
