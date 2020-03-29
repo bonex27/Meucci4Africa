@@ -216,9 +216,25 @@ function loadCorso(id)
 
         var page = "<h3 id='title' style='font-weight: bold'>"+obj[0].titolo+"<h3>";
         page += "<h4 id='desc'>"+obj[0].descrizione+"</h4>";
-        page +=  '<select id="inputLezione" class="custom-select mr-sm-2" required></select>';
-        page += '<br><br><button type="button"  class="btn btn-danger" onclick="checkIscrizione()">Iscriviti</button>';
         appContainer.innerHTML = page;
+        var table = document.createElement("table");
+        table.id ="tableTurni";
+        var thead = document.createElement("thead");
+        table.setAttribute("class", "table");
+        thead.className = "thead-dark";
+        table.appendChild(thead);
+        appContainer.appendChild(table);
+
+    
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+            '<th>Turno</th>' +
+            '<th>Orario</th>' +
+            '<th>Posti Liberi</th>' +
+            '<th>Aula</th>'+
+            '<th>Iscriviti</th>';
+        thead.appendChild(tr);
+        
         loadTurni(id);
     };
     xhr.onerror = function() {
@@ -236,16 +252,41 @@ function loadTurni(argomento)
     callInfo.open("GET", chiamataInfo, true);
     callInfo.onload = function()
     {
-        let option;
-        var turni = JSON.parse(callInfo.response);
 
-        for (var i = 0; i < turni.length; i++)
-        {
-            option = document.createElement('option');
-            option.text = "Turno: " + turni[i].idTurno + "     Inizio: "+turni[i].oraInizio.substr(11, 5);
-            option.value = turni[i].idLezione;
-            document.getElementById("inputLezione").add(option);
-        }
+        
+        var turni = JSON.parse(callInfo.response);
+            let tr, td, button, table;
+            table = document.getElementById("tableTurni");
+    
+            for(var i = 0; i < turni.length; i++)
+            {
+                tr = document.createElement('tr');
+                tr.innerHTML =
+                    '<td>' + turni[i].idTurno + '</td>' +
+                    '<td>' + turni[i].oraInizio.substr(11, 5) +" - "+turni[i].oraFine.substr(11, 5)+ '</td>' +
+                    '<td>' + turni[i].postiliberi +"/"+turni[i].postioccupati+ '</td>'+
+                    '<td>' + turni[i].nomeAula + '</td>';
+                td = document.createElement("td");
+                button = document.createElement("button");
+                let lezione = turni[i].idLezione;
+                
+                button.className = "btn btn-success";
+                if(turni[i].justS == 1)
+                    button.className = 'btn btn-secondary disabled'
+                else
+                {
+                button.addEventListener("click",
+                                        function()
+                                        {
+                                            checkIscrizione(lezione);
+                                        });
+                }
+                button.innerHTML="✓";
+                                        
+                td.appendChild(button);
+                tr.appendChild(td);
+                table.appendChild(tr);
+            }
 
     };
     callInfo.onerror = function()
@@ -254,16 +295,12 @@ function loadTurni(argomento)
     };
     callInfo.send();
 }
-function checkIscrizione()
+
+function checkIscrizione(lezione)
 {
-    document.getElementById('modalTitle').innerHTML ="Isccrizione";
+    document.getElementById('modalTitle').innerHTML ="Iscrizione";
     document.getElementById('modalBody').innerHTML ="Sei sicuro di volerti iscrivere?";
     document.getElementById('modalBtn').innerHTML ="No";
-    document.getElementById('modalBtn').addEventListener("click",function list()
-    {
-        $("#modalBtnOk" ).remove();
-        document.getElementById('modalBtn').removeEventListener('click',list);
-    });
     
     let button = document.createElement("button");
     button.innerHTML="Si";
@@ -273,25 +310,32 @@ function checkIscrizione()
     button.addEventListener("click", function()
     {
         $('#modalAll').modal('hide');
-        callIscriviti();
-        document.getElementById('modalBtn').removeEventListener('click',list);
+        callIscriviti(lezione);
+        
 
     });
+    $('#modalAll').on('hidden.bs.modal', function (e) {
+        $("#modalBtnOk" ).remove();
+        document.getElementById('modalBtn').removeEventListener('click',list());
+      })
     document.getElementById("modalFooter").appendChild(button);
     $('#modalAll').modal('show');
 }
 
-function callIscriviti()
+function callIscriviti(lezione)
 {
-    id = document.getElementById("inputLezione").value;
-    var chiamataIscrizione = '/API/iscrizioni.php?id='+ id;
+    lezione = document.getElementById("inputLezione").value;
+    var chiamataIscrizione = '/API/iscrizioni.php?id='+ lezione;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chiamataIscrizione, true);
     xhr.onload = function()
     {
         if(xhr.status != 200)
         {
-            alert("Sei già iscritto ad una lezione durante questo turno");
+            document.getElementById('modalTitle').innerHTML ="Errore";
+            document.getElementById('modalBody').innerHTML ="Sei gia iscritto a una lezione durante questo turno";
+            document.getElementById('modalBtn').innerHTML ="Ok";
+            $('#modalAll').modal('show');
         }
         else
         {
@@ -565,11 +609,7 @@ function checkDel(iscrizione,lezione)
     document.getElementById('modalTitle').innerHTML ="Disiscrizione";
     document.getElementById('modalBody').innerHTML ="Sei sicuro di volerti disiscrivere?";
     document.getElementById('modalBtn').innerHTML ="No";
-    document.getElementById('modalBtn').addEventListener("click",function list()
-    {
-        $("#modalBtnOk" ).remove();
-        document.getElementById('modalBtn').removeEventListener('click',list);
-    });
+    document.getElementById('modalBtn').addEventListener("click", list);
     
     let button = document.createElement("button");
     button.innerHTML="Si";
@@ -578,17 +618,24 @@ function checkDel(iscrizione,lezione)
     button.className="btn btn-danger";
     button.type ="button";
     button.addEventListener("click", function()
-    {
+    { 
         $('#modalAll').modal('hide');
-        checkDel(iscrizione,lezione);
-        document.getElementById('modalBtn').removeEventListener('click',list);
-        
+        delIscrizione(iscrizione,lezione);       
+       
 
     });
+    $('#modalAll').on('hidden.bs.modal', function (e) {
+        $("#modalBtnOk" ).remove();
+        document.getElementById('modalBtn').removeEventListener('click',list());
+      })
     document.getElementById("modalFooter").appendChild(button);
     $('#modalAll').modal('show');
 }
-
+function list ()
+{
+    $("#modalBtnOk" ).remove();
+        document.getElementById('modalBtn').removeEventListener('click',list);
+}
 function delIscrizione(iscrizione,lezione)
 {
     var xhr = new XMLHttpRequest();
@@ -619,6 +666,9 @@ function loadNavbar(isLogged)
     var navItem2 = navItem1.cloneNode(false);
     var navLink2 = navLink1.cloneNode(false);
 
+    var navItem3 = navItem1.cloneNode(false);
+    var navLink3 = navLink1.cloneNode(false);
+
     if(!isLogged)
     {
         navLink1.innerHTML="Login"
@@ -633,6 +683,11 @@ function loadNavbar(isLogged)
                                             history.pushState({},"Meucci4Africa", "/signup");
                                             loadSignUp();
                                         } );
+        navItem1.appendChild(navLink1);
+        navItem2.appendChild(navLink2);
+
+        appNavbar.appendChild(navItem1);
+        appNavbar.appendChild(navItem2);
     }
     else
     {
@@ -643,14 +698,26 @@ function loadNavbar(isLogged)
                                         } );
         navLink1.innerHTML="I tuoi corsi";
 
-        navLink2.addEventListener("click", logout);
-        navLink2.innerHTML="Esci";
+        navLink2.addEventListener("click", 
+                                function() {
+                                            history.pushState({},"Meucci4Africa", "/profile");
+                                            loadProfile();
+                                        } );
+        navLink2.innerHTML="Il tuo profilo";
+
+        navLink3.addEventListener("click", logout);
+        navLink3.innerHTML="Esci";
+
+        navItem1.appendChild(navLink1);
+        navItem2.appendChild(navLink2);
+        navItem3.appendChild(navLink3);
+
+        appNavbar.appendChild(navItem1);
+        appNavbar.appendChild(navItem2);
+        appNavbar.appendChild(navItem3);
     }
     
-    navItem1.appendChild(navLink1);
-    navItem2.appendChild(navLink2);
-    appNavbar.appendChild(navItem1);
-    appNavbar.appendChild(navItem2);
+    
 }
 
 /*
@@ -739,7 +806,9 @@ function loadProfile()
             button.addEventListener("click",
                                     function()
                                     {
-        
+                                        loadUsersList();
+                                        history.pushState({},"Meucci4Africa", "/users")
+                                        
                                     });
             document.getElementById("listIscritti").append(button);
 

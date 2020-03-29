@@ -1,6 +1,6 @@
 <?php
 include_once("DBConnection.php");
-
+include_once("corsoSeguito.php");
 class Lezione 
 {
     protected $db;
@@ -15,11 +15,13 @@ class Lezione
 	
 	public function get()
 	{
+		session_start();
 		/*
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
 		if(isset($this->_idLezione))
 		{
+		
 			$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati
 			FROM lezione l
 			INNER JOIN aula a
@@ -37,6 +39,13 @@ class Lezione
 		}
 		else if(isset($this->_idArgomento))
 		{
+			$corsoSeguito = new mieiCorsi();
+			$corsoSeguito->_id  = $_SESSION["id"];
+			$turni = $corsoSeguito->get();
+			for($i = 0;$i < count($turni); $i++)
+			{
+				$idT[$turni[$i]["idTurno"]] = true;
+			}
 			try
 			{
 				$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati
@@ -52,6 +61,18 @@ class Lezione
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute($data);
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				for($i = 0;$i < count($result); $i++)
+				{
+					if(isset($idT[$result[$i]["idTurno"]]))
+						{
+							$result[$i]["justS"] = 1;
+						}
+					else
+					{
+						$result[$i]["justS"] = 0;
+					}
+				}
+
 				return $result;	
 			}
 			catch (Exception $e)

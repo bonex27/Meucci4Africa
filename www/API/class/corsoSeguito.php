@@ -6,7 +6,7 @@
  *   
  */
  
-include("DBConnection.php");
+include_once("DBConnection.php");
 class mieiCorsi 
 {
     protected $db;
