@@ -87,5 +87,24 @@ class Utente
 			echo $e;
 		}
 	}	
+	public function list(){
+		try
+		{
+			$sql = 'select u.nome, u.cognome, u.email, u.authLevel, c.nome as classe
+				from utente u inner join classi c 
+				on u.classe = c.id';
+			
+	    	$stmt = $this->db->prepare($sql);
+	    	$stmt->execute();
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return $result;			
+ 
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.0 500 Internal server error");
+			echo $e;
+		}
+	}
 }
 ?>
