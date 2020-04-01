@@ -2,7 +2,7 @@ html, body
 {
   overflow-x: hidden;
   height: 100%;
-  color: white;
+  color: black; 
 }
 
 .form-signin
@@ -60,14 +60,18 @@ html, body
   font-style: normal;
 
 }
-body, .appBg
+.appBg
 {
-  background-color: #27241f;
+  background-color: #b9bec6;
+}
+body
+{
+  background-color: #1f2227;
 }
 
 .bg-yellow
 {
-  background-color: #eaaf25;
+  background-color: #119ad9;
 }
 
 div.nowLoading
@@ -85,7 +89,7 @@ div.nowLoading
 
 .text-black
 {
-  color: #27241f !important;
+  color: #181b1e !important;
 }
 
 .table
@@ -116,7 +120,7 @@ div.nowLoading
 
 .navbar
 {
-  background-color: #eaaf25;
+  background-color: #119ad9;
   position: sticky;
   top: 0;
   z-index: 1024;
@@ -138,4 +142,9 @@ div.nowLoading
 .link:hover
 {
   text-decoration: underline !important;
+}
+
+hr
+{
+	background-color: white;
 }

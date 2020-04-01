@@ -371,6 +371,32 @@ function logout()
     xhr.send();
 }
 
+gapi.load('client', init);
+function init() {
+    var auth2 = gapi.auth2.init({client_id:'172278911634-3frggsillmspcdpbgvo8mtqqt70pnln8.apps.googleusercontent.com', hosted_domain:'itismeucci.com'});
+
+    auth2.signIn().then(
+    function(response) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST","./API/loginwithgoogle.php",TRUE);
+        xhr.onload = function(data, status, jqXHR)
+        {
+            console.log(data);
+        };
+        xhr.onerror = function()
+        {
+            alert("err");
+        };
+        xhr.send({'token': response.getAuthResponse().id_token});
+    
+    }
+    );
+}    
+
+
+  
+
+
 /*
 ###LOGIN###
 */
@@ -640,7 +666,7 @@ function delIscrizione(iscrizione,lezione)
 {
     var xhr = new XMLHttpRequest();
 
-    xhr.open("DELETE", '/API/iscrizioni.php/?id='+iscrizione+"&idLezione="+lezione , true);
+    xhr.open("DELETE", '/API/students.php/?id='+iscrizione+"&idLezione="+lezione , true);
     xhr.onload = loadHome;
     xhr.onerror = function()
     {
