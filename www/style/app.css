@@ -148,3 +148,7 @@ hr
 {
 	background-color: white;
 }
+
+.scrollable{
+	overflow-x: auto;
+}
