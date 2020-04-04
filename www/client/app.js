@@ -689,7 +689,7 @@ function delIscrizione(iscrizione,lezione)
 {
     var xhr = new XMLHttpRequest();
 
-    xhr.open("DELETE", '/API/students.php/?id='+iscrizione+"&idLezione="+lezione , true);
+    xhr.open("DELETE", '/API/iscrizioni.php?id='+iscrizione+"&idLezione="+lezione , true);
     xhr.onload = loadHome;
     xhr.onerror = function()
     {
@@ -786,8 +786,7 @@ function loadProfile()
     '<span>Classe: </span><span id="classe"></span><br/>' +
     '<br/>' +
     '<h2>Account</h2>' +
-    '<span>E-Mail: </span><span id="email"></span><br/>' +
-    '<span>Password: ********</span> <a class="link" id="editPsw"></a><br/>' +
+    '<span>E-Mail: </span><span id="email"></span><br/>'+
     '<br/>' +
     '<div id="editProfile" style="margin-bottom: 0.5rem;">' +
     '</div>' +

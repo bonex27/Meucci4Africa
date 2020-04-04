@@ -14,7 +14,7 @@ switch($requestMethod)
         $utente->_id = $_SESSION["id"];
 
         $profileInfo = $utente->get();
-        
+
         if(isset($profileInfo[0]))
         {
             echo json_encode($profileInfo);
