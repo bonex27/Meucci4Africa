@@ -217,13 +217,16 @@ function loadCorso(id)
         var page = "<h3 id='title' style='font-weight: bold'>"+obj[0].titolo+"<h3>";
         page += "<h4 id='desc'>"+obj[0].descrizione+"</h4>";
         appContainer.innerHTML = page;
+        var div = document.createElement("div");
         var table = document.createElement("table");
         table.id ="tableTurni";
         var thead = document.createElement("thead");
         table.setAttribute("class", "table");
         thead.className = "thead-dark";
+        div.className = "scrollable";
         table.appendChild(thead);
-        appContainer.appendChild(table);
+        appContainer.appendChild(div);
+        div.appendChild(table);
 
     
         var tr = document.createElement('tr');
@@ -571,12 +574,15 @@ function loadHome()
     appTitle.innerHTML = "<a class='unclickable text-black'>Home</a>";
     appContainer.innerHTML="";
 
+	var div = document.createElement("div");
     var table = document.createElement("table");
     var thead = document.createElement("thead");
     table.setAttribute("class", "table");
     thead.className = "thead-dark";
+	div.className = "scrollable";
     table.appendChild(thead);
-    document.getElementById("appContainer").appendChild(table);
+	div.appendChild(table);
+	appContainer.appendChild(div);
 
     var tr = document.createElement('tr');
     tr.innerHTML =
