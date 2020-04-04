@@ -14,13 +14,12 @@ switch($requestMethod)
 		{
 			$iscrizione->_idUtente = $_SESSION["id"];	//id is last element of uri
 			$iscrizione->_idLezione = $_GET["id"];
-			
+			echo $_SESSION["id"];
 			if(!$iscrizione->checkTurno())				
 			{
 				header("HTTP/1.0 400 Bad Request");		
 				exit();
 			}
-			echo "A";	
 			$availableSeats = $iscrizione->getSpace();
 			if($availableSeats <= 0)	//Redundant??
 			{

@@ -15,7 +15,7 @@ class Lezione
 	
 	public function get()
 	{
-		session_start();
+		
 		/*
 		Nella prima parte esegue l' aggiunta del nuovo studente
 		*/
@@ -39,6 +39,7 @@ class Lezione
 		}
 		else if(isset($this->_idArgomento))
 		{
+			session_start();
 			$corsoSeguito = new mieiCorsi();
 			$corsoSeguito->_id  = $_SESSION["id"];
 			$turni = $corsoSeguito->get();

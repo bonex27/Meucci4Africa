@@ -36,6 +36,7 @@ class Iscrizione
 		}
 		catch (Exception $e)
 		{
+			//echo $e;
             header("HTTP/1.1 400 Bad request");
 		}
     }
@@ -84,12 +85,15 @@ class Iscrizione
 			$stmt->execute($data);
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 			return !isset($result[0]);
+			
 		}
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 400 Bad request");
+			
 			return FALSE;
 		}
+		
     }
     
 	public function setPlace($posti)
@@ -108,6 +112,7 @@ class Iscrizione
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 400 Bad request");
+			
 			return FALSE;
 		}
 		

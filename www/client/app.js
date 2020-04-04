@@ -324,7 +324,7 @@ function checkIscrizione(lezione)
 
 function callIscriviti(lezione)
 {
-    lezione = document.getElementById("inputLezione").value;
+
     var chiamataIscrizione = '/API/iscrizioni.php?id='+ lezione;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chiamataIscrizione, true);
@@ -371,23 +371,30 @@ function logout()
     xhr.send();
 }
 
-gapi.load('client', init);
+function logGoogle()
+{
+    gapi.load('client', init);
+}
+
 function init() {
     var auth2 = gapi.auth2.init({client_id:'172278911634-3frggsillmspcdpbgvo8mtqqt70pnln8.apps.googleusercontent.com', hosted_domain:'itismeucci.com'});
 
     auth2.signIn().then(
     function(response) {
         var xhr = new XMLHttpRequest();
-        xhr.open("POST","./API/loginwithgoogle.php",TRUE);
+        xhr.open("POST","./API/loginwithgoogle.php",true);
         xhr.onload = function(data, status, jqXHR)
         {
             console.log(data);
+            history.pushState({},"Meucci4Africa", "/home");
+            loadNavbar(true);
+            loadHome();
         };
         xhr.onerror = function()
         {
             alert("err");
         };
-        xhr.send({'token': response.getAuthResponse().id_token});
+        xhr.send(JSON.stringify({'token': response.getAuthResponse().id_token}));
     
     }
     );
@@ -405,15 +412,20 @@ function loadLogin()
 {
     appTitle.innerHTML = "<a class='unclickable text-black'>Login</a>";
     appContainer.innerHTML = 
-'<form class="form-signin" method="GET" id="form">'+
+    '<form class="form-signin" method="GET" id="form">'+
     '<h1 class="h3 mb-3 font-weight-normal">Sign in</h1>'+
     '<label for="inputEmail" class="sr-only">Email</label>'+
     '    <input type="text" id="inputEmail" class="form-control" placeholder="Email address" name="email" required>'+
     '<label for="inputPassword" class="sr-only">Password</label>'+
     '    <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password" required>'+
     '<input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="login()" value="Login"/>'+
-    '<p class="mt-4 text-muted">&copy; 2019-2020</p>'+
-'</form>';
+    '<p class="mt-4 text-muted">oppure</p>'+
+    '</form>'+
+    '<br>'+
+    '<a class="btn btn-outline-dark" onclick="logGoogle()" role="button" style="text-transform:none">'+
+    '<img  width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />'+
+    'Login with Google'+
+    '</a>';
 }
 
 function login()
@@ -471,8 +483,13 @@ function loadSignUp()
     '       <label for="formGroupExampleInput">Verifica password</label>' +
     '        <input type="password" id="inputPasswordCheck" class="form-control" name="passwordCheck" placeholder="Password" required>' +
     '        <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="signUp()" value="Iscriviti"/>' +
-    '        <p class="mt-4 text-muted">&copy; 2019-2020</p>' +
-    '</form>';
+        '<p class="mt-4 text-muted">oppure</p>'+
+    '</form>'+
+    '<br>'+
+    '<a class="btn btn-outline-dark" onclick="logGoogle()" role="button" style="text-transform:none">'+
+    '<img  width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />'+
+    'Login with Google'+
+    '</a>';
     aule();
 }
 

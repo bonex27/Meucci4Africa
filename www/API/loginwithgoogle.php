@@ -1,6 +1,6 @@
 <?php
 require_once('../lib/google-api-php-client-2.4.1/vendor/autoload.php');
-
+include_once('class/logGoogle.php');
 $client = new Google_Client();
 
 //imposta variabile ambiente con file allegato nel messaggio precedente
@@ -9,11 +9,11 @@ putenv('GOOGLE_APPLICATION_CREDENTIALS=serviceAccount.json');
 //istruzioni da inserire nel php di redirect dopo la login con google ouath
 //decodifica token
 $postdata = json_decode(file_get_contents("php://input"));
-print_r($postdata);
+
 
 // verifica token
 $ver_token = $client->verifyIdToken($postdata->token);
-echo $ver_token;
+
 // ver token c’è il risultato della verifica del token: $ver_token['email'] contiene l’email dell’utente loggato
 
 $serviceaccount = new Google_Client();
@@ -26,5 +26,9 @@ $serviceaccount->setScopes(['https://www.googleapis.com/auth/admin.directory.use
 $dirservice = new Google_Service_Directory($serviceaccount);
 $user = $dirservice->users->get($ver_token['email']);
 echo $user->orgUnitPath; //contiene /Studente oppure /Docente
- print_r($user);
+print_r($user);
+
+$LG = new logGoogle($user->primaryEmail, $user->name->familyName,$user->name->givenName);
+$LG->checkJustLog();
+
 ?>
