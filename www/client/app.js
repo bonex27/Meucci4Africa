@@ -264,10 +264,11 @@ function loadTurni(argomento)
             for(var i = 0; i < turni.length; i++)
             {
                 tr = document.createElement('tr');
+                var posti = parseInt(turni[i].postiTotali)-parseInt(turni[i].postiOccupati);
                 tr.innerHTML =
                     '<td>' + turni[i].idTurno + '</td>' +
                     '<td>' + turni[i].oraInizio.substr(11, 5) +" - "+turni[i].oraFine.substr(11, 5)+ '</td>' +
-                    '<td>' + turni[i].postiliberi +"/"+turni[i].postioccupati+ '</td>'+
+                    '<td>' + posti  +"/"+turni[i].postiTotali+ '</td>'+
                     '<td>' + turni[i].nomeAula + '</td>';
                 td = document.createElement("td");
                 button = document.createElement("button");
@@ -333,17 +334,26 @@ function callIscriviti(lezione)
     xhr.open("GET", chiamataIscrizione, true);
     xhr.onload = function()
     {
-        if(xhr.status != 200)
+        if(xhr.status == 200)
+        {
+            
+            history.pushState({},"Meucci4Africa", "/home");
+            loadHome();
+        }
+        else if(xhr.status == 403)
+        {
+            document.getElementById('modalTitle').innerHTML ="Errore";
+            document.getElementById('modalBody').innerHTML ="Il Corso è pieno";
+            document.getElementById('modalBtn').innerHTML ="Ok";
+            $('#modalAll').modal('show');
+
+        }
+        else if(xhr.status == 400)
         {
             document.getElementById('modalTitle').innerHTML ="Errore";
             document.getElementById('modalBody').innerHTML ="Sei gia iscritto a una lezione durante questo turno";
             document.getElementById('modalBtn').innerHTML ="Ok";
             $('#modalAll').modal('show');
-        }
-        else
-        {
-            history.pushState({},"Meucci4Africa", "/home");
-            loadHome();
         }
     };
     xhr.onerror = function() {
@@ -893,7 +903,8 @@ function checkDel(iscrizione,lezione)
     button.addEventListener("click", function()
     { 
         $('#modalAll').modal('hide');
-        delProfile();       
+        delProfile();
+        loadNavbar();       
        
     });
     $('#modalAll').on('hidden.bs.modal', function (e) {

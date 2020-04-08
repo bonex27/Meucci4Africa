@@ -22,13 +22,13 @@ class Lezione
 		if(isset($this->_idLezione))
 		{
 		
-			$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati
+			$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiTotali, l.postiOccupati
 			FROM lezione l
 			INNER JOIN aula a
 			ON l.aula = a.idAula
 			INNER JOIN turno t
 			on l.turno = t.idTurno
-			where l.idLezione = :idLezione and l.postiliberi > 0';
+			where l.idLezione = :idLezione and l.postiTotali > 0';
 			$data = [
 				'idLezione' => $this->_idLezione,
 			];
@@ -49,13 +49,13 @@ class Lezione
 			}
 			try
 			{
-				$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiliberi, l.postioccupati
+				$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiTotali, l.postiOccupati
 				FROM lezione l
 				INNER JOIN aula a
 				ON l.aula = a.idAula
 				INNER JOIN turno t
 				on l.turno = t.idTurno
-				where l.argomento = :idArgomento and l.postiliberi > 0';
+				where l.argomento = :idArgomento ';
 				$data = [
 					'idArgomento' => $this->_idArgomento,
 				];
@@ -86,7 +86,7 @@ class Lezione
 		{
 			try
 			{
-				$sql = 'SELECT a.nomeAula, t.idTurno, t.oraInizio, t.oraFine, l.postiliberi, l.postioccupati
+				$sql = 'SELECT a.nomeAula, t.idTurno, t.oraInizio, t.oraFine, l.postiTotali, l.postioccupati
 				FROM lezione l
 				INNER JOIN aula a
 				ON l.aula = a.idAula
@@ -107,16 +107,16 @@ class Lezione
 
 
 	}	
- 	public function put($aula, $argomento, $turno, $postiLiberi) {
+ 	public function put($aula, $argomento, $turno, $postiTotali) {
 		
 		try
 		{
-			$sql = "INSERT INTO lezione ('aula', 'argomento', 'turno', 'postiLiberi', 'postiOccupati') VALUES (:aula, :argomento, :turno, :postiLiberi, 0);";
+			$sql = "INSERT INTO lezione ('aula', 'argomento', 'turno', 'postiTotali', 'postiOccupati') VALUES (:aula, :argomento, :turno, :postiTotali, 0);";
 			$data = [
 				'aula' => $aula,
 				'argomento' => $argomento,
 				'turno' => $turno,
-				'postiLiberi' => $postiLiberi,
+				'postiTotali' => $postiTotali,
 			];
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);

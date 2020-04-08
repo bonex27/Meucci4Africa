@@ -17,18 +17,18 @@ switch($requestMethod)
 			echo $_SESSION["id"];
 			if(!$iscrizione->checkTurno())				
 			{
-				header("HTTP/1.0 400 Bad Request");		
+				header("HTTP/1.0 400 Bad Request");	
 				exit();
 			}
 			$availableSeats = $iscrizione->getSpace();
-			if($availableSeats <= 0)	//Redundant??
+			if(is_null($availableSeats))	//Redundant??
 			{
-				header("HTTP/1.0 400 Bad Request");		
+				header("HTTP/1.0 403 Forbidden");		
 				exit();
 			}
-			if(!$iscrizione->setPlace($availableSeats -1))
+			if(!$iscrizione->setPlace($availableSeats +1))
 			{
-				header("HTTP/1.0 400 Bad Request");		
+				header("HTTP/1.0 400 Bad Request");	
 				exit();
 			}
 			$iscrizione->insert();

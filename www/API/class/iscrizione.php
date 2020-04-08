@@ -45,16 +45,16 @@ class Iscrizione
 	{
 		try
 		{
-			$sql = 'SELECT  l.postiLiberi, l.postiOccupati
+			$sql = 'SELECT  l.postiTotali, l.postiOccupati
 			FROM lezione l
-			where l.idLezione = :idLezione and l.postiliberi > 0';
+			where l.idLezione = :idLezione and l.postiTotali > l.postiOccupati';
 			$data = [
 				'idLezione' => $this->_idLezione,
 			];
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-			return($result[0]["postiLiberi"]);
+			return($result[0]["postiOccupati"]);
 		}
 		catch (Exception $e)
 		{
@@ -76,7 +76,8 @@ class Iscrizione
 			$sql = 'SELECT i.utente, l.turno
 			FROM iscrizione i
 			INNER JOIN lezione l ON i.lezione = l.idLezione
-			WHERE i.utente = :idUtente AND l.turno = :idTurno';
+			WHERE i.utente = :idUtente AND l.turno = :idTurno
+			FOR update';
 			$data = [
 				'idTurno' => $turno,
 				'idUtente' => $this->_idUtente
@@ -90,6 +91,7 @@ class Iscrizione
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 400 Bad request");
+			echo $e;
 			
 			return FALSE;
 		}
@@ -100,7 +102,7 @@ class Iscrizione
 	{
 		try
 		{
-			$sql = "UPDATE lezione SET postiLiberi = :place WHERE (`idLezione` = :id)";
+			$sql = "UPDATE lezione SET postiOccupati = :place WHERE (`idLezione` = :id)";
 			$data = [
 				'id' => $this->_idLezione,
 				'place' => $posti,
@@ -132,7 +134,7 @@ class Iscrizione
 			else if(isset($this->_idUtente))
 			{
 				$sql = 'DELETE FROM iscrizione
-				WHERE idUtente = :id';
+				WHERE utente = :id';
 				$data = [
 					'id' => $this->_idUtente + 0
 				];
@@ -149,6 +151,7 @@ class Iscrizione
 		catch (Exception $e)
 		{
 			header("HTTP/1. 500 Internal server error");
+			echo $e;
 		}
 	}
 }

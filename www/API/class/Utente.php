@@ -122,15 +122,13 @@ class Utente
 			$iscrizioni->_idUtente = $this->_id;
 			$iscrizioni->del();
 
-			$sql = 'DELETE FROM utenti WHERE id = :id';
+			$sql = 'DELETE FROM utente WHERE idUtente = :id';
 			$data = [
-				'id' => $this_id
+				'id' => $this->_id
 			];
 	    	$stmt = $this->db->prepare($sql);
 	    	$stmt->execute($data);
-			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-			return $result;			
- 
+			session_destroy();
 		}
 		catch (Exception $e)
 		{
