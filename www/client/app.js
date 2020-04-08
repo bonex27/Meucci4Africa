@@ -824,7 +824,7 @@ function loadProfile()
     button.addEventListener("click",
                             function()
                             {
-
+                                checkDel();
                             });
     document.getElementById("deleteProfile").append(button);
 
@@ -877,6 +877,45 @@ function loadProfile()
     xhr.onerror = function(){alert("Errore di rete");}
     xhr.send();
 }
+function checkDel(iscrizione,lezione)
+{
+    document.getElementById('modalTitle').innerHTML ="Cancellazione profilo";
+    document.getElementById('modalBody').innerHTML ="Sei sicuro di volerti cancellare?";
+    document.getElementById('modalBtn').innerHTML ="No";
+    document.getElementById('modalBtn').addEventListener("click", list);
+    
+    let button = document.createElement("button");
+    button.innerHTML="Si";
+    button.class="btn btn-primary";
+    button.id="modalBtnOk";
+    button.className="btn btn-danger";
+    button.type ="button";
+    button.addEventListener("click", function()
+    { 
+        $('#modalAll').modal('hide');
+        delProfile();       
+       
+    });
+    $('#modalAll').on('hidden.bs.modal', function (e) {
+        $("#modalBtnOk" ).remove();
+        document.getElementById('modalBtn').removeEventListener('click',list);
+      })
+    document.getElementById("modalFooter").appendChild(button);
+    $('#modalAll').modal('show');
+}
+
+function delProfile()
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE","api/profilo.php");
+    xhr.onload =  function(){
+        loadIndex();
+        history.pushState({},"Meucci4Africa", "/index")
+    }
+    xhr.onerror = function(){alert("Errore di rete");}
+    xhr.send();
+}
+
 function addCorso()
 {
     var aula = document.getElementById("inputAula").value;
