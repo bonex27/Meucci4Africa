@@ -49,7 +49,10 @@ class Utente
 			header("HTTP/1.0 400 Bad request");
 			echo $e;
 		}
-	}	
+	}
+	
+	
+	
 	public function get()
 	{
 		/*
@@ -61,7 +64,7 @@ class Utente
 			{
 				$sql = 'select u.nome, u.cognome, u.email, u.authLevel, c.nome as classe
 				from utente u
-				left join classi c on u.classe = c.id
+				left join classi c on u.classe = c.idClasse
 				where idUtente = :id';
 				$data = [
 					'id' => $this->_id,

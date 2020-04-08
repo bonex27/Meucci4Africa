@@ -36,6 +36,21 @@ class Classe
 			{
 				header("HTTP/1.1 500 Internal server error");
 			}
-    }
+	}
+	public function getClassId($alias)
+	{
+		$sql = "select * from classi where alias = :alias";
+
+			$data = [
+				'alias' => $alias,
+			];
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		if (count($result) > 0)
+        	{	
+				return (int)$result[0]["idClasse"];
+        	}
+	}
 }
 ?>

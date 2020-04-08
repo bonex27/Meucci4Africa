@@ -1,10 +1,10 @@
 <?php
 
 class DBConnection {
-    private $_dbHostname ="localhost";
-    private $_dbName = "meucci4africa";
-    private $_dbUsername = "bonex";
-    private $_dbPassword = "pietro001";
+    private $_dbHostname ="ideeinbit.it:3306";
+    private $_dbName = "ideeinbi_meucciforafrica";
+    private $_dbUsername = "ideei_meucci";
+    private $_dbPassword = "meucci2020";
     private $_con;
  
     public function __construct()
