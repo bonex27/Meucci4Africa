@@ -120,16 +120,31 @@ class Iscrizione
 	public function del() {	//add user check
 		try
 		{
-			$sql = 'DELETE FROM iscrizione
-			WHERE idIscrizione = :id';
-			$data = [
-				'id' => $this->_idIscrizione + 0
-			];
+			if(isset($this->_idIscrizione))
+			{
+				$sql = 'DELETE FROM iscrizione
+				WHERE idIscrizione = :id';
+				$data = [
+					'id' => $this->_idIscrizione + 0
+				];
+				//$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);		
+			}
+			else if(isset($this->_idUtente))
+			{
+				$sql = 'DELETE FROM iscrizione
+				WHERE idUtente = :id';
+				$data = [
+					'id' => $this->_idUtente + 0
+				];
+			}
+			else
+			{
+				header("HTTP/1. 500 Internal server error");
+				return;
+			}
 
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
-			//$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);		
-
 		}
 		catch (Exception $e)
 		{

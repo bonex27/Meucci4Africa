@@ -6,7 +6,8 @@
  *   
  */
  
-include("DBConnection.php");
+include_once("DBConnection.php");
+include_once("iscrizione.php");
 class Utente 
 {
     protected $db;
@@ -91,7 +92,9 @@ class Utente
 			echo $e;
 		}
 	}	
-	public function list(){
+
+	public function list()
+	{
 		try
 		{
 			$sql = 'select u.nome, u.cognome, u.email, u.authLevel, c.nome as classe
@@ -100,6 +103,31 @@ class Utente
 			
 	    	$stmt = $this->db->prepare($sql);
 	    	$stmt->execute();
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return $result;			
+ 
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.0 500 Internal server error");
+			echo $e;
+		}
+	}
+
+	public function delete()
+	{
+		try
+		{
+			$iscrizioni = new Iscrizione();
+			$iscrizioni->_idUtente = $this->_id;
+			$iscrizioni->del();
+
+			$sql = 'DELETE FROM utenti WHERE id = :id';
+			$data = [
+				'id' => $this_id
+			];
+	    	$stmt = $this->db->prepare($sql);
+	    	$stmt->execute($data);
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 			return $result;			
  
