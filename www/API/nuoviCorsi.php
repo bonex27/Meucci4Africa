@@ -9,8 +9,7 @@ $argomento = new Argomento();
 
 switch($requestMethod)
 {
-
-    case 'POST'://Ok
+    case 'POST':
         
         $inputJSON = file_get_contents('php://input');
         $input = json_decode($inputJSON, TRUE);
@@ -45,7 +44,7 @@ switch($requestMethod)
             $nuovoCorso->idTurno = 4;
             $nuovoCorso->post();
         }
-    break;
+        break;
     default:
 	    header("HTTP/1.1 405 Method Not Allowed");
 	    break;

@@ -26,8 +26,8 @@ class logGoogle
 
 	}
 	
-	public function sign() {
-		
+	public function sign()
+	{
 		try
 		{
 			$sql = "INSERT INTO utente (nome, cognome, email, classe) VALUES (:nome, :cognome , :email, :classe)";
@@ -45,29 +45,29 @@ class logGoogle
 		catch (Exception $e)
 		{
 			header("HTTP/1.1 400 Bad request");
-			echo $e;
 		}
 		
 	}
-	public function checkJustLog() {
+	public function checkJustLog()
+	{
         $sql = 'select * from utente where email = :email';
         $data = [
             'email' => $this->_email,
         ];
         $stmt = $this->db->prepare($sql);
         $stmt->execute($data);
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		
         if (count($result) > 0)
         {
             session_start();
 			$_SESSION["id"] = (int)$result[0]["idUtente"];
 			return true;
         }
-   
-        else
+		else
+		{
 			$this->sign();
+		}	
 	}	
-
-	
 }
 ?>

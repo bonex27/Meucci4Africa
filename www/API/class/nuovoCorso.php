@@ -15,6 +15,7 @@ class nuovoCorso
     public $idTurno; 
     public $postiLiberi; 
     public $postiOccupati;
+
 	public function __construct()
 	{
         $this->db = new DBConnection();
@@ -23,28 +24,28 @@ class nuovoCorso
 	
     public function post() 
     {
-			try
-			{
-                $sql = "INSERT INTO lezione (aula, argomento, turno, postiLiberi,postiOccupati) VALUES (:aula, :argomento, :turno, :postiLiberi, :postiOccupati);";
-                
-				$data = [
-                    'aula' => $this->idAula,
-                    'argomento' => $this->idArgomento,
-                    'turno' => $this->idTurno,
-                    'postiLiberi' => $this->postiLiberi,
-                    'postiOccupati' => $this->postiOccupati,
+        try
+        {
+            $sql = "INSERT INTO lezione (aula, argomento, turno, postiLiberi,postiOccupati) VALUES (:aula, :argomento, :turno, :postiLiberi, :postiOccupati);";
+            
+            $data = [
+                'aula' => $this->idAula,
+                'argomento' => $this->idArgomento,
+                'turno' => $this->idTurno,
+                'postiLiberi' => $this->postiLiberi,
+                'postiOccupati' => $this->postiOccupati,
 
-                ];
-                $stmt = $this->db->prepare($sql);
-                $stmt->execute($data);
-                $result = "OK";
-                return $result;			
-	
-			}
-			catch (Exception $e)
-			{
-				header("HTTP/1.1 500 Internal server error");
-			}
+            ];
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($data);
+            $result = "OK";
+            return $result;			
+
+        }
+        catch (Exception $e)
+        {
+            header("HTTP/1.1 500 Internal server error");
+        }
     }
 }
 ?>

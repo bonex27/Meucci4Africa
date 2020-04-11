@@ -15,14 +15,10 @@ class Lezione
 	
 	public function get()
 	{
-		
-		/*
-		Nella prima parte esegue l' aggiunta del nuovo studente
-		*/
 		if(isset($this->_idLezione))
 		{
 		
-			$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiTotali, l.postiOccupati
+			$sql = 'SELECT l.idLezione, l.argomento, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiTotali, l.postiOccupati
 			FROM lezione l
 			INNER JOIN aula a
 			ON l.aula = a.idAula
@@ -40,16 +36,21 @@ class Lezione
 		else if(isset($this->_idArgomento))
 		{
 			session_start();
+
 			$corsoSeguito = new mieiCorsi();
 			$corsoSeguito->_id  = $_SESSION["id"];
-			$turni = $corsoSeguito->get();
-			for($i = 0;$i < count($turni); $i++)
+			$infoCorsi = $corsoSeguito->get();
+
+			for($i = 0;$i < count($infoCorsi); $i++)
 			{
-				$idT[$turni[$i]["idTurno"]] = true;
+				$idTurn[$infoCorsi[$i]["idTurno"]] = true;	//Gets and sets turns the user has already occupied
+				$idTopic[$infoCorsi[$i]["idArgomento"]] = true;	//Gets and sets topics the user has already occupied
+				$idClass[$infoCorsi[$i]["idLezione"]] = true;	//Gets and sets topics the user has already occupied
 			}
+
 			try
 			{
-				$sql = 'SELECT l.idLezione, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiTotali, l.postiOccupati
+				$sql = 'SELECT l.idLezione, l.argomento, a.nomeAula, t.idTurno, t.oraInizio, t.oraFine ,l.postiTotali, l.postiOccupati
 				FROM lezione l
 				INNER JOIN aula a
 				ON l.aula = a.idAula
@@ -62,16 +63,16 @@ class Lezione
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute($data);
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				//TODO: Check if everything works fine.
+				//NOTE: Seems to be working fine
+				//TODO: Add checks to the backend
 				for($i = 0;$i < count($result); $i++)
 				{
-					if(isset($idT[$result[$i]["idTurno"]]))
-						{
-							$result[$i]["justS"] = 1;
-						}
-					else
-					{
-						$result[$i]["justS"] = 0;
-					}
+					$result[$i]["isSubscribedToTurn"] = isset($idTurn[$result[$i]["idTurno"]]) ? 1 : 0;	//Checks whether the user already subscribed to the i-th turn 
+					$result[$i]["isSubscribedToClass"] = isset($idClass[$result[$i]["idLezione"]]) ? 1 : 0;	//Checks whether the user already subscribed to the i-th class 
+					$result[$i]["isSubscribedToTopic"] = isset($idTopic[$result[$i]["argomento"]]) ? 1 : 0;	//Checks whether the user already subscribed to the i-th topic 
+					$result[$i]["postiOccupati"] += 0;	//convert to number
+					$result[$i]["postiTotali"] += 0;	//convert to number
 				}
 
 				return $result;	
@@ -79,7 +80,6 @@ class Lezione
 			catch (Exception $e)
 			{
 				header("HTTP/1.0 400 Bad request");
-				echo $e;
 			}
 		}
 		else
@@ -95,20 +95,17 @@ class Lezione
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute();
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				return $result;			
-	
+				return $result;	
 			}
 			catch (Exception $e)
 			{
 				header("HTTP/1. 500 Internal server error");
-				
 			}
 		}
-
-
 	}	
- 	public function put($aula, $argomento, $turno, $postiTotali) {
-		
+
+	 public function put($aula, $argomento, $turno, $postiTotali)
+	 {
 		try
 		{
 			$sql = "INSERT INTO lezione ('aula', 'argomento', 'turno', 'postiTotali', 'postiOccupati') VALUES (:aula, :argomento, :turno, :postiTotali, 0);";
@@ -121,14 +118,12 @@ class Lezione
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
 			$result = "OK";
-			return $result;			
-	
+			return $result;
 		}
 		catch (Exception $e)
 		{
 			header("HTTP/1.1 400 Bad request");
 		}
-		
 	}
 }
 ?>

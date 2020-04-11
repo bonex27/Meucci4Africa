@@ -7,7 +7,6 @@ $utente = new Utente();
 
 switch($requestMethod)
 {
-
     case 'GET':
         session_start();
         if(!isset($_SESSION["id"]))
@@ -42,7 +41,7 @@ switch($requestMethod)
 
             $profileInfo = $utente->delete();
         }
-    break;
+        break;
     default:
 	    header("HTTP/1.0 405 Method Not Allowed");
 	    break;

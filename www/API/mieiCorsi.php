@@ -1,6 +1,6 @@
 <?php
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-include('class/corsoSeguito.php');
+include_once('class/corsoSeguito.php');
 $MieiCorsi = new MieiCorsi();
 
 try
@@ -27,7 +27,6 @@ try
 
 			
 			break;
-		
 		default:
 			header("HTTP/1.0 405 Method Not Allowed");
 			break;

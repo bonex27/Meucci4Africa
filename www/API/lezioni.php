@@ -41,8 +41,7 @@ switch($requestMethod)
 
 		if($_PUT["turno4"])
 			$lez = $lezione->put($_PUT["aula"], $arg, 4, $_PUT["posti"]);
-		
-		echo "OK";
+			
 		break;
 
     default:

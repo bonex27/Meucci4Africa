@@ -8,6 +8,7 @@
  
 include_once("DBConnection.php");
 include_once("Lezione.php");
+include_once("Argomento.php");
 class Iscrizione 
 {
 	protected $db;
@@ -36,7 +37,6 @@ class Iscrizione
 		}
 		catch (Exception $e)
 		{
-			//echo $e;
             header("HTTP/1.1 400 Bad request");
 		}
     }
@@ -47,21 +47,20 @@ class Iscrizione
 		{
 			$sql = 'SELECT  l.postiTotali, l.postiOccupati
 			FROM lezione l
-			where l.idLezione = :idLezione and l.postiTotali > l.postiOccupati';
+			where l.idLezione = :idLezione';
 			$data = [
 				'idLezione' => $this->_idLezione,
 			];
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-			return($result[0]["postiOccupati"]);
+			return $result;
 		}
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 400 Bad request");
 			return 0;
 		}
-		
 	}
 	
 	public function checkTurno()
@@ -69,10 +68,11 @@ class Iscrizione
 		try
 		{
 			$lezione = new Lezione();
+
 			$lezione->_idLezione = $this->_idLezione;
-			print_r( $lezione->get());
 			$turno = $lezione->get()[0]["idTurno"];
-			echo $turno;
+			$argomento = $lezione->get()[0]["argomento"];
+
 			$sql = 'SELECT i.utente, l.turno
 			FROM iscrizione i
 			INNER JOIN lezione l ON i.lezione = l.idLezione
@@ -85,18 +85,28 @@ class Iscrizione
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-			return !isset($result[0]);
-			
+
+			$sql = 'SELECT count(a.idArgomento) as c -- only interested in number of rows
+			FROM iscrizione i
+			INNER JOIN lezione l on i.lezione = l.idLezione
+			INNER JOIN argomento a on l.argomento = a.idArgomento
+			WHERE i.utente = :user and a.idArgomento = :topic;';
+			$data = [
+				'user' => $this->_idUtente,
+				'topic' => $argomento
+			];
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			$result2 = $stmt->fetchAll(\PDO::FETCH_ASSOC)[0]['c'];
+
+			return ((!isset($result[0])) && ($result2 == 0));
 		}
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 400 Bad request");
-			echo $e;
-			
 			return FALSE;
 		}
-		
-    }
+	}
     
 	public function setPlace($posti)
 	{
@@ -117,9 +127,9 @@ class Iscrizione
 			
 			return FALSE;
 		}
-		
 	}
-	public function del() {	//add user check
+	public function del()
+	{	//TODO ASAP: add user check
 		try
 		{
 			if(isset($this->_idIscrizione))
@@ -128,16 +138,37 @@ class Iscrizione
 				WHERE idIscrizione = :id';
 				$data = [
 					'id' => $this->_idIscrizione + 0
-				];
-				//$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);		
+				];	
 			}
 			else if(isset($this->_idUtente))
 			{
-				$sql = 'DELETE FROM iscrizione
-				WHERE utente = :id';
-				$data = [
-					'id' => $this->_idUtente + 0
-				];
+				if(isset($this->_idLezione))
+				{
+					$sql = 'DELETE FROM iscrizione
+					WHERE utente = :id AND lezione = :class';
+					$data = [
+						'id' => $this->_idUtente + 0,
+						'class' => $this->_idLezione + 0
+					];
+				}
+				else
+				{
+					$sql = 'UPDATE lezione l
+					INNER JOIN iscrizione i ON i.lezione = l.idLezione
+					SET l.postiOccupati = l.postiOccupati - 1
+					WHERE i.utente = :id';
+					$data = [
+						'id' => $this->_idUtente + 0
+					];
+					$stmt = $this->db->prepare($sql);
+					$stmt->execute($data);
+
+					$sql = 'DELETE FROM iscrizione
+					WHERE utente = :id';
+					$data = [
+						'id' => $this->_idUtente + 0
+					];
+				}
 			}
 			else
 			{
@@ -151,7 +182,6 @@ class Iscrizione
 		catch (Exception $e)
 		{
 			header("HTTP/1. 500 Internal server error");
-			echo $e;
 		}
 	}
 }

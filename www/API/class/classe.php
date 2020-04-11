@@ -21,36 +21,34 @@ class Classe
 	
     public function get() 
     {
-
-		
-			try
-			{
-				$sql = 'select * from classi';
-				$stmt = $this->db->prepare($sql);
-				$stmt->execute();
-				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				return $result;			
-	
-			}
-			catch (Exception $e)
-			{
-				header("HTTP/1.1 500 Internal server error");
-			}
+		try
+		{
+			$sql = 'select * from classi';
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute();
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return $result;	
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.1 500 Internal server error");
+		}
 	}
 	public function getClassId($alias)
 	{
 		$sql = "select * from classi where alias = :alias";
+		$data = [
+			'alias' => $alias,
+		];
 
-			$data = [
-				'alias' => $alias,
-			];
-			$stmt = $this->db->prepare($sql);
-			$stmt->execute($data);
-			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute($data);
+		$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
 		if (count($result) > 0)
-        	{	
-				return (int)$result[0]["idClasse"];
-        	}
+		{	
+			return (int)$result[0]["idClasse"];
+		}
 	}
 }
 ?>

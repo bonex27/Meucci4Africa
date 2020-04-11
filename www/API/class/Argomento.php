@@ -20,9 +20,8 @@ class Argomento
         $this->db = $this->db->returnConnection();
 	}
 	
-	public function get() {
-
-		
+	public function get()
+	{
 		if(!isset($this->_id))
 		{
 			try
@@ -31,8 +30,7 @@ class Argomento
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute();
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				return $result;			
-	
+				return $result;
 			}
 			catch (Exception $e)
 			{
@@ -47,11 +45,11 @@ class Argomento
 				$data = [
 					'titolo' => $this->_titolo,
 				];
+
 				$stmt = $this->db->prepare($sql);
 				$stmt->execute($data);
 				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				return $result;			
-	
+				return $result;
 			}
 			catch (Exception $e)
 			{
@@ -74,15 +72,12 @@ class Argomento
 			catch (Exception $e)
 			{
 				header("HTTP/1.1 400 Bad request");
-				echo $e;
 			}
 		}
-
-
 	}	
 
-	public function put() {
-		
+	public function put()
+	{
 		try
 		{
 			$sql = "INSERT INTO argomento (titolo, descrizione) VALUES (:titolo, :descrizione)";
@@ -94,23 +89,19 @@ class Argomento
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
 
-			
 			$sql = 'select idArgomento from argomento where titolo = :titolo';
-				$data = [
-					'titolo' => $this->_titolo,
-				];
-				$stmt = $this->db->prepare($sql);
-				$stmt->execute($data);
-				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				return $result;	
-	
+			$data = [
+				'titolo' => $this->_titolo,
+			];
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute($data);
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return $result;	
 		}
 		catch (Exception $e)
 		{
 			header("HTTP/1.1 400 Bad request");
-			echo $e;
 		}
-		
 	}
 }
 ?>

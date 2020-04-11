@@ -28,7 +28,6 @@ switch($requestMethod)
             header("HTTP/1.0 400 Bad Request");
         }
         break;
-    
     default:
 	    header("HTTP/1.0 405 Method Not Allowed");
 	    break;

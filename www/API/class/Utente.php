@@ -23,13 +23,9 @@ class Utente
         $this->db = new DBConnection();
         $this->db = $this->db->returnConnection();
     }
- 
-    //insert
+
 	public function insert()
 	{
-		/*
-		Nella prima parte esegue l' aggiunta del nuovo studente
-		*/
 		try
 		{
     		$sql = 'INSERT INTO utente (nome, cognome, email, password, classe)  VALUES (:nome, :cognome, :email, :password, :classe)';
@@ -48,7 +44,6 @@ class Utente
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 400 Bad request");
-			echo $e;
 		}
 	}
 	
@@ -56,9 +51,6 @@ class Utente
 	
 	public function get()
 	{
-		/*
-		Nella prima parte esegue l' aggiunta del nuovo studente
-		*/
 		try
 		{
 			if(isset($this->_id))
@@ -89,7 +81,6 @@ class Utente
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 500 Internal server error");
-			echo $e;
 		}
 	}	
 
@@ -110,7 +101,6 @@ class Utente
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 500 Internal server error");
-			echo $e;
 		}
 	}
 
@@ -133,7 +123,6 @@ class Utente
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 500 Internal server error");
-			echo $e;
 		}
 	}
 }

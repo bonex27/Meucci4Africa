@@ -7,7 +7,6 @@ $utente = new Utente();
 
 switch($requestMethod)
 {
-
     case 'POST'://Ok
         $inputJSON = file_get_contents('php://input');
         $input = json_decode($inputJSON, TRUE);
@@ -20,7 +19,6 @@ switch($requestMethod)
 
         $data = $utente->insert();
         break;
-    
     default:
 	    header("HTTP/1.0 405 Method Not Allowed");
 	    break;

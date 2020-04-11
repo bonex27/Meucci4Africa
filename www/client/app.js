@@ -275,17 +275,30 @@ function loadTurni(argomento)
                 let lezione = turni[i].idLezione;
                 
                 button.className = "btn btn-success";
-                if(turni[i].justS == 1)
+                if(turni[i].isSubscribedToClass)
+                {
+                    button.innerHTML="x";
+                    button.className = "btn btn-danger";
+                    button.addEventListener("click",
+                                            function()
+                                            {
+                                                checkDel(null,lezione);
+                                            });
+                }
+                else if((turni[i].isSubscribedToTurn | turni[i].isSubscribedToTopic) == 1 || turni[i].postiOccupati >= turni[i].postiTotali)
+                {
+                    button.innerHTML="✓";
                     button.className = 'btn btn-secondary disabled'
+                }
                 else
                 {
-                button.addEventListener("click",
-                                        function()
-                                        {
-                                            checkIscrizione(lezione);
-                                        });
+                    button.innerHTML="✓";
+                    button.addEventListener("click",
+                                            function()
+                                            {
+                                                checkIscrizione(lezione);
+                                            });
                 }
-                button.innerHTML="✓";
                                         
                 td.appendChild(button);
                 tr.appendChild(td);
@@ -699,7 +712,7 @@ function delIscrizione(iscrizione,lezione)
 {
     var xhr = new XMLHttpRequest();
 
-    xhr.open("DELETE", '/API/iscrizioni.php?id='+iscrizione+"&idLezione="+lezione , true);
+    xhr.open("DELETE", '/API/iscrizioni.php?' + (iscrizione != null ? 'id=' + iscrizione + '&' : '' ) + 'idLezione=' + lezione , true);
     xhr.onload = loadHome;
     xhr.onerror = function()
     {
@@ -834,7 +847,7 @@ function loadProfile()
     button.addEventListener("click",
                             function()
                             {
-                                checkDel();
+                                confirmUserDelete();
                             });
     document.getElementById("deleteProfile").append(button);
 
@@ -887,7 +900,7 @@ function loadProfile()
     xhr.onerror = function(){alert("Errore di rete");}
     xhr.send();
 }
-function checkDel(iscrizione,lezione)
+function confirmUserDelete()
 {
     document.getElementById('modalTitle').innerHTML ="Cancellazione profilo";
     document.getElementById('modalBody').innerHTML ="Sei sicuro di volerti cancellare?";

@@ -21,21 +21,18 @@ class Aula
 	
     public function get() 
     {
-
-		
-			try
-			{
-				$sql = 'select * from aula';
-				$stmt = $this->db->prepare($sql);
-				$stmt->execute();
-				$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-				return $result;			
-	
-			}
-			catch (Exception $e)
-			{
-				header("HTTP/1.1 500 Internal server error");
-			}
+		try
+		{
+			$sql = 'select * from aula';
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute();
+			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return $result;
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.1 500 Internal server error");
+		}
     }
 }
 ?>
