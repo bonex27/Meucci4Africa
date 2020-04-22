@@ -1,3 +1,6 @@
+//TODO: tables needs a tbody in order to be striped
+
+
 /*
 ###APP LOAD###
 */
@@ -80,6 +83,11 @@ function load()
         case "profile":
         {
             loadProfile();
+
+        }break;
+        case "users":
+        {
+            loadUserList();
 
         }break;
         default:
@@ -221,7 +229,7 @@ function loadCorso(id)
         var table = document.createElement("table");
         table.id ="tableTurni";
         var thead = document.createElement("thead");
-        table.setAttribute("class", "table");
+        table.setAttribute("class", "table table-striped");
         thead.className = "thead-dark";
         div.className = "scrollable";
         table.appendChild(thead);
@@ -600,7 +608,7 @@ function loadHome()
 	var div = document.createElement("div");
     var table = document.createElement("table");
     var thead = document.createElement("thead");
-    table.setAttribute("class", "table");
+    table.setAttribute("class", "table table-striped");
     thead.className = "thead-dark";
 	div.className = "scrollable";
     table.appendChild(thead);
@@ -1029,48 +1037,197 @@ appTitle.appendChild(title);
 
 
 /*
-###LISTA CORSI###
+###LISTA UTENTI###
 */
-
 function loadUserList()
 {
-    appTitle.innerHTML = "<a class='unclickable text-black'>Tutti gli utenti</a>";
+    appTitle = document.getElementById("appTitle");
+    appContainer = document.getElementById("appContainer");
+    appNavbar = document.getElementById("appNavbar");
 
-    appContainer.innerHTML= '<div id="utenti"></div>';
-    appUtenti = document.getElementById("utenti");      
-                var table = document.createElement("table");
-                var thead = document.createElement("thead");
-                table.setAttribute("class", "table");
-                thead.className = "thead-dark";
-                table.appendChild(thead);
-                document.getElementById("appContainer").appendChild(table);
-            
-                var tr = document.createElement('tr');
-                tr.innerHTML =
-                    '<th>Nome</th>' +
-                    '<th>Cognome</th>' +
-                    '<th>Classe</th>' ;
-                thead.appendChild(tr);
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/API/utenti.php");
     xhr.onload = function()
+    {
+        appTitle.innerHTML = "Tutti gli utenti";
+        appContainer.innerHTML = "";
+
+        var table = document.createElement("table");
+        var thead = document.createElement("thead");
+        var tr = document.createElement('tr');
+    
+        table.setAttribute("class", "table");
+        table.id = "table";
+        thead.className = "thead-dark";
+        tr.innerHTML =
+            '<th>Nome</th>' +
+            '<th>Cognome</th>' +
+            '<th>Email</th>' +
+            '<th>Classe</th>' +
+            '<th style="width: 1%;">Rimuovi</th>' +
+            '<th style="width: 1%;">Modifica</th>' ;
+    
+        thead.appendChild(tr);
+        table.appendChild(thead);
+        appContainer.appendChild(table);
+
+        var students = JSON.parse(xhr.response);
+
+        for(var i = 0; i < students.length; i++)
         {
-            var profileInfo = JSON.parse(xhr.response);
-                    let tr, td, button;
-            
-                    for(var i = 0; i < profileInfo.length; i++)
-                    {
-                        tr = document.createElement('tr');
-                        tr.innerHTML =
-                            '<td>' +  profileInfo[i].nome + '</td>' +
-                            '<td>' +  profileInfo[i].cognome + '</td>' +
-                            '<td>' + profileInfo[i].classe + '</td>';
-                        td = document.createElement("td");
-                        tr.appendChild(td);
-                        table.appendChild(tr);
-                    }
-            
-        };
-    xhr.onerror = function(){alert("Errore di rete");}
+            tr = document.createElement('tr');
+            fillTR(tr, students[i]);
+            table.appendChild(tr);
+        }
+    };
     xhr.send();
+}
+
+function fillTR(tr, student)
+{
+    let id = student.idUtente;
+    let button1 = document.createElement("button");
+    let button2 = document.createElement("button");
+    let td1 = document.createElement("td");
+    let td2 = document.createElement("td");
+
+    button1.className = "btn btn-danger";
+    button1.innerHTML = "x";
+    button1.addEventListener("click", function()
+                                    {
+                                        removeStudent(id, button1);
+                                    });
+    td1.appendChild(button1);
+
+    button2.className = "btn btn-primary";
+    button2.innerHTML = "&#x1F589;";
+    button2.addEventListener("click", function()
+                                    {
+                                        editStudent(id, button2);
+                                    });
+    td2.appendChild(button2);
+
+    tr.innerHTML =
+        '<td>' +  student.nome + '</td>' +
+        '<td>' +  student.cognome + '</td>' +
+        '<td>' +  student.email + '</td>' +
+        '<td>' +  student.classe + '</td>';
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+}
+
+function removeStudent(id, button)  //TODO: SESSION GET DESTROYED, FIX THIS!
+{
+    document.getElementById("table").removeChild(button.parentElement.parentElement);
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", '/API/utenti.php?id=' + id , true);
+    xhr.onload = function()
+    {
+        if(xhr.status != 200)
+        {
+            alert("Errore: il server ha risposto con codice " + xhr.status);
+            return;
+        }
+    };
+    xhr.onerror = function()
+    {
+        alert("Errore di rete. Sei ancora online?");
+    };
+    xhr.send();
+}
+
+function editStudent(id, button)
+{
+    let inpName, inpSurname, slcClass;
+    var tr = button.parentElement.parentElement;
+
+    tr.innerHTML = tr.innerHTML; //reconstruct the DOM, removing all event listeners
+
+    var tdName = tr.childNodes[0];
+    var tdSurname = tr.childNodes[1];
+    var tdEmail = tr.childNodes[2];
+    var tdClass = tr.childNodes[3];
+    var btnRemove = tr.childNodes[4].childNodes[0];
+    var btnEdit = tr.childNodes[5].childNodes[0];
+
+    tdName.innerHTML = tdSurname.innerHTML = tdClass.innerHTML = tdEmail.innerHTML = "";
+
+
+    btnRemove.className = "btn btn-secondary";
+    btnRemove.disabled = true;
+
+    btnEdit.className = "btn btn-success";
+    btnEdit.innerHTML = "&#x2713;";
+    btnEdit.addEventListener("click", function()
+                                        {
+                                            var nome = inpName.value;
+                                            var cognome = inpSurname.value;
+                                            var email = inpEmail.value;
+                                            var classe = slcClass.value;
+                                            var sezione = slcClass.options[slcClass.selectedIndex].text;
+                                            var obj = {id: id, nome: nome, cognome: cognome, email: email, classe: classe, sezione: sezione};
+                                            applyChanges(obj, tr);
+                                        });
+    
+    inpName = document.createElement("input");
+    inpName.className = "form-input";
+    tdName.appendChild(inpName);
+
+    inpSurname = document.createElement("input");
+    inpSurname.className = "form-input";
+    tdSurname.appendChild(inpSurname);
+
+    inpEmail = document.createElement("input");
+    inpEmail.className = "form-input";
+    tdEmail.appendChild(inpEmail);
+
+    slcClass = document.createElement("select");
+    slcClass.className = "form-input";
+    tdClass.appendChild(slcClass);
+                                        
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", '/API/classi.php' , true);
+    xhr.onload = function()
+    {
+        var data = JSON.parse(xhr.response);
+        let option;
+
+        for (var i = 0; i < data.length; i++)
+        {
+            option = document.createElement('option');
+            option.text = data[i].nome;
+            option.value = data[i].idClasse;
+            slcClass.add(option);
+        } 
+    };
+    xhr.onerror = function()
+    {
+        alert("Errore di rete");
+    };
+    xhr.send();
+}
+
+function applyChanges(object, tr)
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", '/API/utenti.php', true);
+    xhr.onload = function()
+    {
+        if(xhr.status != 200)
+        {
+            alert("Errore: il server ha risposto con codice " + xhr.status);
+            return;
+        }
+
+        tr.innerHTML = "";
+        object.classe = object.sezione;
+        fillTR(tr, object);
+    };
+    xhr.onerror = function()
+    {
+        alert("Errore di rete. Sei ancora online?");
+    };
+    xhr.send(JSON.stringify(object));
+
+    //revert changes to the table here
 }
