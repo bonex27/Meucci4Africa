@@ -88,9 +88,9 @@ class Utente
 	{
 		try
 		{
-			$sql = 'select u.nome, u.cognome, u.email, u.authLevel, c.nome as classe
+			$sql = 'select u.idUtente, u.nome, u.cognome, u.email, u.authLevel, c.nome as classe
 				from utente u inner join classi c 
-				on u.classe = c.id';
+				on u.classe = c.idClasse';
 			
 	    	$stmt = $this->db->prepare($sql);
 	    	$stmt->execute();
@@ -123,6 +123,54 @@ class Utente
 		catch (Exception $e)
 		{
 			header("HTTP/1.0 500 Internal server error");
+		}
+	}
+
+	public function update()
+	{
+		try
+		{
+			$data["id"] = (int)$this->_id;
+
+			$sql = 'UPDATE utente SET ';
+
+			if(isset($this->_nome))
+			{
+				$sql.=' nome = :nome,';
+				$data["nome"] = $this->_nome;
+			}
+
+			if(isset($this->_cognome))
+			{
+				$sql.=' cognome = :cognome,';
+				$data["cognome"] = $this->_cognome;
+			}
+
+			if(isset($this->_email))
+			{
+				$sql.=' email = :email,';
+				$data["email"] = $this->_email;
+			}
+
+			if(isset($this->_classe))
+			{
+				
+				$sql.=' classe = :classe';
+				$data["classe"] = $this->_classe;
+			}
+			else
+				$sql = substr_replace($sql, '', -1);
+			
+			$sql.=" WHERE idUtente = :id";
+
+	    	$stmt = $this->db->prepare($sql);
+	    	$stmt->execute($data);
+			$status = $stmt->rowCount();
+
+		}
+		catch (Exception $e)
+		{
+			header("HTTP/1.0 400 Bad request");
 		}
 	}
 }
