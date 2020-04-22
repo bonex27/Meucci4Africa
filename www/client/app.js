@@ -815,6 +815,8 @@ function loadProfile()
     '</div>' +
     '<div id="deleteProfile" style="margin-bottom: 0.5rem;">' +
     '</div>';
+    '<div id="getPdf" style="margin-bottom: 0.5rem;">' +
+    '</div>';
 
     button = document.createElement("button");
     button.id = "btnEdit";
@@ -868,6 +870,8 @@ function loadProfile()
             '<div id="listIscritti" style="margin-bottom: 0.5rem;">' +
             '</div>' +
             '<div id="addCorso" style="margin-bottom: 0.5rem;">' +
+            '</div>'+
+            '<div id="getPdf" style="margin-bottom: 0.5rem;">' +
             '</div>');
 
             button = document.createElement("button");
@@ -895,6 +899,19 @@ function loadProfile()
 				
                                     });
             document.getElementById("addCorso").append(button);
+
+            button = document.createElement("button");
+            button.id = "btnPdf";
+            button.className = "btn btn-danger";
+            button.innerHTML = "Pdf Aule";
+            button.addEventListener("click",
+                                    function()
+                                    {
+        								var win = window.open("API/getPdf.php", '_blank');
+                                        win.focus();
+				
+                                    });
+            document.getElementById("getPdf").append(button);
         }
     };
     xhr.onerror = function(){alert("Errore di rete");}
