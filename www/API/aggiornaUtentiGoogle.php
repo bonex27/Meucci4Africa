@@ -25,7 +25,7 @@ $serviceaccount->setSubject('adminsoft@itismeucci.com');
 $serviceaccount->setScopes(['https://www.googleapis.com/auth/admin.directory.user.readonly','https://www.googleapis.com/auth/admin.directory.group.readonly']);
 
 $dirservice = new Google_Service_Directory($serviceaccount);
-$user = $dirservice->users->get($ver_token['email']);
+//$user = $dirservice->users->get($ver_token['email']);
 //echo $user->orgUnitPath; //contiene /Studente oppure /Docente
 //print_r($user);
 
@@ -33,22 +33,34 @@ $user = $dirservice->users->get($ver_token['email']);
 //$dirservice = new Google_Service_Directory($serviceaccount);
 $user = $dirservice->users->get($ver_token['email']);
 //echo $user->orgUnitPath; //contiene /Studente oppure /Docente
-$optParams = array('userKey' => $ver_token['email']);
+$optParams = array("domain" => "itismeucci.com");//'userKey' => $ver_token['email']);
+//print_r($dirservice);
+echo "\n";
 $groups = $dirservice->groups->listGroups($optParams);
+//print_r($groups);
 
 //print_r($groups);
 $classId = new Classe();
+$className="5bia";
+$LG = new logGoogle($user->primaryEmail, $user->name->familyName,$user->name->givenName,$classId->getClassId($className));
 for($i = 0; $i < count($groups["groups"]);$i++)
 {
     $className = $groups["groups"][$i]["email"];
-    if (strpos($className, 'studenti.') !== false) {
-        $className =str_replace("studenti.", "", $className);
-        $className =str_replace("@itismeucci.com", "", $className);
-    break;
+    if (strpos($className, 'studenti.') !== false && strpos($className, 'tutti') === false)
+	{
+		print_r("<br><b>".$className."</b><br>");
+        $users = $dirservice->members->listMembers($className);
+		for($j = 0; $j < count($users);$j++)
+		{
+			$className =str_replace("studenti.", "", $className);
+			$className =str_replace("@itismeucci.com", "", $className);
+			//echo $users[$j]["email"]."<br>";
+			$user = $dirservice->users->get($users[$j]["email"]);
+			$LG->setValues($user->primaryEmail, $user->name->familyName,$user->name->givenName,$classId->getClassId($className));
+			$LG->checkJustLog();
+		}
     }
 }
 echo $classId->getClassId($className);
-$LG = new logGoogle($user->primaryEmail, $user->name->familyName,$user->name->givenName,$classId->getClassId($className));
-$_SESSIOD["id"] = $LG->checkJustLog();
 
 ?>

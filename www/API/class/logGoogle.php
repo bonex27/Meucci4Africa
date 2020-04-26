@@ -26,6 +26,16 @@ class logGoogle
 
 	}
 	
+	public function setValues($email,$cognome,$nome,$classe)
+	{
+		
+		$this->_nome = $nome;
+		$this->_cognome = $cognome;
+		$this->_email = $email;
+		$this->_classe = $classe;
+		
+	}
+	
 	public function sign()
 	{
 		try
@@ -60,9 +70,8 @@ class logGoogle
 		
         if (count($result) > 0)
         {
-            session_start();
-			$_SESSION["id"] = (int)$result[0]["idUtente"];
-			return true;
+            //session_start();
+			return ((int)$result[0]["idUtente"]);
         }
 		else
 		{
