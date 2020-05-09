@@ -50,7 +50,7 @@ class logGoogle
 			];
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute($data);
-			$this->checkJustLog();
+			return $this->checkJustLog();
 		}
 		catch (Exception $e)
 		{
@@ -71,11 +71,11 @@ class logGoogle
         if (count($result) > 0)
         {
             //session_start();
-			return ((int)$result[0]["idUtente"]);
+			return (int)$result[0]["idUtente"];
         }
 		else
 		{
-			$this->sign();
+			return $this->sign();
 		}	
 	}	
 }

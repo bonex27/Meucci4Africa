@@ -956,7 +956,7 @@ function confirmUserDelete()
 function delProfile()
 {
     var xhr = new XMLHttpRequest();
-    xhr.open("DELETE","api/profilo.php");
+    xhr.open("DELETE","/API/profilo.php");
     xhr.onload =  function(){
         loadIndex();
         history.pushState({},"Meucci4Africa", "/index")
