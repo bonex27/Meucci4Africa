@@ -21,7 +21,7 @@ switch($requestMethod)
         
         $nuovoCorso->idAula = $input["idAula"];
         $nuovoCorso->idArgomento =  $id[0]['idArgomento'];           
-        $nuovoCorso->postiLiberi = $input['postiLiberi'];
+        $nuovoCorso->postiTotali = $input['postiTotali'];
         $nuovoCorso->postiOccupati = 0;
 
         if($input["turno1"] == true)

@@ -996,9 +996,9 @@ function addCorso()
     var turno2 = document.getElementById("turno2").checked;
     var turno3 = document.getElementById("turno3").checked;
     var turno4 = document.getElementById("turno4").checked;
-    var postiLiberi = document.getElementById("inputPosti").value;
+    var postiTotali = document.getElementById("inputPosti").value;
 
-    var obj = { idAula: aula, titolo: titolo, descrizione: descrizione, turno1: turno1,turno2: turno2,turno3: turno3,turno4: turno4, postiLiberi: postiLiberi};
+    var obj = { idAula: aula, titolo: titolo, descrizione: descrizione, turno1: turno1,turno2: turno2,turno3: turno3,turno4: turno4, postiTotali: postiTotali};
     var myJSON = JSON.stringify(obj);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", '/API/nuoviCorsi.php' , true);

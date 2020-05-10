@@ -13,7 +13,7 @@ class nuovoCorso
     public $idArgomento;
     public $idAula;
     public $idTurno; 
-    public $postiLiberi; 
+    public $postiTotali; 
     public $postiOccupati;
 
 	public function __construct()
@@ -26,24 +26,22 @@ class nuovoCorso
     {
         try
         {
-            $sql = "INSERT INTO lezione (aula, argomento, turno, postiLiberi,postiOccupati) VALUES (:aula, :argomento, :turno, :postiLiberi, :postiOccupati);";
+            $sql = "INSERT INTO lezione (aula, argomento, turno, postiTotali, postiOccupati) VALUES (:aula, :argomento, :turno, :postiTotali, :postiOccupati);";
             
             $data = [
                 'aula' => $this->idAula,
                 'argomento' => $this->idArgomento,
                 'turno' => $this->idTurno,
-                'postiLiberi' => $this->postiLiberi,
+                'postiTotali' => $this->postiTotali,
                 'postiOccupati' => $this->postiOccupati,
 
             ];
             $stmt = $this->db->prepare($sql);
             $stmt->execute($data);
-            $result = "OK";
-            return $result;			
-
         }
         catch (Exception $e)
         {
+            echo $e;
             header("HTTP/1.1 500 Internal server error");
         }
     }
