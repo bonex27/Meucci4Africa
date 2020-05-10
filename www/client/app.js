@@ -733,7 +733,23 @@ function delIscrizione(iscrizione,lezione)
 /*
 ###NAVBAR###
 */
+function buttonGoogle()
+{
+    var a = document.createElement("a");
+    var img = document.createElement("img");
+    a.innerHTML = "Login with Google";
+    a.class = "btn btn-outline-dark";
+    a.addEventListener("click",function() {       
+        logGoogle();
+    } );
+    img.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png";
+    img.width="20px";
+    img.style = "margin-bottom:3px; margin-right:5px";
+    img.alt="Google sign-in";
+    a.appendChild(img);
+    appNavbar.appendChild(a);
 
+}
 function loadNavbar(isLogged)
 {
     appNavbar.innerHTML = "";
@@ -763,12 +779,18 @@ function loadNavbar(isLogged)
                                             history.pushState({},"Meucci4Africa", "/signup");
                                             loadSignUp();
                                         } );
+        
+
         navItem1.appendChild(navLink1);
         navItem2.appendChild(navLink2);
 
+
         appNavbar.appendChild(navItem1);
         appNavbar.appendChild(navItem2);
-    }
+        appNavbar.appendChild(navItem2);
+        buttonGoogle();
+       
+}
     else
     {
         navLink1.addEventListener("click", 
