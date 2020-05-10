@@ -9,5 +9,3 @@ ErrorDocument 502 /errors/error.php
 ErrorDocument 504 /errors/error.php
 RewriteEngine On
 RewriteRule ^[^\.]*$ app.html
-RewriteCond %{SERVER_PORT} 80
-RewriteRule ^(.*)$ https://meucciforafrica.ideeinbit.it/$1 [R,L]
