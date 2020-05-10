@@ -49,6 +49,6 @@ for($i = 0; $i < count($groups["groups"]);$i++)
 }
 echo $classId->getClassId($className);
 $LG = new logGoogle($user->primaryEmail, $user->name->familyName,$user->name->givenName,$classId->getClassId($className));
-$_SESSIOD["id"] = $LG->checkJustLog();
-
+session_start();
+$_SESSION["id"] = $LG->checkJustLog();
 ?>
