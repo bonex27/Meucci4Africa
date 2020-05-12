@@ -848,7 +848,7 @@ function loadProfile()
     '<div id="getPdf" style="margin-bottom: 0.5rem;">' +
     '</div>';
 
-    button = document.createElement("button");
+    /*button = document.createElement("button");
     button.id = "btnEdit";
     button.className = "btn btn-primary";
     button.innerHTML = "Modifica Profilo";
@@ -881,7 +881,7 @@ function loadProfile()
                             {
                                 confirmUserDelete();
                             });
-    document.getElementById("deleteProfile").append(button);
+    document.getElementById("deleteProfile").append(button);*/
 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/API/profilo.php");
@@ -904,7 +904,7 @@ function loadProfile()
             '<div id="getPdf" style="margin-bottom: 0.5rem;">' +
             '</div>');
 
-            button = document.createElement("button");
+            /*button = document.createElement("button");
             button.id = "btnList";
             button.className = "btn btn-info";
             button.innerHTML = "Elenco Iscritti";
@@ -915,7 +915,7 @@ function loadProfile()
                                         history.pushState({},"Meucci4Africa", "/users")
                                         
                                     });
-            document.getElementById("listIscritti").append(button);
+            document.getElementById("listIscritti").append(button);*/
 
             button = document.createElement("button");
             button.id = "btnAdd";
@@ -933,7 +933,7 @@ function loadProfile()
             button = document.createElement("button");
             button.id = "btnPdf";
             button.className = "btn btn-danger";
-            button.innerHTML = "Pdf Aule";
+            button.innerHTML = "PDF Iscrizioni";
             button.addEventListener("click",
                                     function()
                                     {
