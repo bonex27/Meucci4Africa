@@ -14,10 +14,10 @@ switch($requestMethod)
         $utente->_nome = $input["nome"];
         $utente->_cognome = $input["cognome"];
         $utente->_email = $input["email"];
-        $utente->_password = md5($input["password"]);
-        $utente->_classe = $input["classe"];
+        $utente->_password = password_hash($input["password"],PASSWORD_DEFAULT);
 
         $data = $utente->insert();
+        
         break;
     default:
 	    header("HTTP/1.0 405 Method Not Allowed");
