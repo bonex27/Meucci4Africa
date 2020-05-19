@@ -1,5 +1,43 @@
 //TODO: tables needs a tbody in order to be striped
 
+/*
+
+Indice:
+
+Line   | Nome         |  Descrizione
+
+[14]   | load()              |  Carica la homepage
+[108]  | loadIndex()         |  Carica il testo dell'homepage
+[118]  | listCorsi()         |  Carica la lista dei corsi
+[183]  | clickCorso()        |  Reindirizza al corso 
+[189]  | loadCorso()         |  Carica la pagina di iscrizione al corso
+[259]  | loadTurni()         |  Carica i turni di un corso
+[324]  | checkIscrizione()   |  Controlla se è stata fatta l'iscrizione
+[350]  | callIscriviti()     |  Chiama l'iscrizione
+[391]  | logout()            |  Uscita
+[408]  | logGoogle()         |
+[413]  | init()              |
+[500]  | loadSignUp()        |
+[529]  | aule()              |
+[555]  | signUp()            |
+[602]  | loadHome()          |
+[686]  | checkDel()          |
+[713]  | list()              |
+[718]  | delIscrizione()     |
+[735]  | buttonGoogle()      |
+[752]  | loadNavbar()        |
+[828]  | loadProfile()       |
+[949]  | confirmUserDelete() |
+[977]  | delProfile()        |
+[989]  | addCorso()          |
+[1016] | newCorso()          |
+[1080] | loadUserList()      |
+[1124] | fillTR()            |
+[1157] | removeStudent()     |
+[1177] | editStudent()       |
+[1248] | applyChanges()      |
+
+*/
 
 /*
 ###APP LOAD###
@@ -496,7 +534,6 @@ function login()
 /*
 ###SIGN UP###
 */
-
 
 function loadSignUp()
 {
