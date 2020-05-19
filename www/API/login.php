@@ -13,13 +13,13 @@ switch($requestMethod)
         $input = json_decode($inputJSON, TRUE);
 
         $utente->_email = $input["email"];
-        $utente->_password = md5($input["password"]);
+        $utente->_password = $input["password"];
 
         $dati = $utente->get();
 
         session_start();
         
-        if(isset($dati[0]))
+        if(isset($dati[0]["idUtente"]) && password_verify($utente->_password,$dati[0]["password"]) )
         {
             $_SESSION['id'] = (int)$dati[0]['idUtente'];
         }

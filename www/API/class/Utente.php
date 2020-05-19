@@ -28,13 +28,12 @@ class Utente
 	{
 		try
 		{
-    		$sql = 'INSERT INTO utente (nome, cognome, email, password, classe)  VALUES (:nome, :cognome, :email, :password, :classe)';
+    		$sql = 'INSERT INTO utente (nome, cognome, email, password)  VALUES (:nome, :cognome, :email, :password)';
     		$data = [
 			    'nome' => $this->_nome,
 			    'cognome' => $this->_cognome,
 			    'email' => $this->_email,
 				'password' => $this->_password,
-				'classe' => $this->_classe,
 			];
 	    	$stmt = $this->db->prepare($sql);
 	    	$stmt->execute($data);
@@ -43,6 +42,7 @@ class Utente
 		}
 		catch (Exception $e)
 		{
+			echo $e;
 			header("HTTP/1.0 400 Bad request");
 		}
 	}
@@ -66,10 +66,9 @@ class Utente
 			}
 			else
     		{
-				$sql = 'select idUtente from utente where email = :email and password = :password';
+				$sql = 'select idUtente, password from utente where email = :email';
 				$data = [
 					'email' => $this->_email,
-					'password' => $this->_password,
 				];
 			}
 	    	$stmt = $this->db->prepare($sql);
