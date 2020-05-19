@@ -148,7 +148,7 @@ function listCorsi()
         for(var i = 0; i< obj.length; i++)
         {
             var title = document.createElement("h3");
-            var description = document.createElement("h4");
+            //var description = document.createElement("h4");
 
             title.setAttribute("style", "font-weight: bold");
             title.className = "clickable";
@@ -161,10 +161,10 @@ function listCorsi()
                                         clickCorso(id)
                                     });
 
-            description.innerHTML = obj[i].descrizione;
+            //description.innerHTML = obj[i].descrizione;
 
             appContainer.appendChild(title);
-            appContainer.appendChild(description);
+            //appContainer.appendChild(description);
         }
     };
     xhr.onerror = function()
@@ -510,8 +510,8 @@ function loadSignUp()
     '        <input type="text" id="inputSurname" class="form-control" placeholder="Cognome" name="cognome" required>' +
     '    <label for="formGroupExampleInput">Email</label>' +
     '        <input type="text" id="inputEmail" class="form-control" placeholder="Email" name="email" required>' +
-    '       <label for="formGroupExampleInput">Classe</label>' +
-'            <select id="inputClasse" class="form-control" name="aula" required></select>' +
+    //'  <label for="formGroupExampleInput">Classe</label>' +
+    //'       <select id="inputClasse" class="form-control" name="aula" required></select>' +
     '       <label for="formGroupExampleInput">Password</label>' +
     '        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>' +
     '       <label for="formGroupExampleInput">Verifica password</label>' +
