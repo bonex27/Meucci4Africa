@@ -9,7 +9,7 @@ Line   | Nome         |  Descrizione
 [14]   | load()              |  Carica la homepage
 [108]  | loadIndex()         |  Carica il testo dell'homepage
 [118]  | listCorsi()         |  Carica la lista dei corsi
-[183]  | clickCorso()        |  Reindirizza al corso 
+[183]  | clickCorso()        |  Reindirizza al corso
 [189]  | loadCorso()         |  Carica la pagina di iscrizione al corso
 [259]  | loadTurni()         |  Carica i turni di un corso
 [324]  | checkIscrizione()   |  Controlla se è stata fatta l'iscrizione
@@ -70,7 +70,7 @@ function load()
     let pathTopLevel = pathSplit[1 + levelsToApp];
     let corso = pathSplit[2 + levelsToApp];
 
-    appTitle.innerHTML = "";  
+    appTitle.innerHTML = "";
 
     switch(pathTopLevel)
     {
@@ -146,7 +146,8 @@ window.addEventListener("load", load);
 function loadIndex()
 {
     appTitle.innerHTML = "<a class='unclickable text-black'>Meucci for Africa</a>";
-    appContainer.innerHTML = "<img style='float: left;' src='/img/logo.png' class='rounded' alt='LOGO'><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut ornare ante. Sed iaculis vulputate tellus. Morbi et mattis tellus, facilisis gravida tellus. Maecenas ut ex vel erat tempus tristique sed ac purus. Sed erat neque, bibendum eget sem at, pellentesque egestas mi. Donec iaculis vehicula justo, at pharetra libero tempor vel. Ut finibus hendrerit arcu id malesuada. Aenean posuere, leo nec tempus sodales, ante ipsum auctor purus, a laoreet odio velit eu tellus. Vivamus dictum orci nec fermentum ullamcorper. Nam sollicitudin convallis ex, non vulputate ante. Duis nec malesuada mi. Duis lacinia ante eget orci porta maximus. Quisque sit amet elementum dui. Mauris nec odio id metus sollicitudin rutrum et sed metus.</p><p></p><p>Sed euismod odio a ex dictum, et maximus magna dapibus. Sed commodo ante sagittis lacus molestie, sed commodo eros pulvinar. Nullam tristique, felis sed malesuada ullamcorper, sem quam maximus est, in pretium est justo id nisi. Nullam sit amet dui ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget suscipit libero, quis venenatis ligula. Vivamus malesuada id orci in tincidunt. Donec in sapien cursus, laoreet diam et, sollicitudin sem.</p><p></p><p>Nullam non bibendum eros, vel dictum ante. Praesent varius justo sed libero efficitur malesuada consequat vel massa. Nam et neque eu lorem pretium gravida. Cras facilisis gravida tincidunt. Mauris eget nulla ut elit ultrices vulputate ut a ante. Phasellus sit amet diam quis ligula sollicitudin porttitor. Etiam vel nunc eu est sodales venenatis in quis magna. Sed vitae augue lacinia, volutpat neque vitae, ullamcorper mi. Praesent volutpat erat odio, non malesuada nisi rhoncus eget. Curabitur magna erat, ullamcorper sit amet turpis nec, bibendum euismod dui. Praesent congue eleifend urna, vitae suscipit eros ultricies a. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla eu cursus nisi, vel porttitor sapien. Cras a justo et metus laoreet porttitor.</p><p></p><p>Pellentesque feugiat scelerisque lectus in facilisis. Sed sed quam maximus, molestie mauris ut, ultricies tortor. Morbi nec finibus erat. Nulla lacus est, imperdiet id placerat vitae, volutpat varius erat. Morbi luctus dolor sem, in porttitor sapien molestie ac. Curabitur metus mauris, vehicula in euismod quis, gravida sit amet turpis. Phasellus massa mi, sodales quis convallis quis, faucibus tincidunt metus. Mauris nec nisl et nisl aliquet laoreet. Sed egestas ut orci eget finibus. Vestibulum consectetur at dolor et tincidunt. Duis semper egestas semper. Phasellus aliquam tempus cursus. Sed vel sapien nunc. Curabitur fermentum malesuada consequat. Suspendisse rutrum, erat ut euismod ultrices, arcu urna pellentesque libero, eu lobortis metus eros ac nulla. Maecenas vel dapibus leo, vel congue diam.</p><p></p><p>Ut facilisis suscipit quam ac malesuada. Etiam sit amet purus sapien. Suspendisse vitae lorem non sapien scelerisque efficitur. Etiam at est eget nulla molestie sollicitudin a in nisl. Donec auctor lacus gravida neque rutrum, vel lacinia lectus tincidunt. Nulla et vestibulum nisi. Proin id rutrum turpis. Fusce hendrerit urna in ullamcorper dapibus. Sed vitae ultrices leo. Phasellus eget ante eget sapien accumsan consequat.</p>";
+    appContainer.innerHTML = "<div id='indexDesc'>Un progetto didattico-sociale e di sviluppo della cittadinanza attiva, basato sull’inclusione e sulla promozione del welfare, con l’obiettivo parallelo di sensibilizzazione e promozione di azioni di sostegno sanitario alla popolazione del Togo.</div><div id='indexDiv'><button type='button' onclick='loadLogin()' class='btn btn-outline-dark'>Login</button> <button class='btn btn-outline-dark' onclick='logGoogle()' href='/users/googleauth' role='button' style='text-transform:none'> <img width='20px' style='margin-bottom:3px; margin-right:5px' alt='Google sign-in' src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png' /> Login with Google </button> </div> <div id='indexDiv'><span style='text-align:center'>Oppure</span> <button onclick='loadSignUp()' class='btn btn-link'>Registrati qui</button></div>";
+
 }
 
 /*
@@ -202,6 +203,8 @@ function listCorsi()
             //description.innerHTML = obj[i].descrizione;
 
             appContainer.appendChild(title);
+            let hr =  document.createElement("hr");
+            appContainer.appendChild(hr);
             //appContainer.appendChild(description);
         }
     };
@@ -234,7 +237,7 @@ function loadCorso(id)
     {
         let title;
         var obj = JSON.parse(xhr.response);
-    
+
         title = document.createElement("a");
         title.addEventListener("click",
                             function() {
@@ -244,9 +247,9 @@ function loadCorso(id)
         title.className = "clickable text-black";
         title.innerHTML = "Home -> ";
         appTitle.appendChild(title);
-    
+
         title = document.createElement("a");
-        title.addEventListener("click", 
+        title.addEventListener("click",
                             function() {
                                         history.pushState({},"Meucci4Africa", "/corsi");
                                         listCorsi();
@@ -274,7 +277,7 @@ function loadCorso(id)
         appContainer.appendChild(div);
         div.appendChild(table);
 
-    
+
         var tr = document.createElement('tr');
         tr.innerHTML =
             '<th>Turno</th>' +
@@ -283,13 +286,13 @@ function loadCorso(id)
             '<th>Aula</th>'+
             '<th>Iscriviti</th>';
         thead.appendChild(tr);
-        
+
         loadTurni(id);
     };
     xhr.onerror = function() {
         alert("Errore");
     };
-   
+
     xhr.send();
 
 }
@@ -302,11 +305,11 @@ function loadTurni(argomento)
     callInfo.onload = function()
     {
 
-        
+
         var turni = JSON.parse(callInfo.response);
             let tr, td, button, table;
             table = document.getElementById("tableTurni");
-    
+
             for(var i = 0; i < turni.length; i++)
             {
                 tr = document.createElement('tr');
@@ -319,7 +322,7 @@ function loadTurni(argomento)
                 td = document.createElement("td");
                 button = document.createElement("button");
                 let lezione = turni[i].idLezione;
-                
+
                 button.className = "btn btn-success";
                 if(turni[i].isSubscribedToClass)
                 {
@@ -345,7 +348,7 @@ function loadTurni(argomento)
                                                 checkIscrizione(lezione);
                                             });
                 }
-                                        
+
                 td.appendChild(button);
                 tr.appendChild(td);
                 table.appendChild(tr);
@@ -364,7 +367,7 @@ function checkIscrizione(lezione)
     document.getElementById('modalTitle').innerHTML ="Iscrizione";
     document.getElementById('modalBody').innerHTML ="Sei sicuro di volerti iscrivere?";
     document.getElementById('modalBtn').innerHTML ="No";
-    
+
     let button = document.createElement("button");
     button.innerHTML="Si";
     button.className="btn btn-success";
@@ -374,7 +377,7 @@ function checkIscrizione(lezione)
     {
         $('#modalAll').modal('hide');
         callIscriviti(lezione);
-        
+
 
     });
     $('#modalAll').on('hidden.bs.modal', function (e) {
@@ -395,7 +398,7 @@ function callIscriviti(lezione)
     {
         if(xhr.status == 200)
         {
-            
+
             history.pushState({},"Meucci4Africa", "/home");
             loadHome();
         }
@@ -467,13 +470,13 @@ function init() {
             alert("err");
         };
         xhr.send(JSON.stringify({'token': response.getAuthResponse().id_token}));
-    
+
     }
     );
-}    
+}
 
 
-  
+
 
 
 /*
@@ -483,21 +486,14 @@ function init() {
 function loadLogin()
 {
     appTitle.innerHTML = "<a class='unclickable text-black'>Login</a>";
-    appContainer.innerHTML = 
+    appContainer.innerHTML =
     '<form class="form-signin" method="GET" id="form">'+
     '<h1 class="h3 mb-3 font-weight-normal">Sign in</h1>'+
     '<label for="inputEmail" class="sr-only">Email</label>'+
     '    <input type="text" id="inputEmail" class="form-control" placeholder="Email address" name="email" required>'+
     '<label for="inputPassword" class="sr-only">Password</label>'+
     '    <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password" required>'+
-    '<input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="login()" value="Login"/>'+
-    '<p class="mt-4 text-muted">oppure</p>'+
-    '</form>'+
-    '<br>'+
-    '<a class="btn btn-outline-dark" onclick="logGoogle()" role="button" style="text-transform:none">'+
-    '<img  width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />'+
-    'Login with Google'+
-    '</a>';
+    '<input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="login()" value="Login"/>';
 }
 
 function login()
@@ -538,7 +534,7 @@ function login()
 function loadSignUp()
 {
     appTitle.innerHTML = "<a class='unclickable text-black'>Registrazione</a>";
-    appContainer.innerHTML = 
+    appContainer.innerHTML =
     '<form class="form-signin">' +
     '    <h1 class="h3 mb-3 font-weight-normal">Registrazione</h1>' +
     '    <label for="formGroupExampleInput">Nome:</label>' +
@@ -553,14 +549,7 @@ function loadSignUp()
     '        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>' +
     '       <label for="formGroupExampleInput">Verifica password</label>' +
     '        <input type="password" id="inputPasswordCheck" class="form-control" name="passwordCheck" placeholder="Password" required>' +
-    '        <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="signUp()" value="Iscriviti"/>' +
-        '<p class="mt-4 text-muted">oppure</p>'+
-    '</form>'+
-    '<br>'+
-    '<a class="btn btn-outline-dark" onclick="logGoogle()" role="button" style="text-transform:none">'+
-    '<img  width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />'+
-    'Login with Google'+
-    '</a>';
+    '        <input type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="signUp()" value="Iscriviti"/></form>';
     aule();
 }
 
@@ -587,7 +576,7 @@ function aule()
         alert("Errore");
     };
     xhr.send();
-    
+
 }
 
 function signUp() {
@@ -601,7 +590,7 @@ function signUp() {
     var myJSON = JSON.stringify(obj);
 
     if(password == passwordCheck)
-    {    
+    {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/API/registrazione.php", true);
 
@@ -683,7 +672,7 @@ function loadHome()
 
             let iscrizione = data[i].idIscrizione;
             let lezione = data[i].idLezione;
-            
+
             button.className = "btn btn-danger";
             button.addEventListener("click",
                                     function()
@@ -709,7 +698,7 @@ function loadHome()
         button.innerHTML = "Vai ai corsi";
 
         appContainer.appendChild(button);
-        
+
     };
     xhr.onerror = function()
     {
@@ -727,7 +716,7 @@ function checkDel(iscrizione,lezione)
     document.getElementById('modalBody').innerHTML ="Sei sicuro di volerti disiscrivere?";
     document.getElementById('modalBtn').innerHTML ="No";
     document.getElementById('modalBtn').addEventListener("click", list);
-    
+
     let button = document.createElement("button");
     button.innerHTML="Si";
     button.class="btn btn-primary";
@@ -735,10 +724,10 @@ function checkDel(iscrizione,lezione)
     button.className="btn btn-danger";
     button.type ="button";
     button.addEventListener("click", function()
-    { 
+    {
         $('#modalAll').modal('hide');
-        delIscrizione(iscrizione,lezione);       
-       
+        delIscrizione(iscrizione,lezione);
+
 
     });
     $('#modalAll').on('hidden.bs.modal', function (e) {
@@ -770,23 +759,7 @@ function delIscrizione(iscrizione,lezione)
 /*
 ###NAVBAR###
 */
-function buttonGoogle()
-{
-    var a = document.createElement("a");
-    var img = document.createElement("img");
-    a.innerHTML = "Login with Google";
-    a.class = "btn btn-outline-dark";
-    a.addEventListener("click",function() {       
-        logGoogle();
-    } );
-    img.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png";
-    img.width="20px";
-    img.style = "margin-bottom:3px; margin-right:5px";
-    img.alt="Google sign-in";
-    a.appendChild(img);
-    appNavbar.appendChild(a);
 
-}
 function loadNavbar(isLogged)
 {
     appNavbar.innerHTML = "";
@@ -805,18 +778,18 @@ function loadNavbar(isLogged)
     if(!isLogged)
     {
         navLink1.innerHTML="Login"
-        navLink1.addEventListener("click", 
+        navLink1.addEventListener("click",
                                 function() {
                                             history.pushState({},"Meucci4Africa", "/login");
                                             loadLogin();
                                         } );
         navLink2.innerHTML="Registrati"
-        navLink2.addEventListener("click", 
+        navLink2.addEventListener("click",
                                 function() {
                                             history.pushState({},"Meucci4Africa", "/signup");
                                             loadSignUp();
                                         } );
-        
+
 
         navItem1.appendChild(navLink1);
         navItem2.appendChild(navLink2);
@@ -825,19 +798,18 @@ function loadNavbar(isLogged)
         appNavbar.appendChild(navItem1);
         appNavbar.appendChild(navItem2);
         appNavbar.appendChild(navItem2);
-        buttonGoogle();
-       
+
 }
     else
     {
-        navLink1.addEventListener("click", 
+        navLink1.addEventListener("click",
                                 function() {
                                             history.pushState({},"Meucci4Africa", "/home");
                                             loadHome();
                                         } );
         navLink1.innerHTML="I tuoi corsi";
 
-        navLink2.addEventListener("click", 
+        navLink2.addEventListener("click",
                                 function() {
                                             history.pushState({},"Meucci4Africa", "/profile");
                                             loadProfile();
@@ -855,8 +827,8 @@ function loadNavbar(isLogged)
         appNavbar.appendChild(navItem2);
         appNavbar.appendChild(navItem3);
     }
-    
-    
+
+
 }
 
 /*
@@ -905,7 +877,7 @@ function loadProfile()
     button.addEventListener("click",
                             function()
                             {
-                                
+
                             });
     document.getElementById("editProfile").append(button);
 
@@ -950,7 +922,7 @@ function loadProfile()
                                     {
                                         loadUserList();
                                         history.pushState({},"Meucci4Africa", "/users")
-                                        
+
                                     });
             document.getElementById("listIscritti").append(button);*/
 
@@ -963,7 +935,7 @@ function loadProfile()
                                     {
         								newCorso();
 										history.pushState({},"Meucci4Africa", "/newcorso")
-				
+
                                     });
             document.getElementById("addCorso").append(button);
 
@@ -976,7 +948,7 @@ function loadProfile()
                                     {
         								var win = window.open("API/getPdf.php", '_blank');
                                         win.focus();
-				
+
                                     });
             document.getElementById("getPdf").append(button);
         }
@@ -990,7 +962,7 @@ function confirmUserDelete()
     document.getElementById('modalBody').innerHTML ="Sei sicuro di volerti cancellare?";
     document.getElementById('modalBtn').innerHTML ="No";
     document.getElementById('modalBtn').addEventListener("click", list);
-    
+
     let button = document.createElement("button");
     button.innerHTML="Si";
     button.class="btn btn-primary";
@@ -998,11 +970,11 @@ function confirmUserDelete()
     button.className="btn btn-danger";
     button.type ="button";
     button.addEventListener("click", function()
-    { 
+    {
         $('#modalAll').modal('hide');
         delProfile();
-        loadNavbar();       
-       
+        loadNavbar();
+
     });
     $('#modalAll').on('hidden.bs.modal', function (e) {
         $("#modalBtnOk" ).remove();
@@ -1057,13 +1029,13 @@ function newCorso()
     xhr.open("GET", '/API/aule.php' , true);
     xhr.onload = function()
     {
-    
+
     appContainer.innerHTML= ' <div  id="form">'+
 '       <label for="inputAula">Aula</label><br>'+
 '       <select id="inputAula" class ="form-control"name="aula" required></select>'+
 '       <label for="inputCorso" >Corso</label><br>'+
     '    <input type="text" id="inputCorso" class="form-control" name="corso" placeholder="Corso" required>'+
-    
+
     '<label for="inputDescrizione" >Descrizione</label><br>'+
         '<textarea type="" id="inputDescrizione" class="form-control" name="descrizione" placeholder="Descrizione" required>'+
         '</textarea><br>'+
@@ -1102,7 +1074,7 @@ title.innerHTML = "Corsi";
 appTitle.appendChild(title);
 
 
-        
+
     };
     xhr.onerror = function()
     {
@@ -1131,7 +1103,7 @@ function loadUserList()
         var table = document.createElement("table");
         var thead = document.createElement("thead");
         var tr = document.createElement('tr');
-    
+
         table.setAttribute("class", "table");
         table.id = "table";
         thead.className = "thead-dark";
@@ -1142,7 +1114,7 @@ function loadUserList()
             '<th>Classe</th>' +
             '<th style="width: 1%;">Rimuovi</th>' +
             '<th style="width: 1%;">Modifica</th>' ;
-    
+
         thead.appendChild(tr);
         table.appendChild(thead);
         appContainer.appendChild(table);
@@ -1244,7 +1216,7 @@ function editStudent(id, button)
                                             var obj = {id: id, nome: nome, cognome: cognome, email: email, classe: classe, sezione: sezione};
                                             applyChanges(obj, tr);
                                         });
-    
+
     inpName = document.createElement("input");
     inpName.className = "form-input";
     tdName.appendChild(inpName);
@@ -1260,7 +1232,7 @@ function editStudent(id, button)
     slcClass = document.createElement("select");
     slcClass.className = "form-input";
     tdClass.appendChild(slcClass);
-                                        
+
     var xhr = new XMLHttpRequest();
     xhr.open("GET", '/API/classi.php' , true);
     xhr.onload = function()
@@ -1274,7 +1246,7 @@ function editStudent(id, button)
             option.text = data[i].nome;
             option.value = data[i].idClasse;
             slcClass.add(option);
-        } 
+        }
     };
     xhr.onerror = function()
     {
